@@ -874,8 +874,8 @@ svg {
 
 .footer-shell { 
   display: grid; 
-  grid-template-columns: 1fr 2.2fr 1.1fr; 
-  gap: 40px; 
+  grid-template-columns: 1.2fr 3.8fr; 
+  gap: 60px; 
   margin-bottom: 64px; 
 }
 
@@ -975,10 +975,21 @@ svg {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+  .footer-links-group {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
   .footer-bottom {
     flex-direction: column;
     gap: 16px;
     text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-links-group {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 
