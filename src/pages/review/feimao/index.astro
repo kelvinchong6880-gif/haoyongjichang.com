@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="飞猫云深度测评与使用指南 - 2026 最新评测" 
+  description="飞猫云是一家极具性价比的创新型机场，主打“花中转的钱，体验专线的速度”。后端采用 BGP 多线中继结合部分 IEPL 专线，完美兼顾了日常浏览与重度下载的双重需求。"
+>
+  <div class="review-page-shell">
+    <div class="rp-header">
+      <img src="/images/brands/feimao.png" alt="飞猫云" class="rp-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='" />
+      <div class="rp-title-wrap">
+        <h1>飞猫云机场深度测评</h1>
+        <p class="rp-subtitle">2026年最新测速与解锁报告</p>
+      </div>
+    </div>
+
+    <div class="rp-content">
+      <div class="bcp-text-intro">
+        <h2>飞猫云简介</h2>
+        <p>飞猫云是一家极具性价比的创新型机场，主打“花中转的钱，体验专线的速度”。后端采用 BGP 多线中继结合部分 IEPL 专线，完美兼顾了日常浏览与重度下载的双重需求。</p>
+        
+        <h2>节点覆盖</h2>
+        <p>飞猫云在全球部署了超过 80 个精选节点，除了常见的港日新美，还囊括了土耳其、阿根廷等汇率优势区，所有节点支持 UDP 转发，适合游戏与语音需求。</p>
+        
+        <h2>流媒体与AI解锁</h2>
+        <p>流媒体与 AI 解锁能力拉满。不仅秒开 Netflix 4K，还能完美支持 TikTok 运营与 ChatGPT 注册。智能分流系统确保国内流量直连，海外流量走代理，互不干扰。</p>
+        
+        <h2>价格套餐</h2>
+        <p>飞猫云以亲民著称，低至每月 15 元即可享受百 G 大流量，更有极具诱惑力的年付优惠。提供详尽的各平台使用教程，支持微信扫码秒级开通，售后响应极快。</p>
+      </div>
+
+      <div class="rp-action">
+        <a href="/" class="rp-btn-back">返回机场列表</a>
+      </div>
+    </div>
+  </div>
+
+  <style is:inline>
+    .review-page-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .rp-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .rp-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      object-fit: cover;
+    }
+    .rp-title-wrap h1 {
+      font-size: 2.2rem;
+      color: #0f172a;
+      margin: 0 0 8px 0;
+      font-weight: 800;
+    }
+    .rp-subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin: 0;
+    }
+    
+    .bcp-text-intro {
+      background-color: #f8fafc;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    }
+    .bcp-text-intro h2 {
+      font-size: 1.5rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bcp-text-intro h2::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 22px;
+      background: #3b82f6;
+      border-radius: 3px;
+    }
+    .bcp-text-intro p {
+      font-size: 1.15rem;
+      color: #334155;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .bcp-text-intro h2:not(:first-child) {
+      margin-top: 40px;
+    }
+    .bcp-text-intro p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .rp-action {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .rp-btn-back {
+      display: inline-block;
+      background: #ffffff;
+      color: #3b82f6;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+      border: 2px solid #3b82f6;
+      transition: all 0.2s;
+    }
+    .rp-btn-back:hover {
+      background: #3b82f6;
+      color: #fff;
+    }
+    
+    @media (max-width: 600px) {
+      .rp-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .bcp-text-intro {
+        padding: 24px;
+      }
+      .bcp-text-intro h2 {
+        font-size: 1.3rem;
+      }
+      .bcp-text-intro p {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</BaseLayout>

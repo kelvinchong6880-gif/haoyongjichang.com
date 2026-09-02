@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="微风深度测评与使用指南 - 2026 最新评测" 
+  description="微风机场成立于2023年，是一家专注于提供高端网络体验的老牌服务商。全线采用顶级的 IPLC 国际专线，彻底免疫防火墙干扰，运营团队技术实力雄厚，旨在为极客和商务人士提供最极致的科学上网体验。"
+>
+  <div class="review-page-shell">
+    <div class="rp-header">
+      <img src="/images/brands/weifeng.png" alt="微风" class="rp-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='" />
+      <div class="rp-title-wrap">
+        <h1>微风机场深度测评</h1>
+        <p class="rp-subtitle">2026年最新测速与解锁报告</p>
+      </div>
+    </div>
+
+    <div class="rp-content">
+      <div class="bcp-text-intro">
+        <h2>微风简介</h2>
+        <p>微风机场成立于2023年，是一家专注于提供高端网络体验的老牌服务商。全线采用顶级的 IPLC 国际专线，彻底免疫防火墙干扰，运营团队技术实力雄厚，旨在为极客和商务人士提供最极致的科学上网体验。</p>
+        
+        <h2>节点覆盖</h2>
+        <p>微风节点精准覆盖香港、台湾、日本、新加坡、美国、英国等优质核心区，所有节点均采用专线内网传输，高峰期速率依然能够达到 100% 满血状态，完全不限速、不限制在线设备数。</p>
+        
+        <h2>流媒体与AI解锁</h2>
+        <p>全链路原生 IP 落地，完美解锁 Netflix、Disney+、Hulu 等全球流媒体，对 ChatGPT、Claude、Gemini 等 AI 平台提供丝滑的原生解锁支持，让您不再遇到 Access Denied 报错。</p>
+        
+        <h2>价格套餐</h2>
+        <p>虽然定位高端专线，但微风提供了极具诚意的入门价格。基础套餐每月仅需几十元，支持支付宝、微信等主流支付方式，支持全平台主流客户端一键导入，新手也能一秒上手。</p>
+      </div>
+
+      <div class="rp-action">
+        <a href="/" class="rp-btn-back">返回机场列表</a>
+      </div>
+    </div>
+  </div>
+
+  <style is:inline>
+    .review-page-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .rp-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .rp-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      object-fit: cover;
+    }
+    .rp-title-wrap h1 {
+      font-size: 2.2rem;
+      color: #0f172a;
+      margin: 0 0 8px 0;
+      font-weight: 800;
+    }
+    .rp-subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin: 0;
+    }
+    
+    .bcp-text-intro {
+      background-color: #f8fafc;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    }
+    .bcp-text-intro h2 {
+      font-size: 1.5rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bcp-text-intro h2::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 22px;
+      background: #3b82f6;
+      border-radius: 3px;
+    }
+    .bcp-text-intro p {
+      font-size: 1.15rem;
+      color: #334155;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .bcp-text-intro h2:not(:first-child) {
+      margin-top: 40px;
+    }
+    .bcp-text-intro p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .rp-action {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .rp-btn-back {
+      display: inline-block;
+      background: #ffffff;
+      color: #3b82f6;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+      border: 2px solid #3b82f6;
+      transition: all 0.2s;
+    }
+    .rp-btn-back:hover {
+      background: #3b82f6;
+      color: #fff;
+    }
+    
+    @media (max-width: 600px) {
+      .rp-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .bcp-text-intro {
+        padding: 24px;
+      }
+      .bcp-text-intro h2 {
+        font-size: 1.3rem;
+      }
+      .bcp-text-intro p {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</BaseLayout>

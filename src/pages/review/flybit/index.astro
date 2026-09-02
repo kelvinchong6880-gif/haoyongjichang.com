@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Flybit深度测评与使用指南 - 2026 最新评测" 
+  description="Flybit 是一家拥有极客基因的高端技术流机场，首批全线拥抱 Hysteria 2 与 TUIC 协议的先驱者。通过暴力的 UDP 协议加速，彻底消灭了跨国网络的卡顿与丢包。"
+>
+  <div class="review-page-shell">
+    <div class="rp-header">
+      <img src="/images/brands/flybit.png" alt="Flybit" class="rp-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='" />
+      <div class="rp-title-wrap">
+        <h1>Flybit机场深度测评</h1>
+        <p class="rp-subtitle">2026年最新测速与解锁报告</p>
+      </div>
+    </div>
+
+    <div class="rp-content">
+      <div class="bcp-text-intro">
+        <h2>Flybit简介</h2>
+        <p>Flybit 是一家拥有极客基因的高端技术流机场，首批全线拥抱 Hysteria 2 与 TUIC 协议的先驱者。通过暴力的 UDP 协议加速，彻底消灭了跨国网络的卡顿与丢包。</p>
+        
+        <h2>节点覆盖</h2>
+        <p>节点网络遍布全球 30 多个国家，所有节点均经过严格的 SLA 在线率监控。Flybit 特别为极客玩家提供了众多稀有国家节点，满足全方位的网络漫游需求。</p>
+        
+        <h2>流媒体与AI解锁</h2>
+        <p>不仅能解锁主流的流媒体与 ChatGPT，Flybit 甚至对 Hulu、HBO Max 等冷门流媒体都有极佳的兼容性。专为追求极致自由的网络探索者打造。</p>
+        
+        <h2>价格套餐</h2>
+        <p>虽然技术含量极高，但 Flybit 的定价却非常亲民，提供多种灵活档位的套餐选择。官网设计极简大气，不强制年付，支持 USDT 等加密资产匿名支付。</p>
+      </div>
+
+      <div class="rp-action">
+        <a href="/" class="rp-btn-back">返回机场列表</a>
+      </div>
+    </div>
+  </div>
+
+  <style is:inline>
+    .review-page-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .rp-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .rp-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      object-fit: cover;
+    }
+    .rp-title-wrap h1 {
+      font-size: 2.2rem;
+      color: #0f172a;
+      margin: 0 0 8px 0;
+      font-weight: 800;
+    }
+    .rp-subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin: 0;
+    }
+    
+    .bcp-text-intro {
+      background-color: #f8fafc;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    }
+    .bcp-text-intro h2 {
+      font-size: 1.5rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bcp-text-intro h2::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 22px;
+      background: #3b82f6;
+      border-radius: 3px;
+    }
+    .bcp-text-intro p {
+      font-size: 1.15rem;
+      color: #334155;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .bcp-text-intro h2:not(:first-child) {
+      margin-top: 40px;
+    }
+    .bcp-text-intro p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .rp-action {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .rp-btn-back {
+      display: inline-block;
+      background: #ffffff;
+      color: #3b82f6;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+      border: 2px solid #3b82f6;
+      transition: all 0.2s;
+    }
+    .rp-btn-back:hover {
+      background: #3b82f6;
+      color: #fff;
+    }
+    
+    @media (max-width: 600px) {
+      .rp-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .bcp-text-intro {
+        padding: 24px;
+      }
+      .bcp-text-intro h2 {
+        font-size: 1.3rem;
+      }
+      .bcp-text-intro p {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</BaseLayout>

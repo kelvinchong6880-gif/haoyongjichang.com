@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="xsus深度测评与使用指南 - 2026 最新评测" 
+  description="xsus (叉速) 专注于为高净值用户提供“如丝般顺滑”的 IEPL 专线网络。彻底抛弃公网传输，100% 物理内网过境，将网络波动与墙的干扰降至绝对的零。"
+>
+  <div class="review-page-shell">
+    <div class="rp-header">
+      <img src="/images/brands/xsus.png" alt="xsus" class="rp-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='" />
+      <div class="rp-title-wrap">
+        <h1>xsus机场深度测评</h1>
+        <p class="rp-subtitle">2026年最新测速与解锁报告</p>
+      </div>
+    </div>
+
+    <div class="rp-content">
+      <div class="bcp-text-intro">
+        <h2>xsus简介</h2>
+        <p>xsus (叉速) 专注于为高净值用户提供“如丝般顺滑”的 IEPL 专线网络。彻底抛弃公网传输，100% 物理内网过境，将网络波动与墙的干扰降至绝对的零。</p>
+        
+        <h2>节点覆盖</h2>
+        <p>xsus 的节点犹如精密切割的钻石，数量不在多而在精。香港与日本节点常年保持在个位数延迟，是炒美股、玩外服竞技游戏的绝佳物理外挂。</p>
+        
+        <h2>流媒体与AI解锁</h2>
+        <p>原生纯净住宅 IP 库是 xsus 的护城河。Netflix 4K 秒缓冲只是基础，完美避开 OpenAI 风控、轻松注册各大海外严苛平台才是其真正的实力体现。</p>
+        
+        <h2>价格套餐</h2>
+        <p>xsus 定位中高端，但带来的体验绝对物超所值。提供大流量团队套餐与精简个人套餐，完善的工单售后系统，让您花的每一分钱都能感受到 VIP 般的尊贵服务。</p>
+      </div>
+
+      <div class="rp-action">
+        <a href="/" class="rp-btn-back">返回机场列表</a>
+      </div>
+    </div>
+  </div>
+
+  <style is:inline>
+    .review-page-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .rp-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .rp-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      object-fit: cover;
+    }
+    .rp-title-wrap h1 {
+      font-size: 2.2rem;
+      color: #0f172a;
+      margin: 0 0 8px 0;
+      font-weight: 800;
+    }
+    .rp-subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin: 0;
+    }
+    
+    .bcp-text-intro {
+      background-color: #f8fafc;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    }
+    .bcp-text-intro h2 {
+      font-size: 1.5rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bcp-text-intro h2::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 22px;
+      background: #3b82f6;
+      border-radius: 3px;
+    }
+    .bcp-text-intro p {
+      font-size: 1.15rem;
+      color: #334155;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .bcp-text-intro h2:not(:first-child) {
+      margin-top: 40px;
+    }
+    .bcp-text-intro p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .rp-action {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .rp-btn-back {
+      display: inline-block;
+      background: #ffffff;
+      color: #3b82f6;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+      border: 2px solid #3b82f6;
+      transition: all 0.2s;
+    }
+    .rp-btn-back:hover {
+      background: #3b82f6;
+      color: #fff;
+    }
+    
+    @media (max-width: 600px) {
+      .rp-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .bcp-text-intro {
+        padding: 24px;
+      }
+      .bcp-text-intro h2 {
+        font-size: 1.3rem;
+      }
+      .bcp-text-intro p {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</BaseLayout>

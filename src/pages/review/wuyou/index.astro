@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="无忧链接深度测评与使用指南 - 2026 最新评测" 
+  description="无忧链接成立于 2024 年底，采用全新 VLESS 协议与 IPLC 专线，运营团队为海外团队，主打稳定、低延迟的线路体验，全天客服轮班响应用户需求。"
+>
+  <div class="review-page-shell">
+    <div class="rp-header">
+      <img src="/images/brands/wuyou.png" alt="无忧链接" class="rp-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='" />
+      <div class="rp-title-wrap">
+        <h1>无忧链接机场深度测评</h1>
+        <p class="rp-subtitle">2026年最新测速与解锁报告</p>
+      </div>
+    </div>
+
+    <div class="rp-content">
+      <div class="bcp-text-intro">
+        <h2>无忧链接简介</h2>
+        <p>无忧链接成立于 2024 年底，采用全新 VLESS 协议与 IPLC 专线，运营团队为海外团队，主打稳定、低延迟的线路体验，全天客服轮班响应用户需求。</p>
+        
+        <h2>节点覆盖</h2>
+        <p>无忧链接节点覆盖香港、台湾、新加坡、日本、美国等主流地区，全部套餐不限速、不限制同时在线设备数量。</p>
+        
+        <h2>流媒体与AI解锁</h2>
+        <p>支持解锁 ChatGPT、Gemini 等 AI 工具，以及 Netflix、Disney+、YouTube、TikTok 等国外流媒体与短视频平台。同时官方声明不记录日志、不屏蔽 BT 下载。</p>
+        
+        <h2>价格套餐</h2>
+        <p>轻量级套餐低至 6 元每月，大促期间全新 6.8 折。支持订阅链接无需转换，支持 iOS/安卓/Windows/MAC 等客户端。支持支付宝、微信、USDT 支付，首次订阅享 85 折优惠。</p>
+      </div>
+
+      <div class="rp-action">
+        <a href="/" class="rp-btn-back">返回机场列表</a>
+      </div>
+    </div>
+  </div>
+
+  <style is:inline>
+    .review-page-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .rp-header {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .rp-logo {
+      width: 90px;
+      height: 90px;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      object-fit: cover;
+    }
+    .rp-title-wrap h1 {
+      font-size: 2.2rem;
+      color: #0f172a;
+      margin: 0 0 8px 0;
+      font-weight: 800;
+    }
+    .rp-subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin: 0;
+    }
+    
+    .bcp-text-intro {
+      background-color: #f8fafc;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+    }
+    .bcp-text-intro h2 {
+      font-size: 1.5rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .bcp-text-intro h2::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 22px;
+      background: #3b82f6;
+      border-radius: 3px;
+    }
+    .bcp-text-intro p {
+      font-size: 1.15rem;
+      color: #334155;
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+    .bcp-text-intro h2:not(:first-child) {
+      margin-top: 40px;
+    }
+    .bcp-text-intro p:last-child {
+      margin-bottom: 0;
+    }
+    
+    .rp-action {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .rp-btn-back {
+      display: inline-block;
+      background: #ffffff;
+      color: #3b82f6;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 14px 32px;
+      border-radius: 30px;
+      text-decoration: none;
+      border: 2px solid #3b82f6;
+      transition: all 0.2s;
+    }
+    .rp-btn-back:hover {
+      background: #3b82f6;
+      color: #fff;
+    }
+    
+    @media (max-width: 600px) {
+      .rp-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .bcp-text-intro {
+        padding: 24px;
+      }
+      .bcp-text-intro h2 {
+        font-size: 1.3rem;
+      }
+      .bcp-text-intro p {
+        font-size: 1.05rem;
+      }
+    }
+  </style>
+</BaseLayout>
