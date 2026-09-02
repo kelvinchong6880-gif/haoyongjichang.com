@@ -1,0 +1,245 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="[2026最新] Windows 篇：Clash Verge Rev 完整使用指南与排坑详解" 
+  description="详细的 Clash Verge Rev 教程，为您提供最全面的 Windows 翻墙配置和 Clash 电脑版订阅导入方法。包含软件安装、Meta内核选择、一键导入与系统代理设置，及常见问题排坑。"
+>
+  <article class="tutorial-article page-shell">
+    <div class="article-header">
+      <div class="ah-meta">Windows / macOS 入门指南</div>
+      <h1 class="ah-title">[2026最新] Windows 篇：Clash Verge Rev 完整使用指南与排坑详解</h1>
+      <p class="ah-desc">本文将手把手教您完成 Windows 翻墙配置，涵盖软件下载、内核设置、Clash 电脑版订阅导入全流程。</p>
+    </div>
+
+    <div class="article-content">
+      <h2>什么是 Clash Verge Rev？为什么选择它？</h2>
+      <p><strong>Clash Verge Rev</strong> 是目前 Windows 平台上最主流、最好用的代理客户端之一。自原版 Clash for Windows 停止维护后，基于全新架构和 <strong>Meta 内核</strong> 打造的 Clash Verge Rev 迅速成为了最佳替代品。</p>
+      <p>它的界面更现代，原生支持中文字符，并且对各类新型翻墙协议（如 Vless, Trojan 等）的兼容性极佳。</p>
+
+      <h2>第一步：软件下载与安装</h2>
+      <p>在开始配置之前，您需要先下载官方最新版本的客户端：</p>
+      <ul>
+        <li><strong>官方 GitHub 仓库发布页：</strong>前往 GitHub 搜索 <code>clash-verge-rev/clash-verge-rev</code> 的 Releases 页面。</li>
+        <li><strong>下载版本选择：</strong>对于大多数 Windows 用户，请下载以 <code>.exe</code> 结尾的安装包（如 <code>Clash.Verge_xxx_x64_zh-CN-setup.exe</code>）。</li>
+        <li>下载完成后，双击安装包，按照提示默认安装即可。</li>
+      </ul>
+
+      <h2>第二步：内核选择与基本设置</h2>
+      <p>安装完成后，首次打开软件，我们需要进行一些基础设置来保证后续的稳定运行。</p>
+      <h3>选择 Meta 内核</h3>
+      <p>在左侧导航栏点击 <strong>“设置” (Settings)</strong>，找到“内核”选项卡。强烈建议将内核切换为 <strong>Clash Meta</strong>（部分版本中称为 Alpha 或 Mihomo）。Meta 内核不仅连接速度更快，还能完美解析很多新式机场的订阅节点。</p>
+      <h3>语言设置为中文</h3>
+      <p>通常安装包已内置中文。如果是英文界面，同样在“设置”的通用 (General) 标签页中，将语言 (Language) 切换为 <code>zh-CN</code>。</p>
+
+      <h2>第三步：一键导入机场订阅配置</h2>
+      <p>要让客户端工作，最关键的一步是进行 <strong>Clash 电脑版订阅导入</strong>。</p>
+      
+      <h3>1. 获取 Clash 订阅链接</h3>
+      <p>登录您购买的机场后台，在用户仪表盘找到“快捷导入”或“一键订阅”区域，点击 <strong>“复制 Clash 订阅链接”</strong>。</p>
+      
+      <div class="recommend-box">
+        <h4>💡 还没有稳定的机场？</h4>
+        <p>如果您还没有订阅，或者现在的节点经常断流断网，强烈推荐查看我们的 <a href="/best-value-airport/">高性价比机场推荐</a> 榜单。我们精选的机场不仅速度快、晚高峰稳定，并且完美兼容 Clash 协议，支持一键导入。</p>
+      </div>
+
+      <h3>2. 在客户端中导入订阅</h3>
+      <ul>
+        <li>回到 Clash Verge Rev 客户端，点击左侧导航栏的 <strong>“配置” (Profiles)</strong>。</li>
+        <li>在顶部的输入框中，<strong>粘贴</strong> 您刚刚复制的 Clash 订阅链接。</li>
+        <li>点击右侧的 <strong>“导入” (Import)</strong> 按钮。</li>
+        <li>导入成功后，列表中会出现您的机场配置卡片，<strong>单击选中该卡片</strong>（卡片背景变色或打勾表示已激活）。</li>
+      </ul>
+
+      <h2>第四步：开启系统代理与节点选择</h2>
+      <h3>设置系统代理与开机自启</h3>
+      <p>订阅导入并选中后，还需要让电脑的网络接管到 Clash 上：</p>
+      <ul>
+        <li>点击左侧导航栏的 <strong>“代理” (Proxies)</strong> 选项卡。</li>
+        <li>点击右上角的 <strong>测速图标 (延迟测试)</strong>，所有节点会出现具体的毫秒数（如 <code>50ms</code>），说明节点均可用。</li>
+        <li>在上方选择一个绿色的可用节点。</li>
+        <li>回到左侧导航栏的 <strong>“设置” (Settings)</strong>，将 <strong>系统代理 (System Proxy)</strong> 的开关打开（变为开启状态）。此时您就已经成功翻墙了！</li>
+        <li>为了方便下次使用，建议同时打开 <strong>“开机自启” (Start with Windows)</strong>。</li>
+      </ul>
+
+      <h3>规则模式与全局模式的选择</h3>
+      <p>在“代理”页面顶部，您会看到三个模式：</p>
+      <ul>
+        <li><strong>规则 (Rule)：</strong>【推荐日常使用】只有访问海外被墙网站（如 YouTube, Google）时才会走节点流量；访问国内网站（如百度、淘宝）时不耗费流量，速度最快。</li>
+        <li><strong>全局 (Global)：</strong>电脑上所有的网络请求全部走代理，适合某些特殊网站在规则模式下打不开时临时切换。</li>
+        <li><strong>直连 (Direct)：</strong>关闭代理，所有网络直连。</li>
+      </ul>
+
+      <hr />
+
+      <h2>常见问题排坑指南 (FAQ)</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3>Q1: 为什么导入了订阅，但测速全部显示 Timeout（超时）？</h3>
+          <p>答：首先检查电脑右下角的系统时间是否准确（必须同步至标准时间）。其次，请尝试在设置中切换内核为 Meta，或者在“配置”页面右击订阅卡片，选择“强制更新”。如果依然超时，请联系机场客服确认节点是否在维护。</p>
+        </div>
+        <div class="faq-item">
+          <h3>Q2: 能正常上 Google，但是如何解锁 ChatGPT 等 AI 工具？</h3>
+          <p>答：ChatGPT 对 IP 的风控较严。请在“代理”中选择冷门节点（如台湾、日本原生 IP），同时确保使用“规则”或“全局”模式。更多关于 AI 解锁的信息，请参考我们的 <a href="/ai-streaming/">Ai 与流媒体解锁指南</a>。</p>
+        </div>
+        <div class="faq-item">
+          <h3>Q3: 为什么关闭软件后，电脑突然无法上网了？</h3>
+          <p>答：这通常是因为您直接点击了“X”强制关闭软件，而“系统代理”开关没有自动复原。解决办法：重新打开 Clash Verge Rev，关闭“系统代理”后再退出；或者进入 Windows 系统设置 -> 网络和 Internet -> 代理，手动关闭“使用代理服务器”。</p>
+        </div>
+        <div class="faq-item">
+          <h3>Q4: 手机端该用什么客户端配置？</h3>
+          <p>答：如果您同时是手机用户，安卓端推荐参考 <a href="/guide/">Clash for Android 教程</a>，iOS 苹果端推荐参考 <a href="/guide/">Shadowrocket 小火箭使用教程</a>。</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <style is:inline>
+    .tutorial-article {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px 100px 20px;
+    }
+    
+    .article-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .ah-meta {
+      display: inline-block;
+      background: #eff6ff;
+      color: #3b82f6;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .ah-title {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    
+    .ah-desc {
+      font-size: 1.1rem;
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .article-content h2 {
+      font-size: 1.8rem;
+      color: #1e293b;
+      margin-top: 50px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .article-content h3 {
+      font-size: 1.3rem;
+      color: #334155;
+      margin-top: 30px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .article-content p {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+
+    .article-content li {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .article-content strong {
+      color: #0f172a;
+    }
+
+    .article-content code {
+      background: #f1f5f9;
+      color: #ef4444;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    
+    .article-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .recommend-box {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .recommend-box h4 {
+      font-size: 1.2rem;
+      color: #b45309;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .recommend-box p {
+      margin-bottom: 0;
+      color: #92400e;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 60px 0;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #0f172a;
+      font-size: 1.15rem;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      .ah-title { font-size: 2rem; }
+      .article-content h2 { font-size: 1.5rem; }
+      .article-content p, .article-content li { font-size: 1rem; }
+    }
+  </style>
+</BaseLayout>
