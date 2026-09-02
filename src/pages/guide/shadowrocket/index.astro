@@ -6,18 +6,19 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   title="[2026最新] iOS 篇：Shadowrocket（小火箭）新手快速上手与节点添加及排坑指南" 
   description="史上最详细的苹果手机小火箭使用教程。教您如何使用美区 Apple ID 下载 Shadowrocket，快速进行节点导入，并详解分流模式配置，轻松实现 iOS 翻墙。"
 >
-  <article class="tutorial-article page-shell">
-    <div class="article-header">
+  <div class="tutorial-container page-shell">
+    <article class="tutorial-article">
+      <div class="article-header">
       <div class="ah-meta">iPhone / iPad 必看指南</div>
       <h1 class="ah-title">[2026最新] iOS 篇：Shadowrocket（小火箭）新手快速上手与节点添加及排坑指南</h1>
       <p class="ah-desc">本文旨在解决苹果 iOS 设备翻墙的最大门槛，手把手教您获取美区 Apple ID、下载正版小火箭，以及完成节点导入与全局/配置分流设置。</p>
     </div>
 
     <div class="article-content">
-      <h2>为什么苹果手机翻墙首选 Shadowrocket？</h2>
+      <h2 id="intro">为什么苹果手机翻墙首选 Shadowrocket？</h2>
       <p><strong>Shadowrocket</strong>（国内俗称“小火箭”）是 iOS 平台上知名度最高、用户基数最大的科学上网工具。它支持 Shadowsocks、Vmess、Trojan、VLESS 等几乎所有主流的代理协议，且占用的系统资源极低。只要在 iPhone 或 iPad 上安装了它，您就可以轻松接管全局网络，实现科学上网。</p>
 
-      <h2>第一步：如何下载正版 Shadowrocket？（美区 Apple ID 攻略）</h2>
+      <h2 id="step1">第一步：如何下载正版 Shadowrocket？（美区 Apple ID 攻略）</h2>
       <p>这是 iOS 端翻墙最大的门槛。由于政策原因，中国大陆区的 App Store 是无法搜索并下载 Shadowrocket 的，且该软件在海外区售价为 <strong>$2.99</strong>。要下载它，您必须使用海外（如美区、港区）的 Apple ID。</p>
       
       <h3>方案 A：自行注册美区 Apple ID 并充值（适合动手能力强）</h3>
@@ -35,7 +36,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <p>如果您卡在了下载这一步，或者您当前的节点总是断流，推荐查看我们的 <a href="/best-value-airport/">高性价比专线机场推荐</a> 榜单。榜单内的诸多优质机场不仅原生支持 Shadowrocket 协议的一键导入，还会在后台直接提供<strong>美区共享 Apple ID</strong> 协助您免费下载客户端，省去几十块钱的购买费用！</p>
       </div>
 
-      <h2>第二步：Shadowrocket 节点导入教程</h2>
+      <h2 id="step2">第二步：Shadowrocket 节点导入教程</h2>
       <p>安装好小火箭后，接下来需要将您的机场订阅导入进软件。小火箭支持多种导入方式，最常用的是“扫码”和“订阅链接”。</p>
       
       <h3>方式 1：一键导入 / 订阅链接导入（最常用）</h3>
@@ -48,7 +49,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       <h3>方式 2：二维码扫描导入</h3>
       <p>如果您是在电脑上查看机场后台，可以使用小火箭左上角的 <strong>“扫一扫”</strong> 图标，直接扫描电脑屏幕上的节点或订阅二维码，即可瞬间完成导入。</p>
 
-      <h2>第三步：分流模式选择与开启代理</h2>
+      <h2 id="step3">第三步：分流模式选择与开启代理</h2>
       <p>导入成功后，您会在首页看到长长的节点列表。在开启连接之前，请先了解下方的 <strong>“全局路由 (Global Routing)”</strong> 选项，这决定了您的流量走向：</p>
       
       <h3>三种核心分流模式解析：</h3>
@@ -63,7 +64,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <hr />
 
-      <h2>常见问题排坑指南 (FAQ)</h2>
+      <h2 id="faq">常见问题排坑指南 (FAQ)</h2>
       <div class="faq-list">
         <div class="faq-item">
           <h3>Q1: 为什么提示“无法验证服务器”或所有节点都 Ping 不通？</h3>
@@ -83,13 +84,35 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
       </div>
     </div>
-  </article>
+    </article>
+
+    <aside class="tutorial-sidebar">
+      <div class="toc-sticky">
+        <h3>📋 本文目录</h3>
+        <ul class="toc-list">
+          <li><a href="#intro">为什么首选 Shadowrocket？</a></li>
+          <li><a href="#step1">第一步：如何下载正版小火箭？</a></li>
+          <li><a href="#step2">第二步：节点订阅导入教程</a></li>
+          <li><a href="#step3">第三步：分流模式选择与开启</a></li>
+          <li><a href="#faq">常见问题排坑指南 (FAQ)</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
 
   <style is:inline>
-    .tutorial-article {
-      max-width: 800px;
+    .tutorial-container {
+      display: flex;
+      gap: 40px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 60px 20px 100px 20px;
+      align-items: flex-start;
+    }
+
+    .tutorial-article {
+      flex: 1;
+      min-width: 0;
     }
     
     .article-header {
@@ -225,8 +248,65 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       margin-bottom: 0;
       font-size: 1rem;
     }
+
+    .tutorial-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      display: none;
+    }
+    
+    @media (min-width: 1024px) {
+      .tutorial-sidebar {
+        display: block;
+      }
+    }
+
+    .toc-sticky {
+      position: sticky;
+      top: 100px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    .toc-sticky h3 {
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toc-list li a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .toc-list li a:hover {
+      color: #3b82f6;
+    }
     
     @media (max-width: 768px) {
+      .tutorial-container {
+        padding-top: 40px;
+      }
       .ah-title { font-size: 2rem; }
       .article-content h2 { font-size: 1.5rem; }
       .article-content p, .article-content li { font-size: 1rem; }

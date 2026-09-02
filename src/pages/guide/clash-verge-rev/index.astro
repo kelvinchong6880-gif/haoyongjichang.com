@@ -6,19 +6,20 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   title="[2026最新] Windows 篇：Clash Verge Rev 完整使用指南与排坑详解" 
   description="详细的 Clash Verge Rev 教程，为您提供最全面的 Windows 翻墙配置和 Clash 电脑版订阅导入方法。包含软件安装、Meta内核选择、一键导入与系统代理设置，及常见问题排坑。"
 >
-  <article class="tutorial-article page-shell">
-    <div class="article-header">
+  <div class="tutorial-container page-shell">
+    <article class="tutorial-article">
+      <div class="article-header">
       <div class="ah-meta">Windows / macOS 入门指南</div>
       <h1 class="ah-title">[2026最新] Windows 篇：Clash Verge Rev 完整使用指南与排坑详解</h1>
       <p class="ah-desc">本文将手把手教您完成 Windows 翻墙配置，涵盖软件下载、内核设置、Clash 电脑版订阅导入全流程。</p>
     </div>
 
     <div class="article-content">
-      <h2>什么是 Clash Verge Rev？为什么选择它？</h2>
+      <h2 id="intro">什么是 Clash Verge Rev？为什么选择它？</h2>
       <p><strong>Clash Verge Rev</strong> 是目前 Windows 平台上最主流、最好用的代理客户端之一。自原版 Clash for Windows 停止维护后，基于全新架构和 <strong>Meta 内核</strong> 打造的 Clash Verge Rev 迅速成为了最佳替代品。</p>
       <p>它的界面更现代，原生支持中文字符，并且对各类新型翻墙协议（如 Vless, Trojan 等）的兼容性极佳。</p>
 
-      <h2>第一步：软件下载与安装</h2>
+      <h2 id="step1">第一步：软件下载与安装</h2>
       <p>在开始配置之前，您需要先下载官方最新版本的客户端：</p>
       <ul>
         <li><strong>官方 GitHub 仓库发布页：</strong>前往 GitHub 搜索 <code>clash-verge-rev/clash-verge-rev</code> 的 Releases 页面。</li>
@@ -26,14 +27,14 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <li>下载完成后，双击安装包，按照提示默认安装即可。</li>
       </ul>
 
-      <h2>第二步：内核选择与基本设置</h2>
+      <h2 id="step2">第二步：内核选择与基本设置</h2>
       <p>安装完成后，首次打开软件，我们需要进行一些基础设置来保证后续的稳定运行。</p>
       <h3>选择 Meta 内核</h3>
       <p>在左侧导航栏点击 <strong>“设置” (Settings)</strong>，找到“内核”选项卡。强烈建议将内核切换为 <strong>Clash Meta</strong>（部分版本中称为 Alpha 或 Mihomo）。Meta 内核不仅连接速度更快，还能完美解析很多新式机场的订阅节点。</p>
       <h3>语言设置为中文</h3>
       <p>通常安装包已内置中文。如果是英文界面，同样在“设置”的通用 (General) 标签页中，将语言 (Language) 切换为 <code>zh-CN</code>。</p>
 
-      <h2>第三步：一键导入机场订阅配置</h2>
+      <h2 id="step3">第三步：一键导入机场订阅配置</h2>
       <p>要让客户端工作，最关键的一步是进行 <strong>Clash 电脑版订阅导入</strong>。</p>
       
       <h3>1. 获取 Clash 订阅链接</h3>
@@ -52,7 +53,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <li>导入成功后，列表中会出现您的机场配置卡片，<strong>单击选中该卡片</strong>（卡片背景变色或打勾表示已激活）。</li>
       </ul>
 
-      <h2>第四步：开启系统代理与节点选择</h2>
+      <h2 id="step4">第四步：开启系统代理与节点选择</h2>
       <h3>设置系统代理与开机自启</h3>
       <p>订阅导入并选中后，还需要让电脑的网络接管到 Clash 上：</p>
       <ul>
@@ -73,7 +74,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
       <hr />
 
-      <h2>常见问题排坑指南 (FAQ)</h2>
+      <h2 id="faq">常见问题排坑指南 (FAQ)</h2>
       <div class="faq-list">
         <div class="faq-item">
           <h3>Q1: 为什么导入了订阅，但测速全部显示 Timeout（超时）？</h3>
@@ -93,13 +94,36 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         </div>
       </div>
     </div>
-  </article>
+    </article>
+
+    <aside class="tutorial-sidebar">
+      <div class="toc-sticky">
+        <h3>📋 本文目录</h3>
+        <ul class="toc-list">
+          <li><a href="#intro">什么是 Clash Verge Rev？</a></li>
+          <li><a href="#step1">第一步：软件下载与安装</a></li>
+          <li><a href="#step2">第二步：内核选择与基本设置</a></li>
+          <li><a href="#step3">第三步：一键导入机场订阅配置</a></li>
+          <li><a href="#step4">第四步：开启系统代理与节点选择</a></li>
+          <li><a href="#faq">常见问题排坑指南 (FAQ)</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
 
   <style is:inline>
-    .tutorial-article {
-      max-width: 800px;
+    .tutorial-container {
+      display: flex;
+      gap: 40px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 60px 20px 100px 20px;
+      align-items: flex-start;
+    }
+
+    .tutorial-article {
+      flex: 1;
+      min-width: 0;
     }
     
     .article-header {
@@ -235,8 +259,65 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       margin-bottom: 0;
       font-size: 1rem;
     }
+
+    .tutorial-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      display: none;
+    }
+    
+    @media (min-width: 1024px) {
+      .tutorial-sidebar {
+        display: block;
+      }
+    }
+
+    .toc-sticky {
+      position: sticky;
+      top: 100px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    .toc-sticky h3 {
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toc-list li a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .toc-list li a:hover {
+      color: #3b82f6;
+    }
     
     @media (max-width: 768px) {
+      .tutorial-container {
+        padding-top: 40px;
+      }
       .ah-title { font-size: 2rem; }
       .article-content h2 { font-size: 1.5rem; }
       .article-content p, .article-content li { font-size: 1rem; }
