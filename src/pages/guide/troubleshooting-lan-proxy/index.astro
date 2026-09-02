@@ -1,0 +1,313 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="[2026最新] 局域网代理共享设置：Switch 翻墙教程与 PS5 代理加速排坑指南" 
+  description="手把手教您通过电脑或手机的局域网共享功能，让电视盒子、PS5、Switch 等无法安装客户端的设备实现代理加速，解决游戏联机与 NAT 类型报错问题。"
+>
+  <div class="tutorial-container page-shell">
+    <article class="tutorial-article">
+      <div class="article-header">
+        <div class="ah-meta" style="background: #e0e7ff; color: #4338ca;">进阶玩法与主机加速</div>
+        <h1 class="ah-title">[2026最新] 局域网代理共享设置：Switch 翻墙教程与 PS5 代理加速排坑指南</h1>
+        <p class="ah-desc">主机玩家与电视党必看！无需购买昂贵的硬路由，只需开启电脑或手机的“允许局域网连接”，就能轻松让家里的电视盒子、Switch、PS5 实现全速翻墙与联机加速。</p>
+      </div>
+
+      <div class="article-content">
+        <h2 id="intro">什么是局域网共享代理？为什么主机需要它？</h2>
+        <p>很多朋友购买了性价比极高的机场套餐，但在想要给家里的 <strong>Apple TV、智能电视盒子、Nintendo Switch 或是 PS5</strong> 进行网络加速时犯了难，因为这些设备大多属于封闭系统，根本无法直接安装 Clash 或 v2rayNG 这类的 <strong>翻墙软件客户端</strong>。</p>
+        <p>其实解决办法非常简单，那就是 <strong>局域网共享代理 (Allow LAN)</strong>。只要将您的电脑（或闲置手机）和您的主机/电视连在同一个 WiFi 路由器下，就能让它们“借用”电脑的翻墙网络，轻松搞定系统更新与 Netflix 流媒体播放。</p>
+
+        <h2 id="step1">第一步：在电脑端开启“允许局域网连接”</h2>
+        <p>首先，我们要让您的主机（如 Windows 电脑）暴露出一个代理端口，供其他设备连接。</p>
+        
+        <h3>以 Clash Verge Rev（Windows/Mac）为例：</h3>
+        <ol>
+          <li>打开电脑端的 Clash 软件，确保其正常工作，且处于 <strong>规则模式 (Rule)</strong> 或 <strong>全局模式 (Global)</strong>。</li>
+          <li>进入 <strong>设置 (Settings)</strong> 页面。</li>
+          <li>找到 <strong>允许局域网 (Allow LAN)</strong> 选项，将其开关 <strong>打开</strong>。</li>
+          <li>记住下方的 <strong>混合端口 (Mixed Port)</strong> 或者是 <strong>HTTP/SOCKS 端口</strong>。通常默认是 <code>7890</code>。</li>
+        </ol>
+
+        <h2 id="step2">第二步：获取电脑的内网局域网 IP 地址</h2>
+        <p>接着我们要找出电脑在家里路由器上的内网 IP（类似于门牌号）。</p>
+        
+        <h3>Windows 获取方法：</h3>
+        <ul>
+          <li>按 <code>Win + R</code> 键，输入 <code>cmd</code>，按下回车。</li>
+          <li>在弹出的黑框中输入 <code>ipconfig</code> 并回车。</li>
+          <li>找到 <strong>IPv4 地址 (IPv4 Address)</strong>，通常是以 <code>192.168.x.x</code> 开头的数字（例如 <code>192.168.1.100</code>）。记下这个 IP。</li>
+        </ul>
+
+        <h3>Mac 获取方法：</h3>
+        <p>按住键盘上的 <code>Option</code> 键，然后鼠标点击屏幕右上角的 WiFi 图标，在弹出的详细信息里，找到 <strong>IP 地址</strong>（如 <code>192.168.x.x</code>）。</p>
+
+        <h2 id="step3">第三步：在 Switch / PS5 / 电视盒子上填写代理</h2>
+        <p>现在，我们来到需要加速的主机或电视盒子上进行配置。注意：它们必须和刚才的电脑 <strong>连接在同一个 WiFi 路由器下</strong>！</p>
+        
+        <h3>以 Nintendo Switch 翻墙加速为例：</h3>
+        <ol>
+          <li>进入 Switch 的 <strong>系统设置 (System Settings)</strong> -> <strong>互联网 (Internet)</strong> -> <strong>互联网设置 (Internet Settings)</strong>。</li>
+          <li>选中您家里正在连接的 WiFi，点击 <strong>更改设置 (Change Settings)</strong>。</li>
+          <li>向下滑动，找到 <strong>代理服务器 (Proxy Settings)</strong>，将其从“关闭 (Off)”改为 <strong>开启 (On)</strong>。</li>
+          <li>在 <strong>服务器 (Server)</strong> 一栏中，输入刚才第二步获取的 <code>IPv4 地址</code>（例如 <code>192.168.1.100</code>）。</li>
+          <li>在 <strong>端口 (Port)</strong> 一栏中，输入第一步获取的端口号（默认通常是 <code>7890</code>）。</li>
+          <li>保存设置并进行网络测试。</li>
+        </ol>
+        <p>测试成功后，您的 Switch 就可以满速下载游戏更新，或是流畅打开 eShop 商店了！</p>
+
+        <div class="recommend-box">
+          <h4>💡 游戏联机卡顿、NAT 类型报错？</h4>
+          <p>普通的机场节点大多采用 TCP 协议，这能满足看视频和更新游戏的需求，但在打动森、斯普拉遁、Apex 等对延迟要求极高的 P2P 联机游戏时，往往会导致 <strong>NAT 类型受限</strong> 或者频繁掉线。如果您是重度主机玩家，我们强烈建议您选择专门优化了 UDP 转发和专线链路的顶级机场。您可以参考我们的 <a href="/top-10-airports/">十大高端专线机场推荐</a>，享受毫无物理延迟的极致联机体验！</p>
+        </div>
+
+        <hr />
+
+        <h2 id="faq">常见问题排坑指南 (FAQ)</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3>Q1: 为什么填写完 IP 和端口后，Switch/PS5 提示无法连接网络？</h3>
+            <p>答：这通常是因为您电脑的 <strong>Windows 防火墙</strong> 拦截了局域网的请求。解决办法：进入“控制面板 -> 系统和安全 -> Windows Defender 防火墙”，在左侧点击“允许应用或功能通过防火墙”，找到 Clash，勾选其“专用”和“公用”网络权限，或者直接暂时关闭防火墙再测试。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q2: 能用手机（iOS/Android）开启局域网共享吗？</h3>
+            <p>答：可以！如果您用的是安卓手机的 v2rayNG，可以在设置中勾选“允许局域网连接”；如果是苹果手机的 Shadowrocket，可以在主页底部点击“配置 -> 感叹号 -> 允许局域网连接 (Allow Wi-Fi Access)”。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q3: 为什么电视盒子用这个方法，有些国外流媒体 App 还是提示锁区？</h3>
+            <p>答：因为某些电视 App 强制走自己的 DNS，导致域名解析未经过电脑代理。为了彻底解决流媒体封锁，建议确保电脑端的代理处于“全局模式”，并使用了纯净的原生解锁节点。更多流媒体防封锁技巧，请参阅我们的 <a href="/ai-streaming/">Ai 与流媒体解锁专门指南</a>。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q4: 电脑关机了，Switch 还能继续用代理上网吗？</h3>
+            <p>答：不可以。局域网共享的核心是把您的电脑当成一台“软路由”。如果电脑关机、睡眠、或退出了 Clash 软件，Switch 的网络就会彻底断开。如果不想要一直开着电脑，建议购买硬路由进行刷机配置。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <aside class="tutorial-sidebar">
+      <div class="toc-sticky">
+        <h3>📋 本文目录</h3>
+        <ul class="toc-list">
+          <li><a href="#intro">主机为什么需要局域网代理？</a></li>
+          <li><a href="#step1">第一步：电脑端开启 Allow LAN</a></li>
+          <li><a href="#step2">第二步：获取内网 IP 地址</a></li>
+          <li><a href="#step3">第三步：主机填写代理与端口</a></li>
+          <li><a href="#faq">常见问题排坑指南 (FAQ)</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <style is:inline>
+    .tutorial-container {
+      display: flex;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 20px 100px 20px;
+      align-items: stretch;
+    }
+
+    .tutorial-article {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .article-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .ah-meta {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .ah-title {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    
+    .ah-desc {
+      font-size: 1.1rem;
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .article-content h2 {
+      font-size: 1.8rem;
+      color: #1e293b;
+      margin-top: 50px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .article-content h3 {
+      font-size: 1.3rem;
+      color: #334155;
+      margin-top: 30px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .article-content p {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+
+    .article-content li {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .article-content strong {
+      color: #0f172a;
+    }
+
+    .article-content code {
+      background: #f1f5f9;
+      color: #ef4444;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    
+    .article-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .recommend-box {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .recommend-box h4 {
+      font-size: 1.2rem;
+      color: #b45309;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .recommend-box p {
+      margin-bottom: 0;
+      color: #92400e;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 60px 0;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #0f172a;
+      font-size: 1.15rem;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+
+    .tutorial-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      display: none;
+    }
+    
+    @media (min-width: 768px) {
+      .tutorial-sidebar {
+        display: block;
+      }
+    }
+
+    .toc-sticky {
+      position: sticky;
+      top: 100px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    .toc-sticky h3 {
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toc-list li a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .toc-list li a:hover {
+      color: #3b82f6;
+    }
+    
+    @media (max-width: 768px) {
+      .tutorial-container {
+        padding-top: 40px;
+      }
+      .ah-title { font-size: 2rem; }
+      .article-content h2 { font-size: 1.5rem; }
+      .article-content p, .article-content li { font-size: 1rem; }
+    }
+  </style>
+</BaseLayout>
