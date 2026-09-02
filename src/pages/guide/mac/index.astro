@@ -1,0 +1,320 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="[2026最新] Mac 科学上网工具：苹果电脑 Clash 教程与 Surge 配置排坑指南" 
+  description="史上最详尽的 macOS 苹果电脑代理工具使用指南。深度解析 M 芯片与 Intel 芯片版本差异、Clash Verge 订阅导入，以及开启增强模式 (Tun Mode) 的完整权限授权步骤。"
+>
+  <div class="tutorial-container page-shell">
+    <article class="tutorial-article">
+      <div class="article-header">
+        <div class="ah-meta">macOS 苹果电脑指南</div>
+        <h1 class="ah-title">[2026最新] Mac 科学上网工具：苹果电脑 Clash 教程与 Surge 配置排坑指南</h1>
+        <p class="ah-desc">本文将带您了解目前 macOS 平台上最强大好用的代理工具组合，彻底解决芯片架构兼容问题，手把手教您开启增强模式实现真·全局接管。</p>
+      </div>
+
+      <div class="article-content">
+        <h2 id="intro">macOS 平台代理生态介绍：Clash 还是 Surge？</h2>
+        <p>在 <strong>Mac 科学上网工具</strong> 领域，生态极其繁荣，但这其中有两种绝对主流的选择，分别对应了不同的用户群体：</p>
+        <ul>
+          <li><strong>Clash Verge Rev（强烈推荐）：</strong> 免费开源，基于强大的 Meta 内核。界面漂亮，完美兼容绝大多数机场的 Clash 订阅。是 90% 用户的最佳选择。</li>
+          <li><strong>Surge for Mac：</strong> 闭源商业软件，售价高昂（约 100 美元），但功能极其强大，不仅能翻墙，还能进行复杂的网络抓包和网关路由控制。适合极客和重度网络开发者。</li>
+        </ul>
+        <p>本文将主要以受众最广的 <strong>苹果电脑 Clash 教程</strong> (即 Clash Verge Rev) 为核心，向您展示如何在 Mac 上优雅地实现科学上网。</p>
+
+        <h2 id="step1">第一步：软件下载与 M1/Intel 芯片版本选择</h2>
+        <p>由于苹果电脑在近几年进行了架构转换，下载软件时最容易犯的错误就是“下错版本”，导致软件打不开或运行极慢。请按以下步骤核对：</p>
+        
+        <h3>1. 确认您的 Mac 芯片类型</h3>
+        <p>点击屏幕左上角的 <strong>苹果 Logo () -> 关于本机 (About This Mac)</strong>：</p>
+        <ul>
+          <li>如果您看到 <strong>芯片 (Chip)：Apple M1 / M2 / M3...</strong>，说明您使用的是 <strong>ARM 架构</strong>。</li>
+          <li>如果您看到 <strong>处理器 (Processor)：Intel Core i5 / i7...</strong>，说明您使用的是传统的 <strong>x64 / AMD64 架构</strong>。</li>
+        </ul>
+        
+        <h3>2. 去 GitHub 下载对应版本</h3>
+        <p>进入 <code>clash-verge-rev</code> 的 GitHub Releases 页面下载 <code>.dmg</code> 安装包：</p>
+        <ul>
+          <li><strong>M 芯片用户：</strong>请务必下载文件名中带有 <code>aarch64</code> 或 <code>arm64</code> 的安装包（如 <code>Clash.Verge_x.x.x_aarch64.dmg</code>）。</li>
+          <li><strong>Intel 芯片用户：</strong>请下载文件名中带有 <code>x64</code> 的安装包。</li>
+        </ul>
+        <p>下载后双击，将软件拖入“应用程序 (Applications)”文件夹即可完成安装。</p>
+
+        <h2 id="step2">第二步：一键导入机场订阅</h2>
+        <p>这部分操作与 Windows 几乎一致：</p>
+        <ol>
+          <li>登录您的机场后台，点击 <strong>“复制 Clash 订阅链接”</strong>。</li>
+          <li>打开 Mac 上的 Clash Verge Rev，在左侧边栏找到 <strong>“配置” (Profiles)</strong>。</li>
+          <li>在顶部的输入框中粘贴链接，点击 <strong>“导入” (Import)</strong>，随后点击一下刚下载好的卡片，使其变为高亮选中状态。</li>
+          <li>前往 <strong>“代理” (Proxies)</strong> 页面，点击右上角的测速按钮，选择一个绿色的可用节点。</li>
+        </ol>
+
+        <div class="recommend-box">
+          <h4>💡 想要跑满 Mac 设备的顶级性能？</h4>
+          <p>苹果电脑的网卡性能极强，如果您的机场节点速度太慢或者经常断流，完全就是一种浪费！强烈建议查看我们的 <a href="/top-10-airports/">十大机场排行榜</a>，精心挑选的 IEPL/IPLC 专线机场，能让您在 Mac 上无缓冲秒开 4K/8K 视频，完美适配全平台。</p>
+        </div>
+
+        <h2 id="step3">第三步：最关键的一步——开启增强模式 (Tun Mode)</h2>
+        <p>很多 Mac 用户在开启了基础的“系统代理 (System Proxy)”后，发现 <strong>终端 (Terminal)</strong> 里的代码拉取依然很慢，或者部分 App (如 Telegram、Spotify) 依旧无法联网。这是因为 macOS 对代理权限的管控较严，我们需要开启 <strong>增强模式 (Tun Mode)</strong> 来建立虚拟网卡，实现底层的真·全局代理。</p>
+
+        <h3>授权与开启流程</h3>
+        <ul>
+          <li>在 Clash Verge Rev 左侧导航栏进入 <strong>“设置” (Settings)</strong>。</li>
+          <li>向下滑动，找到 <strong>Tun 模式 (Tun Mode)</strong>，将其开关打开。</li>
+          <li>此时，macOS 会弹出一个要求输入 <strong>开机密码（或触控 ID）</strong> 的安全提示框，因为创建虚拟网卡需要管理员权限。</li>
+          <li>输入密码并授权后，Tun 模式旁边的图标会变成开启状态。</li>
+        </ul>
+        <p>开启 Tun 模式后，请务必保证上方的 <strong>“系统代理 (System Proxy)”</strong> 也同时处于开启状态。这样您的 Mac 就已经彻底被代理接管，无论是命令行还是任意 App，都能畅通无阻了！</p>
+
+        <hr />
+
+        <h2 id="faq">常见问题排坑指南 (FAQ)</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3>Q1: 为什么安装后，打开提示“无法打开，因为苹果无法检查其是否包含恶意软件”？</h3>
+            <p>答：这是 macOS 对第三方开发者未签名软件的保护机制。解决办法：点击“取消”后，打开 <strong>系统设置 -> 隐私与安全性 (Privacy & Security)</strong>，向下滑动，在安全性板块会看到“已阻止使用 Clash Verge”，点击右侧的 <strong>“仍要打开 (Open Anyway)”</strong>，输入密码验证即可。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q2: 为什么我的 Mac 在锁屏休眠唤醒后，突然断网连不上网页？</h3>
+            <p>答：由于 Mac 休眠时会断开网络并挂起虚拟网卡，唤醒时可能发生内核冲突。最快的解决办法是在菜单栏点击软件图标，点击 <strong>“重启内核 (Restart Core)”</strong>。为了彻底避免，建议使用上文提到的最新版本并保持更新。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q3: 在 Mac 上开启 Tun 模式后，能流畅使用 ChatGPT 吗？</h3>
+            <p>答：完全可以。配合 Tun 模式接管底层流量，只要您在节点列表中选择支持流媒体/AI解锁的原生节点，就可以顺畅访问。如果您想进一步了解哪些节点好用，请参考我们的 <a href="/ai-streaming/">Ai 与流媒体解锁专门指南</a>。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q4: 除了 Mac，我的其他设备该怎么配置？</h3>
+            <p>答：如果您同时是 Windows 用户，可以参考我们的 <a href="/guide/clash-verge-rev/">Windows 篇：Clash 教程</a>；如果是 iOS 用户，强烈推荐阅读 <a href="/guide/shadowrocket/">iOS 篇：小火箭节点添加</a> 教程。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <aside class="tutorial-sidebar">
+      <div class="toc-sticky">
+        <h3>📋 本文目录</h3>
+        <ul class="toc-list">
+          <li><a href="#intro">Mac 代理生态：Clash 还是 Surge</a></li>
+          <li><a href="#step1">第一步：M芯片与Intel版本选择</a></li>
+          <li><a href="#step2">第二步：一键导入机场订阅</a></li>
+          <li><a href="#step3">第三步：开启增强模式 (Tun Mode)</a></li>
+          <li><a href="#faq">常见问题排坑指南 (FAQ)</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <style is:inline>
+    .tutorial-container {
+      display: flex;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 20px 100px 20px;
+      align-items: stretch;
+    }
+
+    .tutorial-article {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .article-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .ah-meta {
+      display: inline-block;
+      background: #faf5ff;
+      color: #9333ea;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .ah-title {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    
+    .ah-desc {
+      font-size: 1.1rem;
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .article-content h2 {
+      font-size: 1.8rem;
+      color: #1e293b;
+      margin-top: 50px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .article-content h3 {
+      font-size: 1.3rem;
+      color: #334155;
+      margin-top: 30px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .article-content p {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+
+    .article-content li {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .article-content strong {
+      color: #0f172a;
+    }
+
+    .article-content code {
+      background: #f1f5f9;
+      color: #ef4444;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    
+    .article-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .recommend-box {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .recommend-box h4 {
+      font-size: 1.2rem;
+      color: #b45309;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .recommend-box p {
+      margin-bottom: 0;
+      color: #92400e;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 60px 0;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #0f172a;
+      font-size: 1.15rem;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+
+    .tutorial-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      display: none;
+    }
+    
+    @media (min-width: 768px) {
+      .tutorial-sidebar {
+        display: block;
+      }
+    }
+
+    .toc-sticky {
+      position: sticky;
+      top: 100px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    .toc-sticky h3 {
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toc-list li a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .toc-list li a:hover {
+      color: #3b82f6;
+    }
+    
+    @media (max-width: 768px) {
+      .tutorial-container {
+        padding-top: 40px;
+      }
+      .ah-title { font-size: 2rem; }
+      .article-content h2 { font-size: 1.5rem; }
+      .article-content p, .article-content li { font-size: 1rem; }
+    }
+  </style>
+</BaseLayout>
