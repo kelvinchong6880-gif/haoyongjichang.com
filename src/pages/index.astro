@@ -1,49 +1,476 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RunawayTable from '../components/RunawayTable.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout 
+  title="好用机场｜机场测评、测速资料与新手教程" 
+  description="好用机场汇总机场测评、节点测速、套餐价格、线路资料和客户端使用教程，并标注测试条件与信息来源，帮助你在注册前比较服务表现和潜在风险。"
+>
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="page-shell hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> 独立整理 · 持续更新</p>
+        <h1>找到<br><em>稳定机场和优质机场</em></h1>
+        <p class="hero-lead">找机场先找好用机场<br>好用机场在你找机场的路上为你保驾护航，帮助你在注册前看清价格，表现与使用风险。</p>
+        <div class="hero-actions">
+          <a class="button" href="/recommend/">查看机场推荐 <span>→</span></a>
+          <a class="button button-secondary" href="/jichang/">浏览机场测评</a>
+        </div>
+        <p class="hero-note"><i>✓</i> 资料已明确标注来源与采集日期</p>
+      </div>
+      <div class="hero-right">
+        <div class="hero-image">
+          <img src="/images/logo.png" alt="好用机场 品牌标志" />
+        </div>
+        <div class="tech-stats-card">
+          <div class="stats-header">
+            <div class="stats-number"><strong>37</strong> <span>品牌档案</span></div>
+            <span class="pulse-badge">持续更新</span>
+          </div>
+          <ul class="stats-list">
+            <li><i>·</i> <div><b>先看需求</b>，预算、稳定性、使用场景</div></li>
+            <li><i>·</i> <div><b>再看证据</b>，来源、时间与测试条件</div></li>
+            <li><i>·</i> <div><b>最后注册</b>，核实价格、条款与风险</div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-strip">
+    <div class="page-shell">
+      <div><b>资料透明</b><br><span>标注来源与采集时间</span></div>
+      <div><b>拒绝猜测</b><br><span>未核验信息明确说明</span></div>
+      <div><b>新手友好</b><br><span>用简单语言解释复杂概念</span></div>
+      <div><b>客观中立</b><br><span>不为服务商提供保证</span></div>
+    </div>
+  </section>
+
+  <section class="page-shell home-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">优先整理</p>
+        <h2>好用机场推荐</h2>
+      </div>
+      <a class="button button-small" href="/brands/" style="border-radius: 12px; box-shadow: 0 4px 12px rgba(37, 87, 230, 0.2);">品牌库 <span>→</span></a>
+    </div>
+    
+                                <div class="featured-grid">
+
+      <article class="featured-card">
+        <div class="brand-card-top">
+          <img src="/images/brands/weifeng.png?v=2" width="48" height="48" alt="微风" class="brand-avatar-img large" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='">
+        <span class="badge badge-primary">优先推荐</span>
+        </div>
+        <h3>微风</h3>
+        <p>全IPLC专线，享受低延迟高速率，不限制设备同时接入，不限速。</p>
+        <div class="price-promo-box">
+          <div class="price-item">
+            <span>最低价格</span>
+            <strong>¥27<small>/月付</small></strong>
+          </div>
+          <div class="promo-item">
+            <span>专属优惠码</span>
+            <div class="promo-code-group">
+              <code>hM8APccJ</code>
+              <button class="copy-code-btn" data-code="hM8APccJ" title="点击一键复制">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a class="button" style="width: 100%; justify-content: center;" href="https://edp01.breezenetaff.com/#/?code=hM8APccJ" target="_blank" rel="nofollow sponsored noopener noreferrer">官网注册 <span>↗</span></a>
+        </div>
+      </article>
+      <article class="featured-card">
+        <div class="brand-card-top">
+          <img src="/images/brands/feimao-yun.png?v=2" width="48" height="48" alt="飞猫云" class="brand-avatar-img large" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='">
+        <span class="badge">重点关注</span>
+        </div>
+        <h3>飞猫云</h3>
+        <p>全IPLC专线网络最高2.5Gbps，原生IP解锁流媒体与AI，智能路由。</p>
+        <div class="price-promo-box">
+          <div class="price-item">
+            <span>最低价格</span>
+            <strong>¥25<small>/月付</small></strong>
+          </div>
+          <div class="promo-item">
+            <span>专属优惠码</span>
+            <div class="promo-code-group">
+              <code>w5lO9fqB</code>
+              <button class="copy-code-btn" data-code="w5lO9fqB" title="点击一键复制">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a class="button" style="width: 100%; justify-content: center;" href="https://flycat1.flycatvipaff.cc/#/?code=w5lO9fqB" target="_blank" rel="nofollow sponsored noopener noreferrer">官网注册 <span>↗</span></a>
+        </div>
+      </article>
+      <article class="featured-card">
+        <div class="brand-card-top">
+          <img src="/images/brands/jiuyun.png?v=2" width="48" height="48" alt="九云" class="brand-avatar-img large" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='">
+        <span class="badge">性价比优选</span>
+        </div>
+        <h3>九云</h3>
+        <p>海外中转专线，智能路由低延迟，原生解锁流媒体与AI工具，6元低门槛起步。</p>
+        <div class="price-promo-box">
+          <div class="price-item">
+            <span>最低价格</span>
+            <strong>¥6<small>/月付</small></strong>
+          </div>
+          <div class="promo-item">
+            <span>专属优惠码</span>
+            <div class="promo-code-group">
+              <code>INW5fS7Q</code>
+              <button class="copy-code-btn" data-code="INW5fS7Q" title="点击一键复制">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a class="button" style="width: 100%; justify-content: center;" href="https://888.jiuyundl.com/#/register?code=INW5fS7Q" target="_blank" rel="nofollow sponsored noopener noreferrer">官网注册 <span>↗</span></a>
+        </div>
+      </article>
+      <article class="featured-card">
+        <div class="brand-card-top">
+          <img src="/images/brands/firefly.png?v=2" width="48" height="48" alt="firefly" class="brand-avatar-img large" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='">
+        <span class="badge">稳定专线</span>
+        </div>
+        <h3>firefly</h3>
+        <p>IPLC专线网络，不限速，不限设备数，解锁Netflix、Disney+及C...</p>
+        <div class="price-promo-box">
+          <div class="price-item">
+            <span>最低价格</span>
+            <strong>¥25<small>/月付</small></strong>
+          </div>
+          <div class="promo-item">
+            <span>专属优惠码</span>
+            <div class="promo-code-group">
+              <code>8nDg6OEY</code>
+              <button class="copy-code-btn" data-code="8nDg6OEY" title="点击一键复制">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a class="button" style="width: 100%; justify-content: center;" href="https://vip02.fireflyaff.com/#/?code=8nDg6OEY" target="_blank" rel="nofollow sponsored noopener noreferrer">官网注册 <span>↗</span></a>
+        </div>
+      </article>
+      <article class="featured-card">
+        <div class="brand-card-top">
+          <img src="/images/brands/wuyou.png?v=2" width="48" height="48" alt="无忧" class="brand-avatar-img large" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='">
+        <span class="badge badge-primary">优先推荐</span>
+        </div>
+        <h3>无忧</h3>
+        <p>全IPLC专线，节点速率×1，稳定支持全球ChatGPT、Gemini等AI...</p>
+        <div class="price-promo-box">
+          <div class="price-item">
+            <span>最低价格</span>
+            <strong>¥19<small>/月付</small></strong>
+          </div>
+          <div class="promo-item">
+            <span>专属优惠码</span>
+            <div class="promo-code-group">
+              <code>s1kH64A8</code>
+              <button class="copy-code-btn" data-code="s1kH64A8" title="点击一键复制">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a class="button" style="width: 100%; justify-content: center;" href="https://wep01.worryfreeaff.com/#/?code=s1kH64A8" target="_blank" rel="nofollow sponsored noopener noreferrer">官网注册 <span>↗</span></a>
+        </div>
+      </article>
+      <article class="featured-card">
+        <div class="brand-card-top">
+          <img src="/images/brands/kuajie.png?v=2" width="48" height="48" alt="跨界" class="brand-avatar-img large" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='">
+        <span class="badge">Clash精选</span>
+        </div>
+        <h3>跨界</h3>
+        <p>IPLC线路不限速，解锁各大流媒体与AI，不限制设备登录数。</p>
+        <div class="price-promo-box">
+          <div class="price-item">
+            <span>最低价格</span>
+            <strong>¥20<small>/月付</small></strong>
+          </div>
+          <div class="promo-item">
+            <span>专属优惠码</span>
+            <div class="promo-code-group">
+              <code>hh3QezsW</code>
+              <button class="copy-code-btn" data-code="hh3QezsW" title="点击一键复制">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-actions">
+          <a class="button" style="width: 100%; justify-content: center;" href="https://vip02.kuajieaff.com/#/?code=hh3QezsW" target="_blank" rel="nofollow sponsored noopener noreferrer">官网注册 <span>↗</span></a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <style is:inline>
+.reading-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+.reading-link {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  background: #fcfcfc;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reading-icon-wrap {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #6b7280;
+}
+.reading-text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.reading-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #374151;
+  line-height: 1.5;
+  margin: 0;
+  transition: color 0.3s;
+}
+.reading-action {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2457e6;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.8;
+  transition: all 0.3s;
+}
+.reading-action span {
+  transition: transform 0.2s;
+}
+.reading-link:hover {
+  background: #fff;
+  border-color: rgba(36, 87, 230, 0.4);
+  box-shadow: 0 8px 30px rgba(36, 87, 230, 0.08);
+  transform: translateY(-4px);
+}
+.reading-link:hover .reading-title {
+  color: #2457e6;
+}
+.reading-link:hover .reading-action {
+  opacity: 1;
+}
+.reading-link:hover .reading-action span {
+  transform: translateX(4px);
+}
+@media (max-width: 768px) {
+  .reading-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<section class="recommended-reading-section" style="background: #fff; border-top: 1px solid var(--line);">
+    <div class="page-shell" style="padding-top: 80px; padding-bottom: 80px;">
+      <div class="section-heading" style="margin-bottom: 40px; text-align: left;">
+        <h2 style="font-size: 2rem; color: var(--ink);">推荐阅读</h2>
+        <p style="color: var(--muted); margin-top: 8px;">深入了解翻墙技术与客户端配置，解决您的各类网络难题。</p>
+      </div>
+      <div class="reading-grid">
+        <a href="/knowledge/proxy-clients-guide/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #eff6ff; color: #3b82f6;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">2026 翻墙客户端推荐：Clash、v2rayN、小火箭 (Shadowrocket) 怎么选？【附下载与图文教程】</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/knowledge/iplc-vs-iepl-guide/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #fffbeb; color: #f59e0b;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">机场线路解析：IPLC 与 IEPL 专线有什么区别？玩外服游戏选哪个？【附真实测速】</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/knowledge/free-airport-nodes-security-risks/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #fef2f2; color: #ef4444;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">免费机场节点能用吗？说明免费翻墙背后的隐私与安全风险</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/knowledge/clash-verge-custom-routing-rules-guide/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #eef2ff; color: #6366f1;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">Clash/Clash Verge 分流规则怎么写？实现国内外流量精准分流</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/knowledge/v2ray-vmess-vs-vless-protocol/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #faf5ff; color: #a855f7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">V2Ray 核心解析：VMess 与 VLESS 协议的优缺点对比</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/knowledge/what-is-bgp-transit-relay/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #e0f2fe; color: #0284c7;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">什么是 BGP 中转？多入口 BGP 是如何拯救“移动/联通/电信”翻墙稳定性的？【附原理解析】</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/guide/what-is-airport-subscription-link-how-to-use/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #f0fdfa; color: #0d9488;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">机场订阅链接是什么？怎么用？（附全平台图文解析）</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/guide/free-vpn-vs-paid-airport-risks/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #ffe4e6; color: #e11d48;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">免费 VPN 与付费机场的本质区别：为什么不建议用免费翻墙软件？</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/guide/v2rayn-download-and-setup-guide/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #ffedd5; color: #ea580c;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">v2rayN 详细使用教程：从下载到添加机场订阅链接</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/guide/shadowrocket-mac-m-chip-download-guide/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #f3f4f6; color: #4b5563;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"></path></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">Shadowrocket (小火箭) Mac 版安装与配置指南（支持 M芯片）</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/guide/shadowrocket-ios-download-purchase-guide/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #fdf2f8; color: #db2777;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">小火箭 Shadowrocket 下载、购买与机场节点配置全教程</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+        <a href="/guide/clash-for-android-cfa-beginner-guide/" class="reading-link">
+          <div class="reading-icon-wrap" style="background: #dcfce7; color: #16a34a;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </div>
+          <div class="reading-text">
+            <h3 class="reading-title">Clash for Android (CFA) 下载与订阅配置小白教程</h3>
+            <span class="reading-action">阅读全文 <span>→</span></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="needs-section">
+    <div class="page-shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">按需求选择</p>
+          <h2>不必从 36 家里盲选</h2>
+          <p>先确定最重要的需求，再缩小选择范围。</p>
+        </div>
+      </div>
+      <div class="needs-grid">
+        <a href="/recommend/feimao-yun/" class="need-card">
+          <span class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+          </span>
+          <div class="need-content">
+            <h3>预算优先</h3>
+            <p>从套餐价格、流量和倍率开始比较</p>
+          </div>
+          <div class="need-action"><span>查看推荐指南</span><i>→</i></div>
+        </a>
+        <a href="/recommend/weifeng-stability/" class="need-card">
+          <span class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </span>
+          <div class="need-content">
+            <h3>稳定优先</h3>
+            <p>重点查看晚高峰表现与线路情况</p>
+          </div>
+          <div class="need-action"><span>查看推荐指南</span><i>→</i></div>
+        </a>
+        <a href="/recommend/firefly-streaming-ai/" class="need-card">
+          <span class="icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><polygon points="10 8 15 10 10 12 10 8"/></svg>
+          </span>
+          <div class="need-content">
+            <h3>流媒体与 AI</h3>
+            <p>核对 Netflix、Disney+ 与 AI 服务解锁资料</p>
+          </div>
+          <div class="need-action"><span>查看推荐指南</span><i>→</i></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <RunawayTable />
+
+  <section class="page-shell methodology">
+    <div>
+      <p class="eyebrow">我们的资料原则</p>
+      <h2>每个结论，都应该能找到依据</h2>
+      <p>本站区分服务商公开资料、后台节点快照、第三方样本和独立测试。只有保留测试日期、设备、网络、时段与原始记录的结果，才会标注为本站实测。</p>
+      <a class="text-link" href="/methodology/">查看完整方法说明 <span>→</span></a>
+    </div>
+    <ol>
+      <li><span>1</span><div><b>核验</b><p>记录资料来源、采集日期和适用边界</p></div></li>
+      <li><span>2</span><div><b>测试</b><p>具备完整环境与原始记录时才标注实测</p></div></li>
+      <li><span>3</span><div><b>更正</b><p>发现变化或错误后更新正文并保留说明</p></div></li>
+    </ol>
+  </section>
+
+</BaseLayout>

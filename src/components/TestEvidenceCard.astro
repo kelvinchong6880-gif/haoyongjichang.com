@@ -1,0 +1,125 @@
+---
+interface Props {
+  testDate?: string;
+  location?: string;
+  network?: string;
+  testCount?: string;
+  tool?: string;
+  rawData?: string;
+  firstPublished?: string;
+  lastRetested?: string;
+  lastUpdated?: string;
+  nextRetest?: string;
+}
+
+const {
+  testDate = '原始资料未记录',
+  location = '原始资料未记录',
+  network = '原始资料未记录',
+  testCount = '原始资料未记录',
+  tool = '图片中如有标注则以图片为准，版本未记录',
+  rawData = '未取得可公开复现的完整原始日志',
+  firstPublished = '待核对',
+  lastRetested = '尚未完成本站复测',
+  lastUpdated = '2026-08-30',
+  nextRetest = '2026-11-28 前（视测试条件）',
+} = Astro.props;
+---
+
+<aside class="evidence-card" aria-labelledby="test-evidence-title">
+  <div class="evidence-card__header">
+    <div>
+      <p class="evidence-card__eyebrow">透明度说明</p>
+      <h2 id="test-evidence-title">测试信息与证据等级</h2>
+    </div>
+    <span class="evidence-status">待复测</span>
+  </div>
+
+  <p class="evidence-card__notice">
+    本文历史测速材料主要来自第三方图片、社区资料或服务商公开说明，不能视为本站在统一环境下完成的可复现实测。
+    数值仅描述对应截图或记录中的一次结果，不代表其他地区、运营商、设备或时段能获得相同表现。
+  </p>
+
+  <dl class="evidence-grid">
+    <div><dt>实际测试日期</dt><dd>{testDate}</dd></div>
+    <div><dt>测试地点</dt><dd>{location}</dd></div>
+    <div><dt>网络/运营商</dt><dd>{network}</dd></div>
+    <div><dt>测试次数</dt><dd>{testCount}</dd></div>
+    <div><dt>工具与版本</dt><dd>{tool}</dd></div>
+    <div><dt>原始数据</dt><dd>{rawData}</dd></div>
+  </dl>
+
+  <h3>来源类别与证据等级</h3>
+  <ul class="evidence-levels">
+    <li><strong>本站实测：</strong>由本站按披露条件执行；本页目前没有可确认的本站原始测试记录。</li>
+    <li><strong>服务商资料：</strong>套餐、线路和政策等商家自述，记为 <strong>C 级</strong>，未经独立核验。</li>
+    <li><strong>第三方/社区：</strong>截图、用户反馈或社区材料，通常记为 <strong>D 级</strong>；有多次结果但缺少完整日志时记为 B 级。</li>
+    <li><strong>等级定义：</strong>A＝日志、截图、步骤齐全；B＝多次结果但原始数据不完整；C＝仅服务商公开资料；D＝用户反馈或社区传闻；未验证＝无法确认。</li>
+  </ul>
+
+  <div class="content-lifecycle" aria-label="内容更新记录">
+    <div><span>首次发布日期</span><strong>{firstPublished}</strong></div>
+    <div><span>最近复测日期</span><strong>{lastRetested}</strong></div>
+    <div><span>最近内容更新时间</span><strong>{lastUpdated}</strong></div>
+    <div><span>下次计划复测</span><strong>{nextRetest}</strong></div>
+  </div>
+
+  <details class="change-log">
+    <summary>修改记录与状态规则</summary>
+    <p>2026-08-30：增加来源分类、证据等级、图片说明和复测状态；将绝对化结论改为有条件表述。</p>
+    <p>状态规则：90 天内完成可核验测试为“已验证”；90–180 天为“待复测”；超过 180 天为“可能过期”；链接、套餐或服务不可用为“已失效”。价格、优惠码及解锁能力应以访问时的服务商页面为准。</p>
+  </details>
+</aside>
+
+<script is:inline>
+  const annotateEvidence = () => {
+    document.querySelectorAll('.article-content h2:not(#test-evidence-title)').forEach((heading) => {
+      if (heading.querySelector('.evidence-badge')) return;
+      const text = heading.textContent || '';
+      const measured = /测速|延迟|丢包|速度|解锁|流媒体|体验/.test(text);
+      const badge = document.createElement('span');
+      badge.className = 'evidence-badge';
+      badge.textContent = measured ? '来源：第三方资料 · D/未验证' : '来源：服务商资料 · C/未验证';
+      badge.title = measured
+        ? '缺少完整原始日志，不作为本站可复现实测结论'
+        : '主要依据服务商公开资料，未经本站独立核验';
+      heading.appendChild(badge);
+    });
+    document.querySelectorAll('.article-content img').forEach((image) => {
+      if (image.dataset.evidenceAnnotated === 'true') return;
+      image.dataset.evidenceAnnotated = 'true';
+      const note = document.createElement('p');
+      note.className = 'image-evidence-note';
+      note.textContent = '图片证据说明：来源以相邻原文说明为准；如未明确标注，则视为第三方或来源未确认。本站未取得完整原始日志；实际测试日期、地点、运营商及工具版本未记录。图片可能经过裁剪，仅用于展示对应时点的记录，不代表当前或普遍表现。证据等级：D / 未验证。';
+      image.insertAdjacentElement('afterend', note);
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', annotateEvidence, { once: true });
+  else annotateEvidence();
+</script>
+
+<style>
+  .evidence-card { margin: 1.5rem 0 2.5rem; padding: 1.25rem; border: 1px solid #cbd5e1; border-left: 5px solid #0f766e; border-radius: 14px; background: #f8fafc; color: #1e293b; }
+  .evidence-card__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .evidence-card__eyebrow { margin: 0 0 .2rem; color: #0f766e; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .evidence-card h2 { margin: 0; font-size: 1.35rem; }
+  .evidence-card h3 { margin: 1.25rem 0 .6rem; font-size: 1.05rem; }
+  .evidence-status { flex: 0 0 auto; padding: .3rem .65rem; border-radius: 999px; background: #fef3c7; color: #92400e; font-size: .82rem; font-weight: 800; }
+  .evidence-card__notice { margin: 1rem 0; padding: .8rem 1rem; border-radius: 10px; background: #ecfeff; line-height: 1.7; }
+  .evidence-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin: 0; }
+  .evidence-grid div, .content-lifecycle div { min-width: 0; padding: .7rem .8rem; border-radius: 9px; background: #fff; border: 1px solid #e2e8f0; }
+  .evidence-grid dt, .content-lifecycle span { display: block; margin-bottom: .2rem; color: #64748b; font-size: .78rem; font-weight: 700; }
+  .evidence-grid dd { margin: 0; overflow-wrap: anywhere; }
+  .evidence-levels { margin-bottom: 1rem; }
+  .evidence-levels li { margin: .45rem 0; }
+  .content-lifecycle { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+  .change-log { margin-top: 1rem; }
+  .change-log summary { cursor: pointer; font-weight: 800; }
+  :global(.image-evidence-note) { margin: -.25rem 0 1.5rem !important; padding: .65rem .8rem; border: 1px dashed #94a3b8; border-radius: 8px; background: #f8fafc; color: #475569 !important; font-size: .82rem !important; line-height: 1.6; text-align: left !important; }
+  :global(.evidence-badge) { display: inline-block; margin-left: .6rem; padding: .18rem .5rem; border: 1px solid #cbd5e1; border-radius: 999px; background: #f8fafc; color: #475569; font-size: .7rem; font-weight: 700; line-height: 1.4; vertical-align: middle; }
+  @media (max-width: 640px) {
+    .evidence-card { padding: 1rem; }
+    .evidence-card__header { flex-direction: column; }
+    .evidence-grid, .content-lifecycle { grid-template-columns: 1fr; }
+  }
+</style>

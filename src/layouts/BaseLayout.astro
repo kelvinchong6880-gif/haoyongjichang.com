@@ -1,0 +1,230 @@
+---
+import '../styles/global.css';
+import pagePublished from '../data/page-published.json';
+import pageModified from '../data/sitemap-lastmod.json';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url);
+const siteUrl = (Astro.site ? Astro.site.toString() : Astro.url.origin).replace(/\/$/, '');
+const pathname = Astro.url.pathname;
+const isHomePage = pathname === '/';
+const isArticle = /^\/(guide|knowledge|jichang|speed-test|recommend)\/[^/]+\/$/.test(pathname);
+const datePublished = (pagePublished as Record<string, string>)[pathname];
+const dateModified = (pageModified as Record<string, string>)[pathname];
+const organizationDescription = '好用机场提供机场测评、测速资料、线路知识和客户端使用教程，并说明测试条件、信息来源与推广关系。';
+const organization = {
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: '好用机场',
+  url: siteUrl,
+  description: organizationDescription,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/images/logo.png`,
+  },
+};
+const structuredData = isHomePage
+  ? {
+      '@context': 'https://schema.org',
+      '@graph': [
+        organization,
+        {
+          '@type': 'WebSite',
+          '@id': `${siteUrl}/#website`,
+          name: '好用机场',
+          url: siteUrl,
+          description: organizationDescription,
+          inLanguage: 'zh-CN',
+          publisher: { '@id': `${siteUrl}/#organization` },
+        },
+      ],
+    }
+  : isArticle && datePublished && dateModified
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: title,
+        description,
+        url: canonicalURL.href,
+        mainEntityOfPage: canonicalURL.href,
+        inLanguage: 'zh-CN',
+        datePublished,
+        dateModified,
+        author: {
+          '@type': 'Person',
+          name: 'Kelvin Chong',
+          url: `${siteUrl}/author/#kelvin-chong`,
+        },
+        publisher: organization,
+        image: `${siteUrl}/images/logo.png`,
+      }
+    : undefined;
+const displayPublished = datePublished?.slice(0, 10);
+const displayModified = dateModified?.slice(0, 10);
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content={description}>
+  <meta name="robots" content="index, follow">
+  <meta name="bingbot" content="index, follow">
+  <link rel="canonical" href={canonicalURL}>
+  <title>{title}</title>
+  
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="好用机场">
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalURL}>
+  <meta property="og:image" content={`${siteUrl}/images/logo.png`}>
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={`${siteUrl}/images/logo.png`}>
+  
+  {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+</head>
+<body>
+  <div class="flex min-h-screen flex-col">
+    <header class="site-header">
+      <div class="nav-shell">
+        <a href="/" aria-label="好用机场首页">
+          <span class="brand-logo" aria-label="好用机场">
+            <img src="/images/logo.png" alt="好用机场 Logo" width="64" height="64" style="border-radius: 12px; object-fit: cover;" />
+            <span class="brand-word">好用机场</span>
+          </span>
+        </a>
+        <nav class="desktop-nav" aria-label="主导航">
+          <a class="active" href="/">首页</a>
+          <a href="/recommend/">机场推荐</a>
+          <a href="/jichang/">机场测评</a>
+          <a href="/speed-test/">机场测速</a>
+          <a href="/compare/">机场对比</a>
+          <a href="/guide/">使用教程</a>
+          <a href="/knowledge/">机场知识</a>
+        </nav>
+        <a class="button button-small desktop-cta" href="/recommend/">查看推荐 <span>→</span></a>
+        <details class="mobile-menu">
+          <summary aria-label="打开导航菜单"><span></span><span></span><span></span></summary>
+          <nav aria-label="手机导航">
+            <a href="/">首页</a>
+            <a href="/recommend/">机场推荐</a>
+            <a href="/jichang/">机场测评</a>
+            <a href="/speed-test/">机场测速</a>
+            <a href="/compare/">机场对比</a>
+            <a href="/guide/">使用教程</a>
+            <a href="/knowledge/">机场知识</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+
+    <main class="flex-grow">
+      {isArticle && datePublished && dateModified && (
+        <div class="article-meta-bar" aria-label="文章信息">
+          <span>作者：<a href="/author/#kelvin-chong">Kelvin Chong</a></span>
+          <span>首次发布：<time datetime={datePublished}>{displayPublished}</time></span>
+          <span>最近更新：<time datetime={dateModified}>{displayModified}</time></span>
+        </div>
+      )}
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-shell">
+        <div class="footer-intro">
+          <a href="/" class="footer-brand" aria-label="好用机场">
+            <img src="/images/logo.png" alt="好用机场 Logo" width="48" height="48" />
+            <span class="brand-word">好用机场</span>
+          </a>
+          <p class="footer-slogan">致力于将极其复杂的翻墙网络与机场节点信息，整理成真正能让小白看懂、极客也能获益的硬核评测基准。</p>
+        </div>
+        
+        <div class="footer-links-group">
+          <div class="footer-links-col">
+            <h4>关于本站</h4>
+            <nav aria-label="关于本站">
+              <a href="/about/">关于好用机场</a>
+              <a href="/author/">作者与编辑</a>
+              <a href="/contact/">联系我们</a>
+              <a href="/methodology/">评测方法论</a>
+              <a href="/corrections/">更正机制</a>
+            </nav>
+          </div>
+          <div class="footer-links-col">
+            <h4>法律说明</h4>
+            <nav aria-label="法律条款">
+              <a href="/affiliate-disclosure/">推广与返利</a>
+              <a href="/privacy/">隐私政策</a>
+              <a href="/terms/">使用条款</a>
+              <a href="/disclaimer/">免责声明</a>
+            </nav>
+          </div>
+          <div class="footer-links-col">
+            <h4>友情链接</h4>
+            <nav aria-label="友情链接">
+              <a href="https://clashjiedian.org/" target="_blank" rel="nofollow noopener noreferrer">Clash节点</a>
+              <a href="https://findjichang.com/" target="_blank" rel="nofollow noopener noreferrer">找机场</a>
+              <a href="https://clash-vpn.org/" target="_blank" rel="nofollow noopener noreferrer">Clash VPN</a>
+            </nav>
+          </div>
+          <div class="footer-links-col">
+            <h4>技术生态</h4>
+            <nav aria-label="核心技术资源">
+              <a href="https://github.com/clash-verge-rev/clash-verge-rev" target="_blank" rel="noopener noreferrer">Clash Verge Rev</a>
+              <a href="https://github.com/2dust/v2rayN" target="_blank" rel="noopener noreferrer">v2rayN 客户端</a>
+              <a href="https://www.netflix.com/" target="_blank" rel="nofollow noopener noreferrer">Netflix 奈飞</a>
+              <a href="https://chatgpt.com/" target="_blank" rel="nofollow noopener noreferrer">OpenAI ChatGPT</a>
+              <a href="https://telegram.org/" target="_blank" rel="nofollow noopener noreferrer">Telegram 电报</a>
+              <a href="https://www.speedtest.net/" target="_blank" rel="nofollow noopener noreferrer">Speedtest 测速</a>
+            </nav>
+          </div>
+        </div>
+
+        <div class="footer-disclosure">
+          <div class="disclosure-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <strong>透明度声明</strong>
+          </div>
+          <p>本站部分链接包含推荐返利（Affiliate），您的购买可能会为本站带来少量佣金，用于维持昂贵的服务器与评测线路开销，但这<strong>绝不会影响</strong>我们的客观评测与排名标准。</p>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <div class="copyright">© 2026 好用机场 (JiChangDog). All rights reserved.</div>
+        <div class="footer-disclaimer">信息与数据仅供选择参考，不构成任何服务可用性保证。</div>
+      </div>
+    </footer>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.copy-code-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const code = btn.getAttribute('data-code');
+          if(code && code !== '无需填写') {
+            navigator.clipboard.writeText(code).then(() => {
+              const originalHTML = btn.innerHTML;
+              btn.classList.add('copied');
+              btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+              setTimeout(() => {
+                btn.classList.remove('copied');
+                btn.innerHTML = originalHTML;
+              }, 2000);
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
