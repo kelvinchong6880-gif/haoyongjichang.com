@@ -9,76 +9,122 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <div class="page-shell guide-page">
     <header class="guide-header">
       <h1>🚀 新手使用与配置教程</h1>
-      <p>无论您使用的是电脑、手机还是路由器，在这里您都能找到最详尽的客户端配置指南，助您轻松连接，畅游世界。</p>
+      <p>无论您使用的是电脑、手机还是路由器，在这里您都能找到最详尽的图文配置指南，助您轻松连接，畅游世界。</p>
     </header>
 
     <!-- 全平台主流客户端配置（流量基石） -->
     <section class="tutorial-section">
       <div class="section-title-wrap">
         <h2 class="section-title">全平台主流客户端配置（流量基石）</h2>
-        <p class="section-subtitle">选择您的设备平台，查看对应的图文教程。我们将会在下方陆续添加 5 个核心平台的配置文章。</p>
+        <p class="section-subtitle">适合刚买完机场套餐，需要把订阅节点导入到手机或电脑客户端的用户。</p>
       </div>
 
       <div class="tutorial-grid">
-        <!-- Placeholder for Article 1 -->
-        <a href="#" class="tutorial-card">
-          <div class="tc-icon-wrap windows-bg">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 3.75 10.42 2.6v9.33H2V3.75zm9.58-1.28L22 1.07v10.87h-10.42V2.47zM22 13v10.93L11.58 22.8V13H22zM10.42 22.65 2 21.5v-8.5h8.42v9.65z"/></svg>
+        
+        <!-- Card 1: Clash Verge Rev -->
+        <div class="tutorial-card">
+          <div class="tc-top">
+            <div class="tc-icon pc-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+            <div class="tc-meta">
+              <span class="tc-platform">Windows / macOS</span>
+              <span class="tc-level">入门</span>
+            </div>
           </div>
-          <div class="tc-content">
-            <h3>Windows 客户端配置指南</h3>
-            <p>（文章位置预留 1）敬请期待更新...</p>
+          <div class="tc-body">
+            <h3>Clash Verge Rev 使用教程</h3>
+            <p>Clash Verge Rev 是 Windows 和 macOS 用户最常用的代理客户端。内核强大，界面现代化。本教程适合导入机场订阅、选择节点、开启规则模式并测试节点延迟。</p>
           </div>
-          <div class="tc-arrow">➔</div>
-        </a>
+          <a href="/guide/clash-verge-rev/" class="tc-btn">
+            查看教程
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
 
-        <!-- Placeholder for Article 2 -->
-        <a href="#" class="tutorial-card">
-          <div class="tc-icon-wrap mac-bg">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1.666 14.156c-1.396.966-3.14.982-4.572.035a4.57 4.57 0 0 1-1.927-3.411c-.04-.633.09-1.265.378-1.831.285-.558.706-1.037 1.22-1.39a3.79 3.79 0 0 1 1.777-.665c-.655-1.205-.595-2.671.182-3.811.396-.583.94-1.037 1.58-1.315.632-.274 1.332-.348 2.016-.21a3.633 3.633 0 0 1 1.385.666c.465.365.83.823 1.063 1.339.231.512.327 1.075.279 1.636-.06.671-.32 1.31-.749 1.833a4.032 4.032 0 0 1-1.338 1.038c.677 1.157.697 2.585.056 3.76a4.437 4.437 0 0 1-1.35 1.326z"/></svg>
+        <!-- Card 2: Shadowrocket -->
+        <div class="tutorial-card">
+          <div class="tc-top">
+            <div class="tc-icon ios-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+            </div>
+            <div class="tc-meta">
+              <span class="tc-platform">iPhone / iPad</span>
+              <span class="tc-level">入门</span>
+            </div>
           </div>
-          <div class="tc-content">
-            <h3>macOS 客户端配置指南</h3>
-            <p>（文章位置预留 2）敬请期待更新...</p>
+          <div class="tc-body">
+            <h3>Shadowrocket 小火箭教程</h3>
+            <p>Shadowrocket 是 iOS 苹果用户最常见、最好用的代理客户端。支持所有主流协议。本教程将教您如何配置订阅、开启代理并排查无法连接的问题。</p>
           </div>
-          <div class="tc-arrow">➔</div>
-        </a>
+          <a href="/guide/shadowrocket/" class="tc-btn">
+            查看教程
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
 
-        <!-- Placeholder for Article 3 -->
-        <a href="#" class="tutorial-card">
-          <div class="tc-icon-wrap ios-bg">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.62 1.54-1.55 3.09-2.53 4.08zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        <!-- Card 3: v2rayN -->
+        <div class="tutorial-card">
+          <div class="tc-top">
+            <div class="tc-icon win-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12H2"></path><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><line x1="6" y1="16" x2="6.01" y2="16"></line><line x1="10" y1="16" x2="10.01" y2="16"></line></svg>
+            </div>
+            <div class="tc-meta">
+              <span class="tc-platform">Windows</span>
+              <span class="tc-level">进阶</span>
+            </div>
           </div>
-          <div class="tc-content">
-            <h3>iOS 苹果端配置指南</h3>
-            <p>（文章位置预留 3）敬请期待更新...</p>
+          <div class="tc-body">
+            <h3>v2rayN 使用教程</h3>
+            <p>v2rayN 是 Windows 平台上非常经典的 V2Ray、Trojan、Shadowsocks 代理工具。轻量且高效，本教程将指导您如何进行节点测速和真全局代理设置。</p>
           </div>
-          <div class="tc-arrow">➔</div>
-        </a>
+          <a href="/guide/v2rayn/" class="tc-btn">
+            查看教程
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
 
-        <!-- Placeholder for Article 4 -->
-        <a href="#" class="tutorial-card">
-          <div class="tc-icon-wrap android-bg">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.3414C17.523 15.3414 17.522 15.3414 17.523 15.3414C17.915 15.3414 18.232 15.0244 18.232 14.6324C18.232 14.2404 17.915 13.9234 17.523 13.9234C17.131 13.9234 16.814 14.2404 16.814 14.6324C16.814 15.0244 17.131 15.3414 17.523 15.3414ZM6.477 15.3414C6.869 15.3414 7.186 15.0244 7.186 14.6324C7.186 14.2404 6.869 13.9234 6.477 13.9234C6.085 13.9234 5.768 14.2404 5.768 14.6324C5.768 15.0244 6.085 15.3414 6.477 15.3414ZM12.164 5.37839C13.882 5.37839 15.422 6.13639 16.489 7.31939L17.781 5.08239C17.925 4.83239 17.84 4.51239 17.59 4.36839C17.34 4.22439 17.021 4.30839 16.877 4.55839L15.626 6.72639C14.568 6.22039 13.4 5.92839 12.164 5.92839C10.928 5.92839 9.76 6.22039 8.702 6.72639L7.45 4.55839C7.306 4.30839 6.988 4.22339 6.738 4.36839C6.488 4.51239 6.402 4.83239 6.547 5.08239L7.838 7.31939C6.771 6.13639 5.231 5.37839 3.513 5.37839C3.473 5.37839 3.435 5.38139 3.396 5.38339V5.37839H3.328C1.517 5.43839 0.05 6.92439 0 8.75339V15.5264C0 17.3774 1.501 18.8784 3.352 18.8784H20.648C22.499 18.8784 24 17.3774 24 15.5264V8.75339C23.95 6.92439 22.483 5.43839 20.672 5.37839H20.604V5.38339C20.565 5.38139 20.527 5.37839 20.487 5.37839H12.164Z"/></svg>
+        <!-- Card 4: Clash for Android -->
+        <div class="tutorial-card">
+          <div class="tc-top">
+            <div class="tc-icon android-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg>
+            </div>
+            <div class="tc-meta">
+              <span class="tc-platform">Android</span>
+              <span class="tc-level">入门</span>
+            </div>
           </div>
-          <div class="tc-content">
-            <h3>Android 安卓端配置指南</h3>
-            <p>（文章位置预留 4）敬请期待更新...</p>
+          <div class="tc-body">
+            <h3>Clash for Android 教程</h3>
+            <p>安卓手机最主流的代理软件。界面直观，分流规则强大。适合导入 Clash 订阅、快速切换节点、开启规则模式并解决无法联网的常见问题。</p>
           </div>
-          <div class="tc-arrow">➔</div>
-        </a>
+          <a href="/guide/clash-for-android/" class="tc-btn">
+            查看教程
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
 
-        <!-- Placeholder for Article 5 -->
-        <a href="#" class="tutorial-card">
-          <div class="tc-icon-wrap router-bg">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8-1.41-1.42z"/></svg>
+        <!-- Card 5: OpenClash -->
+        <div class="tutorial-card">
+          <div class="tc-top">
+            <div class="tc-icon router-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="18" x2="6.01" y2="18"></line><line x1="10" y1="18" x2="10.01" y2="18"></line><path d="M16.8 14a6 6 0 0 0-9.6 0"></path><path d="M20 14a9.98 9.98 0 0 0-16 0"></path></svg>
+            </div>
+            <div class="tc-meta">
+              <span class="tc-platform">OpenWrt 路由器</span>
+              <span class="tc-level tc-advanced">高阶</span>
+            </div>
           </div>
-          <div class="tc-content">
-            <h3>路由器及其他设备配置</h3>
-            <p>（文章位置预留 5）敬请期待更新...</p>
+          <div class="tc-body">
+            <h3>OpenClash 软路由教程</h3>
+            <p>为家庭网络提供全屋翻墙服务。OpenClash 运行在 OpenWrt 系统上。本教程教您如何在软路由中配置代理，让全家所有设备（如电视、主机）无感科学上网。</p>
           </div>
-          <div class="tc-arrow">➔</div>
-        </a>
+          <a href="/guide/openclash/" class="tc-btn">
+            查看教程
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
 
       </div>
     </section>
@@ -88,19 +134,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   <style is:inline>
     .guide-page {
       padding-top: 60px;
-      padding-bottom: 80px;
-      background-color: #fafbfc;
+      padding-bottom: 100px;
+      background-color: #f8fafc;
       min-height: 100vh;
     }
     
     .guide-header {
       text-align: center;
-      margin-bottom: 60px;
+      margin-bottom: 70px;
     }
     .guide-header h1 {
       font-size: 2.8rem;
       color: var(--ink);
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       font-weight: 800;
       letter-spacing: -0.5px;
     }
@@ -113,123 +159,143 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     }
 
     .tutorial-section {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
     .section-title-wrap {
-      text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
+      border-left: 6px solid #3b82f6;
+      padding-left: 20px;
     }
     .section-title {
       font-size: 2rem;
       color: #0f172a;
       font-weight: 800;
-      margin-bottom: 12px;
-      position: relative;
-      display: inline-block;
-    }
-    .section-title::after {
-      content: '';
-      position: absolute;
-      width: 60px;
-      height: 4px;
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 2px;
+      margin-bottom: 8px;
     }
     .section-subtitle {
       font-size: 1.05rem;
       color: #64748b;
-      margin-top: 20px;
     }
 
     .tutorial-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 30px;
     }
 
     .tutorial-card {
-      display: flex;
-      align-items: center;
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 24px;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
       position: relative;
-      overflow: hidden;
     }
     .tutorial-card:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: 0 16px 32px rgba(59, 130, 246, 0.08);
-      border-color: #bfdbfe;
-    }
-    .tutorial-card::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0; width: 4px;
-      background: transparent;
-      transition: all 0.3s ease;
-    }
-    .tutorial-card:hover::before {
-      background: linear-gradient(180deg, #3b82f6, #8b5cf6);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.2);
     }
 
-    .tc-icon-wrap {
-      width: 56px;
-      height: 56px;
+    .tc-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .tc-icon {
+      width: 52px;
+      height: 52px;
       border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #ffffff;
-      flex-shrink: 0;
-      margin-right: 24px;
     }
-    .tc-icon-wrap svg {
-      width: 28px;
-      height: 28px;
+    .tc-icon svg {
+      width: 24px;
+      height: 24px;
     }
-    .windows-bg { background: linear-gradient(135deg, #0078D7, #00A4EF); box-shadow: 0 4px 12px rgba(0, 120, 215, 0.3); }
-    .mac-bg { background: linear-gradient(135deg, #4b5563, #1f2937); box-shadow: 0 4px 12px rgba(31, 41, 55, 0.3); }
-    .ios-bg { background: linear-gradient(135deg, #0ea5e9, #2563eb); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
-    .android-bg { background: linear-gradient(135deg, #3ddc84, #10b981); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
-    .router-bg { background: linear-gradient(135deg, #f59e0b, #d97706); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); }
+    .pc-icon { background: linear-gradient(135deg, #6366f1, #8b5cf6); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.3); }
+    .ios-icon { background: linear-gradient(135deg, #f43f5e, #fb923c); box-shadow: 0 6px 16px rgba(244, 63, 94, 0.3); }
+    .win-icon { background: linear-gradient(135deg, #0ea5e9, #3b82f6); box-shadow: 0 6px 16px rgba(14, 165, 233, 0.3); }
+    .android-icon { background: linear-gradient(135deg, #10b981, #3b82f6); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3); }
+    .router-icon { background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 6px 16px rgba(245, 158, 11, 0.3); }
 
-    .tc-content {
+    .tc-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .tc-platform {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #475569;
+    }
+    .tc-level {
+      font-size: 0.8rem;
+      color: #10b981;
+      background: #ecfdf5;
+      padding: 2px 8px;
+      border-radius: 6px;
+      align-self: flex-start;
+      font-weight: 600;
+    }
+    .tc-advanced {
+      color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .tc-body {
       flex-grow: 1;
+      margin-bottom: 30px;
     }
-    .tc-content h3 {
-      font-size: 1.3rem;
+    .tc-body h3 {
+      font-size: 1.4rem;
       color: #0f172a;
-      margin: 0 0 6px 0;
-      font-weight: 700;
-      transition: color 0.3s ease;
+      margin: 0 0 12px 0;
+      font-weight: 800;
     }
-    .tc-content p {
+    .tc-body p {
       font-size: 0.95rem;
       color: #64748b;
+      line-height: 1.6;
       margin: 0;
     }
-    .tutorial-card:hover .tc-content h3 {
-      color: #2563eb;
-    }
 
-    .tc-arrow {
-      font-size: 1.5rem;
-      color: #cbd5e1;
-      font-weight: 300;
-      transition: all 0.3s ease;
-    }
-    .tutorial-card:hover .tc-arrow {
+    .tc-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #f1f5f9;
       color: #3b82f6;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 12px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    .tc-btn svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.3s ease;
+    }
+    .tutorial-card:hover .tc-btn {
+      background: #3b82f6;
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+    }
+    .tutorial-card:hover .tc-btn svg {
       transform: translateX(4px);
     }
 
@@ -240,23 +306,11 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       .section-title {
         font-size: 1.6rem;
       }
+      .tutorial-grid {
+        grid-template-columns: 1fr;
+      }
       .tutorial-card {
-        padding: 20px 16px;
-      }
-      .tc-icon-wrap {
-        width: 48px;
-        height: 48px;
-        margin-right: 16px;
-      }
-      .tc-icon-wrap svg {
-        width: 24px;
-        height: 24px;
-      }
-      .tc-content h3 {
-        font-size: 1.15rem;
-      }
-      .tc-content p {
-        font-size: 0.85rem;
+        padding: 24px;
       }
     }
   </style>
