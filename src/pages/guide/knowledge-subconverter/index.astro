@@ -327,4 +327,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "如果我的订阅已经被盗了，流量正在狂掉，怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "立刻登录您的机场官网后台，找到“我的订阅”或“节点设置”区域，点击 “重置订阅链接 (Reset Subscription)” 按钮。一旦重置，旧的订阅链接就会立刻作废，偷您流量的人会全部断线。然后在客户端里替换为新的链接即可。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么机场老板不赔偿我被偷的流量？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "因为订阅链接就等同于您的“银行卡密码”。您把密码输入到了钓鱼网站导致余额被刷，机场端是没有责任的。因此养成良好的链接保护意识至关重要。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "借给朋友使用算不算“被盗”？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "很多机场严格限制了“同时在线设备数”（通常为 3-5 台）和“同时在线 IP 数”（防合租机制）。如果您借给太多朋友，导致不同省份的 IP 同时连接，同样会触发机场的封号系统。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "除了不乱用转换器，还有什么防坑指南吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "购买机场时，尽量避开那些没有正规售后群、使用免费域名的跑路盘。想要了解如何挑选靠谱的线路架构，请阅读我们的 直连、中转与专线的底层逻辑区别。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

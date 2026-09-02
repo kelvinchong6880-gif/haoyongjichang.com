@@ -344,4 +344,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么导入订阅后，点击启动按钮毫无反应或报错？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "由于 Sing-box 迭代非常快，很多机场后台生成的 JSON 配置文件使用的还是旧版格式（如废弃的字段），导致新版客户端解析报错。解决办法是：更换最新版的订阅转换器重新转换，或者联系机场客服要求适配最新的 Sing-box 内核标准。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Hysteria 2 协议真的比 Trojan / Vmess 快吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "是的，尤其在网络环境较差（如丢包率高、跨国晚高峰）的情况下，Hysteria 2 基于 UDP 的暴力发包机制能无视网络拥堵，带来极大的加速效果。但请注意，部分地区运营商可能会对 UDP 流量进行 QOS（限速），此时建议切换回传统的 TCP 协议。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Sing-box 配置好了，如何解锁 ChatGPT 等 AI 工具？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sing-box 自带强大的 DNS 分流与路由机制。只要您的订阅文件中包含了正确的 AI 分流规则，并且选择了干净的原生 IP 节点，即可顺利解锁。详细的 AI 节点挑选策略，请查阅我们的 Ai 与流媒体解锁专区。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "除了 Sing-box，Windows 端还有其他易用的客户端推荐吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "如果您觉得 Sing-box 的纯英文界面或强自定义性门槛较高，在电脑端我们依然推荐您使用具有完美中文界面的 Windows 篇：Clash Verge Rev 教程，它的内部同样可以使用 Meta 内核来支持新协议。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

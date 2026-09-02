@@ -340,4 +340,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么我的 +86 账号无法主动给别人发私信？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是 Telegram 针对中国大陆手机号特有的防骚扰限制（因为以往有很多币圈骗子用大陆号群发广告）。解决办法：向官方的 @SpamBot 发送消息申诉，按提示选择“我不心虚”等选项，通常几天后就会自动解除限制。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如果我的代理端口填错了，怎么把 Telegram 恢复回来？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "如果您填错了 SOCKS5 端口，电报会一直连不上网，导致您无法在聊天列表里操作。请直接进入电报的 设置 -> 数据和存储 -> 代理设置 中，将代理关闭，或者在刚才的方法中切换回“使用系统代理”。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "这个代理设置方法也适用于其他翻墙软件吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "完全适用。无论您使用的是 Clash 还是 v2rayNG，核心逻辑都是找到软件的“本地局域网端口”。如果不清楚怎么看端口，请查阅我们的 Windows 篇：Clash 配置教程 或 Android 篇：v2rayNG 配置教程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "除了 Telegram，如果我想玩转国外的流媒体，还需要配置代理吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "流媒体不需要像 Telegram 这样手动填端口，但它需要更严苛的“原生解锁 IP”。如果您有追剧需求，请务必阅读我们的 Netflix / Disney+ 流媒体解锁与跨区排坑指南。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

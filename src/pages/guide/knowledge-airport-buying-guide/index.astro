@@ -324,4 +324,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么我的按量付费套餐，只看了一天视频就没流量了？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "请注意机场的 “节点倍率”。很多按量付费机场为了控制成本，会把热门节点（如香港、日本原生 IP）的倍率设置为 2.0x 甚至 5.0x。这意味着您看 1GB 的视频，会扣除 2GB 到 5GB 的流量。购买前务必查看清楚倍率说明。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如果机场真的跑路了，我能把钱退回来吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "非常遗憾，几乎不可能。因为机场收款基本使用的是虚拟加密货币（USDT）或者第三方第四方非法易支付接口，资金走向完全无法追踪。所以，千万不要贪图便宜去买不知名机场的长期套餐。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "机场需要实名认证，这安全吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "绝大部分翻墙机场 不需要也不会要求 您提供真实姓名、身份证或实名手机号。通常只需要一个邮箱即可注册（推荐使用 Gmail）。如果某个不知名小机场要求您必须用国内手机号实名，请立刻离开，以防隐私泄露！"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "买好了机场怎么在电脑和手机上配置？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不同设备需要下载不同的客户端软件。电脑推荐使用 Clash Verge Rev，苹果手机推荐 Shadowrocket，安卓推荐 v2rayNG。详细的图文操作请返回我们的 全平台主流客户端配置指南 主页查看。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

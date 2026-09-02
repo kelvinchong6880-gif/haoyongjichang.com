@@ -323,4 +323,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "怎么辨别我买的机场是不是真专线？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "最直观的方法是在晚高峰（晚上9点）进行测速和看 YouTube 4K 视频。如果网速大打折扣或者丢包率很高，绝对不是真专线。进阶方法可以通过在终端进行 tracert 或 mtr 路由追踪，查看是否经过了公网的骨干网路由节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "专线机场是不是绝对不会被封号？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不要混淆“网络线路”和“IP质量”。专线保证的是网络不卡顿、不被墙，但如果您访问 ChatGPT 或流媒体，看的是海外落地节点的 IP 是否原生。专线机场为了用户体验，落地端也一定会选用极品原生 IP。详情参考 Netflix 流媒体解锁机制解析。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "中转机场的 BGP 是什么意思？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "BGP (边界网关协议) 是一种能自动选择最快路由的协议。普通的单线服务器（比如纯电信），联通用户连上去会很慢。而 BGP 多线中转服务器，无论您家里是电信、联通还是移动宽带，它都能自动为您分配最优的国内网络通道，降低第一跳延迟。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "IEPL 和 IPLC 有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "IEPL（国际以太网专线）是二层网络专线，IPLC 是一层网络专线。对咱们普通翻墙用户来说，不需要懂这么深，它们的体验几乎是 100% 相同的，都是不过墙、不拥堵的顶级专线，看到这两个词放心买就对了。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

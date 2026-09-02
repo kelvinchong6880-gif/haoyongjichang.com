@@ -328,4 +328,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "我的 Clash 设置成了规则模式 (Rule)，为什么国内软件还是提示异地登录？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这说明您的 Clash 内置的“分流规则字典”太老旧或损坏了，导致国内域名被错误地识别成了国外。请在 Clash 中进入“配置 (Profiles)”页面，对您的订阅右键点击“更新”，或者使用更专业的分流规则。关于 Clash 的详细设置，请参考我们的 Windows 篇：Clash Verge Rev 教程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "访问 ChatGPT 提示不支持我所在的国家，切全局模式有用吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有用。有些 AI 服务的 API 域名非常杂乱，普通的规则模式可能漏掉了一部分流量导致您的真实 IP 泄露。此时切换到全局模式，并选定一个支持解锁的节点（如台湾、日本），即可解决。深度解锁技巧请查阅 Ai 与流媒体解锁专门指南。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么切换模式后，似乎没有立刻生效？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "因为浏览器和电脑系统都会有 DNS 缓存和链接保持机制（Keep-Alive）。切换模式后，如果您发现依然打不开网页，请尝试完全关闭浏览器再重新打开，或者在终端执行清除 DNS 缓存的命令。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "除了这三个模式，脚本模式 (Script) 是干嘛的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是留给硬核极客开发者的功能，允许使用 JavaScript 等脚本语言来编写极其复杂的动态路由逻辑。99.9% 的普通用户永远不需要用到它，保持默认即可。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

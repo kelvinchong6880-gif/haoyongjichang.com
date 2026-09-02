@@ -343,4 +343,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么能上 YouTube，但不能用 ChatGPT 或者 TikTok 客户端？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是因为普通的全局代理没有完全接管这部分 App 的流量，或者 IP 被风控。如果您使用的是 v2rayNG，请在设置中开启“分应用代理”，并确保相关应用处于勾选状态。关于流媒体与 AI 的深度解锁，可前往参考我们的 Ai 与流媒体解锁配置指南。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "状态栏上的 VPN 钥匙图标怎么去掉？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是 Android 系统的安全机制，凡是接管网络流量的软件都会强制显示 VPN 图标，以防恶意软件窃取数据。这个图标是无法在应用内关闭的，属于正常现象。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么微信等国内软件收不到消息了？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "通常是因为您开启了“全局模式”，导致国内软件的数据被绕远路送到了海外服务器。请将路由模式切换为“规则模式”或在 v2rayNG 中选择“绕过局域网和大陆”。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "除了安卓手机，我的 iPad 怎么弄？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "iPad 与 iPhone 属于 iOS 生态，无法安装 APK 文件。苹果设备强烈建议使用 Shadowrocket，详细教程请参考我们的 iOS 篇：小火箭新手入门。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

@@ -342,4 +342,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么安装后，打开提示“无法打开，因为苹果无法检查其是否包含恶意软件”？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是 macOS 对第三方开发者未签名软件的保护机制。解决办法：点击“取消”后，打开 系统设置 -> 隐私与安全性 (Privacy & Security)，向下滑动，在安全性板块会看到“已阻止使用 Clash Verge”，点击右侧的 “仍要打开 (Open Anyway)”，输入密码验证即可。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么我的 Mac 在锁屏休眠唤醒后，突然断网连不上网页？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "由于 Mac 休眠时会断开网络并挂起虚拟网卡，唤醒时可能发生内核冲突。最快的解决办法是在菜单栏点击软件图标，点击 “重启内核 (Restart Core)”。为了彻底避免，建议使用上文提到的最新版本并保持更新。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "在 Mac 上开启 Tun 模式后，能流畅使用 ChatGPT 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "完全可以。配合 Tun 模式接管底层流量，只要您在节点列表中选择支持流媒体/AI解锁的原生节点，就可以顺畅访问。如果您想进一步了解哪些节点好用，请参考我们的 Ai 与流媒体解锁专门指南。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "除了 Mac，我的其他设备该怎么配置？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "如果您同时是 Windows 用户，可以参考我们的 Windows 篇：Clash 教程；如果是 iOS 用户，强烈推荐阅读 iOS 篇：小火箭节点添加 教程。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

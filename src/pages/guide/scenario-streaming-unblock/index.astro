@@ -324,4 +324,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么昨天还能看 Netflix，今天突然提示“使用了代理”？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "流媒体公司的封杀是动态的。他们会定期清理和拉黑疑似代理的 IP 库。如果是这种情况，只需在客户端里换一个节点即可。好的机场会有专门的技术人员 24 小时监控并维护解锁状态。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么手机上能看 Disney+，但在电视盒子上却打不开？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "因为很多智能电视和 Apple TV 端的流媒体 App 有更严格的 DNS 污染和 IP 验证机制。建议您通过电脑或路由器的“局域网共享”功能，强制让电视走代理。详细操作请参考 局域网共享代理与主机加速设置。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "我可以把账号借给国内的朋友一起看吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Netflix 目前在全球范围内严打“非同住者”共享账号。如果你们俩使用的翻墙节点 IP 不在同一个网段或城市，极易触发同户限制验证。建议购买专门的家庭车或者使用稳定的固定 IP 节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "除了流媒体，这些原生节点能用来注册 ChatGPT 吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "绝大多数情况是可以的！因为能骗过流媒体严苛审查的原生住宅 IP，同样也能完美绕过 OpenAI 的风控系统。如果您还有关于 AI 解锁的困惑，请查看我们的 ChatGPT 节点防封号指南。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

@@ -323,4 +323,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么我的手机连 Hysteria 2 节点非常费电？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "因为 Hysteria 2 是基于 UDP 协议进行暴力发包的，它会长时间唤醒手机的网络基带，并且维持大量的连接数。如果您在意手机续航，建议在不看视频时切换回 Trojan 或 V2Ray 节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么我的 Clash Verge 看不到 Hy2 节点？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "旧版的 Clash 内核是不支持 Hysteria 2 和 TUIC 协议的。您必须使用最新的 Clash Verge Rev (Meta 内核) 或者 Sing-box 才能正常解析并使用这些新生代协议节点。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Vmess 和 Vless 有什么区别？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Vless 是 Vmess 的升级精简版。Vless 去掉了 Vmess 中冗余的加密环节，不再严格依赖系统时间同步，速度更快，性能开销也更低。因此，目前主流机场都已经逐渐用 Vless 淘汰了 Vmess。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "玩游戏用什么协议比较好？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "千万不要用 Hysteria 2 玩游戏！它虽然看视频快，但它的暴力抢占机制会导致游戏延迟极度不稳定（疯狂跳 Ping）。玩主机联机游戏最好的方式是使用普通中转或专线节点，并配置局域网共享。详见 局域网主机游戏代理设置。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

@@ -335,4 +335,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么填写完 IP 和端口后，Switch/PS5 提示无法连接网络？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这通常是因为您电脑的 Windows 防火墙 拦截了局域网的请求。解决办法：进入“控制面板 -> 系统和安全 -> Windows Defender 防火墙”，在左侧点击“允许应用或功能通过防火墙”，找到 Clash，勾选其“专用”和“公用”网络权限，或者直接暂时关闭防火墙再测试。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "能用手机（iOS/Android）开启局域网共享吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以！如果您用的是安卓手机的 v2rayNG，可以在设置中勾选“允许局域网连接”；如果是苹果手机的 Shadowrocket，可以在主页底部点击“配置 -> 感叹号 -> 允许局域网连接 (Allow Wi-Fi Access)”。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么电视盒子用这个方法，有些国外流媒体 App 还是提示锁区？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "因为某些电视 App 强制走自己的 DNS，导致域名解析未经过电脑代理。为了彻底解决流媒体封锁，建议确保电脑端的代理处于“全局模式”，并使用了纯净的原生解锁节点。更多流媒体防封锁技巧，请参阅我们的 Ai 与流媒体解锁专门指南。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "电脑关机了，Switch 还能继续用代理上网吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不可以。局域网共享的核心是把您的电脑当成一台“软路由”。如果电脑关机、睡眠、或退出了 Clash 软件，Switch 的网络就会彻底断开。如果不想要一直开着电脑，建议购买硬路由进行刷机配置。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

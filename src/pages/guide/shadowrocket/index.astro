@@ -338,4 +338,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么提示“无法验证服务器”或所有节点都 Ping 不通？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "首先尝试在节点列表的订阅名称处“向右滑动”，点击“更新 (Update)”获取最新节点。其次，如果您连接的是校园网或部分公司的内网 WIFI，可能会屏蔽 VPN 端口，请尝试切换到 4G/5G 流量网络再连接。如果依旧不行，可能说明机场节点已被封锁，建议更换稳定机场。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "小火箭能解锁 ChatGPT 客户端吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "可以。在保证小火箭连接成功的前提下，您需要选择支持解锁 ChatGPT 的原生节点（如美国、日本、台湾节点），并将路由模式临时切换为“代理（全局）”以确保没有 IP 泄露。关于更多 AI 解锁技巧，请参考我们的 Ai 与流媒体解锁专区。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "下载小火箭时，用共享 Apple ID 会泄露手机隐私吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "绝对不要在手机“设置”的 iCloud 中登录共享账号！ 非常危险，可能会导致手机被锁。正确且唯一的做法是：只在 App Store（应用商店）里退出自己的账号，登录共享账号，下载完小火箭后立刻换回您自己的账号。这样没有任何隐私风险。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "除了 iOS，我还有电脑该怎么配置？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "机场订阅通常是多端通用的。如果您还有 Windows 或者 Mac 电脑，推荐您参考我们编写的 Clash Verge Rev 完整使用指南 进行电脑端配置。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

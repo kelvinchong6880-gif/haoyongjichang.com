@@ -326,4 +326,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么我的账号一直好好的，今天突然被 ChatGPT 封禁了？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "极有可能是您使用的机场节点发生了变更（比如机场主更换了服务器），或者您不小心在“直连”状态下刷新了网页，导致真实的国内 IP 暴露给了 OpenAI。为了防范此问题，建议在客户端内为 AI 域名绑定专属节点策略。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "提示“Oops! You do not have an account because it has been deleted”怎么办？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这句话的意思是您的账号已经被官方永久删除了（俗称连坐封号）。这通常是因为您与其他大量被封禁的用户共用了同一个劣质节点 IP，被系统判定为批量注册的机器人。您只能更换邮箱和原生节点重新注册。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "如果我购买了 ChatGPT Plus 还会被封号吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "会！OpenAI 对付费会员同样执行风控。甚至如果您使用了来路不明的代充黑卡，封号的概率比免费用户还要高。强烈建议使用正规虚拟信用卡（如 WildCard）自己充值。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "有没有不需要折腾节点就能用 AI 的方法？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "如果您觉得自行配置 原生住宅 IP 过于繁琐，可以通过某些国内的第三方 AI 镜像站或 API 中转服务来使用。但这超出了本文的范围。如果想自己搞定，建议先从掌握基础的 Windows 端代理配置 开始。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

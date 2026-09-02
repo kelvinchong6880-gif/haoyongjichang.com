@@ -331,4 +331,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么国内网站秒开，只有国外网站打不开？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这种情况通常是因为您的路由模式设置成了“直连 (Direct)”。请回到您的客户端界面，将代理模式切换回“规则 (Rule)”或“全局 (Global)”。关于客户端具体操作，请参考 Windows 篇：Clash Verge Rev 教程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "节点列表里为什么全是 Timeout（超时）？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "如果测速全都是超时，这绝对不是您本地配置的问题，而是机场节点集体宕机，或者是您的宽带运营商正在进行网络封锁。建议切换手机 4G/5G 热点测试，如果依旧超时，请联系您的机场客服。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "打开网页提示“连接被重置 (Connection Reset)”是怎么回事？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这说明流量没有经过代理，直接被国家防火墙 (GFW) 拦截并重置了连接。请务必检查客户端的“系统代理”开关是否真的处于开启状态，并检查是否有安全软件阻止了代理软件的运行。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "我的网络正常了，但是 ChatGPT 提示 Access Denied？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这是因为您当前连接的节点 IP 被 ChatGPT 官方拉黑封禁了。即使网络正常，也无法访问 AI 服务。您必须在客户端里手动切换到一个干净的原生节点（如台湾、日本 IP）。更多技巧请参考我们的 Ai 与流媒体解锁专门指南。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>

@@ -349,4 +349,45 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
       .article-content p, .article-content li { font-size: 1rem; }
     }
   </style>
+
+  <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "为什么导入了订阅，但测速全部显示 Timeout（超时）？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "首先检查电脑右下角的系统时间是否准确（必须同步至标准时间）。其次，请尝试在设置中切换内核为 Meta，或者在“配置”页面右击订阅卡片，选择“强制更新”。如果依然超时，请联系机场客服确认节点是否在维护。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "能正常上 Google，但是如何解锁 ChatGPT 等 AI 工具？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ChatGPT 对 IP 的风控较严。请在“代理”中选择冷门节点（如台湾、日本原生 IP），同时确保使用“规则”或“全局”模式。更多关于 AI 解锁的信息，请参考我们的 Ai 与流媒体解锁指南。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "为什么关闭软件后，电脑突然无法上网了？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "这通常是因为您直接点击了“X”强制关闭软件，而“系统代理”开关没有自动复原。解决办法：重新打开 Clash Verge Rev，关闭“系统代理”后再退出；或者进入 Windows 系统设置 -> 网络和 Internet -> 代理，手动关闭“使用代理服务器”。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "手机端该用什么客户端配置？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "如果您同时是手机用户，安卓端推荐参考 Clash for Android 教程，iOS 苹果端推荐参考 Shadowrocket 小火箭使用教程。"
+      }
+    }
+  ]
+}
+  </script>
 </BaseLayout>
