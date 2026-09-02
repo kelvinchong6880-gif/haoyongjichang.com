@@ -24,7 +24,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <h3>1. Shadowsocks (SS / SSR)</h3>
         <p>它是翻墙圈真正的祖师爷。通过混淆流量来骗过防火墙。由于出现得太早，其原生的流量特征早就被 GFW 的 AI 算法摸透了。如今，纯粹的 SS 协议在敏感时期几乎活不过一天（除非是跑在不过墙的 IPLC 专线上）。</p>
         
-        <h3>2. V2Ray (Vmess / Vless)</h3>
+        <h3>2. <a href="https://www.v2fly.org/" target="_blank" rel="nofollow noopener noreferrer">V2Ray</a> (Vmess / Vless)</h3>
         <p>V2Ray 曾是翻墙界的王者，它的标志性特征就是“伪装”。它能把代理流量伪装成正常的网站 HTTPS 流量（例如伪装成访问苹果官网）。</p>
         <p><strong>Trojan 和 V2ray 哪个好？</strong> V2Ray 的伪装逻辑非常复杂，这也导致了它的加密解密过程极度消耗手机和路由器的 CPU 性能。如果在旧手机或低配路由器上运行，速度会大打折扣。</p>
         
@@ -34,7 +34,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <h2 id="next-gen">第二阶段：UDP 崛起，新生代暴力协议</h2>
         <p>传统的协议（包括 Trojan/V2Ray）都是基于 TCP 协议的。TCP 有个致命弱点：一旦跨国线路发生拥堵丢包，它就会不断要求对方“重传数据”，导致您的网速变得像蜗牛一样慢。</p>
         
-        <h3>Hysteria 2 / TUIC 的诞生</h3>
+        <h3><a href="https://v2.hysteria.network/" target="_blank" rel="nofollow noopener noreferrer">Hysteria 2</a> / TUIC 的诞生</h3>
         <p>为了解决高丢包率的网络环境，基于 <strong>UDP 协议 (QUIC)</strong> 的新生代工具横空出世，其中最耀眼的就是 <strong>Hysteria 2 (Hy2)</strong> 和 <strong>TUIC</strong>。</p>
         <p><strong>Hysteria 2 速度怎么样？</strong> 它的名字翻译过来叫“歇斯底里”，因为它的原理非常暴力。哪怕您的宽带丢包率高达 30%，它也会无视丢包，疯狂地把数据塞给您。在普通的直连线路上，Hy2 能把看 YouTube 的速度从 1080P 强行拉升到 4K 甚至 8K 秒开！</p>
 
