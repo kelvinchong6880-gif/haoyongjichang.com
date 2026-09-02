@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="使用条款 - 好用机场" 
+  description="请在使用好用机场提供的评测资源前仔细阅读本使用条款。本站提供的内容仅用于技术交流与网络优化参考。"
+>
+  <div class="legal-page-shell">
+    <div class="lp-header">
+      <h1>使用条款</h1>
+    </div>
+    
+    <article class="lp-content">
+
+        <p class="update-time">最后更新日期：2026年9月2日</p>
+        
+        <p>欢迎访问好用机场。在您使用本站提供的评测、教程与推荐服务之前，请务必仔细阅读以下条款。访问和使用本站即表示您同意接受本条款的约束。</p>
+        
+        <h3>1. 网站定位与用途</h3>
+        <p>好用机场是一个中立的第三方技术评测博客。本站提供的内容（包括代理协议介绍、专线测速、流媒体解锁测试等）仅供技术交流、学术研究以及改善国际网络访问体验之用。</p>
+        
+        <h3>2. 法律合规</h3>
+        <p>用户在参考本站教程或购买本站推荐的第三方服务时，<strong>必须严格遵守所在国家或地区的法律法规</strong>。禁止使用相关服务从事任何违法犯罪、危害国家安全或侵犯他人合法权益的活动。对于用户的不当行为，本站概不负责。</p>
+        
+        <h3>3. 版权声明</h3>
+        <p>本站所发布的原创评测文章、图表和设计元素，其版权均归好用机场所有。未经书面授权，严禁任何形式的商业转载、洗稿或爬虫抓取。对于恶意抄袭者，我们将保留追究其法律责任的权利。</p>
+        
+        <h3>4. 条款修改</h3>
+        <p>本站保留随时修改本使用条款的权利，修改后的条款一旦公布即刻生效。建议您定期查看本页面以了解最新规定。</p>
+        
+    </article>
+  </div>
+
+  <style is:inline>
+    .legal-page-shell {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .lp-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    .lp-header h1 {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin: 0;
+    }
+    
+    .lp-content {
+      font-size: 1.1rem;
+      color: #334155;
+      line-height: 1.8;
+    }
+    .lp-content h3 {
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lp-content h3::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: #3b82f6;
+      border-radius: 2px;
+    }
+    .lp-content p {
+      margin-bottom: 20px;
+    }
+    .lp-content ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .lp-content li {
+      margin-bottom: 12px;
+      color: #475569;
+    }
+    .lp-content strong {
+      color: #0f172a;
+    }
+    .lp-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .lp-content a:hover {
+      color: #2563eb;
+    }
+    
+    .lead-text {
+      font-size: 1.25rem !important;
+      color: #475569 !important;
+      line-height: 1.8 !important;
+      margin-bottom: 40px !important;
+    }
+    
+    .update-time {
+      font-size: 0.95rem !important;
+      color: #94a3b8 !important;
+      font-style: italic;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 40px !important;
+    }
+    
+    /* 联系我们卡片样式 */
+    .contact-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 40px 0;
+    }
+    .contact-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .cc-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .contact-card h3 {
+      font-size: 1.25rem;
+      margin: 0 0 12px 0;
+      color: #0f172a;
+      justify-content: center;
+    }
+    .contact-card h3::before {
+      display: none;
+    }
+    .contact-card p {
+      font-size: 1rem;
+      color: #64748b;
+      margin-bottom: 24px;
+      min-height: 70px;
+    }
+    .cc-btn {
+      display: inline-block;
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid #cbd5e1;
+      text-decoration: none !important;
+      transition: all 0.2s;
+    }
+    .cc-btn:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+    
+    @media (max-width: 600px) {
+      .lp-header h1 {
+        font-size: 2rem;
+      }
+      .contact-card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>

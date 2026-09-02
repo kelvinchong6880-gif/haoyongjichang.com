@@ -1,0 +1,185 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="关于好用机场 - 我们的初衷与愿景" 
+  description="了解好用机场的创立初衷。我们致力于为您提供全网最中立、客观的高端专线与高性价比机场评测，帮您避开跑路陷阱。"
+>
+  <div class="legal-page-shell">
+    <div class="lp-header">
+      <h1>关于好用机场</h1>
+    </div>
+    
+    <article class="lp-content">
+
+        <p class="lead-text">欢迎来到 <strong>好用机场</strong>，这是一个致力于为广大网民提供中立、专业、客观的科学上网（翻墙）服务评测平台。</p>
+        
+        <h3>我们的初衷</h3>
+        <p>在当前的网络环境下，寻找一款速度快、不卡顿且不会跑路的代理服务变得越来越困难。市场上充斥着大量虚假宣传的“低价年付机场”，许多新手朋友在购买后经常遭遇“刚买就跑路”或“晚高峰卡成幻灯片”的惨痛经历。</p>
+        <p>为了打破这种信息差，我们成立了“好用机场”。我们不仅自费购买市面上的主流机场进行长期监控，还深入研究了它们背后的线路架构（如 IPLC/IEPL 专线、BGP 中转等），旨在为您筛选出真正靠谱的优质服务。</p>
+        
+        <h3>我们的核心价值观</h3>
+        <ul>
+          <li><strong>客观中立：</strong> 我们所有的测速图与流媒体解锁截图均为真实环境下的实际测试结果，绝不为劣质机场粉饰太平。</li>
+          <li><strong>拒绝跑路：</strong> 我们将“稳定性”与“跑路风险”作为第一考核指标，坚决抵制任何具有明显“庞氏圈钱”特征的机场。</li>
+          <li><strong>全场景覆盖：</strong> 无论您是重度 Netflix/Disney+ 追剧党，还是对延迟极度敏感的外服游戏玩家，亦或是需要稳定原生 IP 解锁 ChatGPT/Claude 的 AI 开发者，我们都能为您提供最精准的推荐。</li>
+        </ul>
+        
+        <p>我们希望通过我们的努力，能让您花最稳的钱，上最快的网，把精力放在更有价值的事情上，而不是每天在寻找节点和排错中内耗。</p>
+        
+    </article>
+  </div>
+
+  <style is:inline>
+    .legal-page-shell {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .lp-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    .lp-header h1 {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin: 0;
+    }
+    
+    .lp-content {
+      font-size: 1.1rem;
+      color: #334155;
+      line-height: 1.8;
+    }
+    .lp-content h3 {
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lp-content h3::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: #3b82f6;
+      border-radius: 2px;
+    }
+    .lp-content p {
+      margin-bottom: 20px;
+    }
+    .lp-content ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .lp-content li {
+      margin-bottom: 12px;
+      color: #475569;
+    }
+    .lp-content strong {
+      color: #0f172a;
+    }
+    .lp-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .lp-content a:hover {
+      color: #2563eb;
+    }
+    
+    .lead-text {
+      font-size: 1.25rem !important;
+      color: #475569 !important;
+      line-height: 1.8 !important;
+      margin-bottom: 40px !important;
+    }
+    
+    .update-time {
+      font-size: 0.95rem !important;
+      color: #94a3b8 !important;
+      font-style: italic;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 40px !important;
+    }
+    
+    /* 联系我们卡片样式 */
+    .contact-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 40px 0;
+    }
+    .contact-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .cc-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .contact-card h3 {
+      font-size: 1.25rem;
+      margin: 0 0 12px 0;
+      color: #0f172a;
+      justify-content: center;
+    }
+    .contact-card h3::before {
+      display: none;
+    }
+    .contact-card p {
+      font-size: 1rem;
+      color: #64748b;
+      margin-bottom: 24px;
+      min-height: 70px;
+    }
+    .cc-btn {
+      display: inline-block;
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid #cbd5e1;
+      text-decoration: none !important;
+      transition: all 0.2s;
+    }
+    .cc-btn:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+    
+    @media (max-width: 600px) {
+      .lp-header h1 {
+        font-size: 2rem;
+      }
+      .contact-card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>

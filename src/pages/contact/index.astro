@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="联系我们 - 合作与反馈" 
+  description="如果您有任何关于机场评测的建议、商务合作、广告投放或文章纠错，欢迎随时通过 Telegram 或邮件联系我们。"
+>
+  <div class="legal-page-shell">
+    <div class="lp-header">
+      <h1>联系我们</h1>
+    </div>
+    
+    <article class="lp-content">
+
+        <p class="lead-text">无论是商务合作、机场推荐、网站纠错还是仅仅想和我们交流心得，我们都非常欢迎您的声音！</p>
+        
+        <div class="contact-card-grid">
+          <div class="contact-card">
+            <div class="cc-icon" style="background: #eef2ff; color: #4f46e5;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </div>
+            <h3>Telegram (首选)</h3>
+            <p>对于时效性要求较高的咨询或商务合作，我们建议您通过 Telegram 与我们取得联系，我们通常会在几个小时内回复。</p>
+            <a href="https://t.me/kelvin8chong" target="_blank" class="cc-btn">@kelvin8chong</a>
+          </div>
+          
+          <div class="contact-card">
+            <div class="cc-icon" style="background: #f0fdf4; color: #16a34a;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </div>
+            <h3>电子邮件</h3>
+            <p>如果您需要发送详细的测试报告、附件，或者不方便使用即时通讯软件，可以通过发送电子邮件联系我们。</p>
+            <a href="mailto:kelvinchong6880@gmail.com" class="cc-btn">kelvinchong6880@gmail.com</a>
+          </div>
+        </div>
+        
+        <h3>常见合作形式</h3>
+        <ul>
+          <li><strong>机场上榜与评测：</strong> 如果您是机场主，且对自己的专线质量有绝对的信心，欢迎提供测试账号，我们将进行为期一周的综合考核。</li>
+          <li><strong>广告位投放：</strong> 我们在首页、评测页及右侧侧边栏提供高曝光的广告位展示。</li>
+          <li><strong>文章纠错：</strong> 如果您发现我们的评测数据过期，或者某个机场已经出现跑路前兆，请务必联系我们进行下架处理。</li>
+        </ul>
+        
+    </article>
+  </div>
+
+  <style is:inline>
+    .legal-page-shell {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .lp-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    .lp-header h1 {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin: 0;
+    }
+    
+    .lp-content {
+      font-size: 1.1rem;
+      color: #334155;
+      line-height: 1.8;
+    }
+    .lp-content h3 {
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lp-content h3::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: #3b82f6;
+      border-radius: 2px;
+    }
+    .lp-content p {
+      margin-bottom: 20px;
+    }
+    .lp-content ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .lp-content li {
+      margin-bottom: 12px;
+      color: #475569;
+    }
+    .lp-content strong {
+      color: #0f172a;
+    }
+    .lp-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .lp-content a:hover {
+      color: #2563eb;
+    }
+    
+    .lead-text {
+      font-size: 1.25rem !important;
+      color: #475569 !important;
+      line-height: 1.8 !important;
+      margin-bottom: 40px !important;
+    }
+    
+    .update-time {
+      font-size: 0.95rem !important;
+      color: #94a3b8 !important;
+      font-style: italic;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 40px !important;
+    }
+    
+    /* 联系我们卡片样式 */
+    .contact-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 40px 0;
+    }
+    .contact-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .cc-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .contact-card h3 {
+      font-size: 1.25rem;
+      margin: 0 0 12px 0;
+      color: #0f172a;
+      justify-content: center;
+    }
+    .contact-card h3::before {
+      display: none;
+    }
+    .contact-card p {
+      font-size: 1rem;
+      color: #64748b;
+      margin-bottom: 24px;
+      min-height: 70px;
+    }
+    .cc-btn {
+      display: inline-block;
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid #cbd5e1;
+      text-decoration: none !important;
+      transition: all 0.2s;
+    }
+    .cc-btn:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+    
+    @media (max-width: 600px) {
+      .lp-header h1 {
+        font-size: 2rem;
+      }
+      .contact-card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>

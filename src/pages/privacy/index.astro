@@ -1,0 +1,191 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="隐私政策 - 好用机场" 
+  description="好用机场的隐私政策说明。了解我们如何处理流量统计数据以及第三方链接的隐私说明。"
+>
+  <div class="legal-page-shell">
+    <div class="lp-header">
+      <h1>隐私政策</h1>
+    </div>
+    
+    <article class="lp-content">
+
+        <p class="update-time">最后更新日期：2026年9月2日</p>
+        
+        <p>好用机场（以下简称“本站”）非常重视用户的隐私保护。本《隐私政策》旨在向您说明本站在您访问时如何收集、使用和保护您的信息。</p>
+        
+        <h3>1. 信息的收集</h3>
+        <p><strong>无需注册访问：</strong> 浏览本站的评测文章和教程不需要您注册任何账号或提供真实姓名、身份证、手机号等敏感个人隐私信息。</p>
+        <p><strong>流量统计分析：</strong> 为了优化网站的用户体验和页面加载速度，我们可能会使用第三方统计工具（如 Google Analytics 等）。这些工具可能会收集您的 IP 地址、浏览器类型、访问时间、引用页面等非身份识别数据。</p>
+        
+        <h3>2. Cookie 的使用</h3>
+        <p>本站可能会使用 Cookie 来提升您的浏览体验，例如记住您的弹窗关闭状态或暗黑模式偏好。您可以通过浏览器的设置随时禁用 Cookie，这不会影响您阅读本站的核心评测内容。</p>
+        
+        <h3>3. 第三方链接说明</h3>
+        <p>本站的评测文章中包含了大量指向第三方代理服务商（机场）的链接。当您点击这些链接离开本站后，您的隐私将受该第三方网站的隐私政策约束。<strong>本站无法控制第三方网站的隐私保护措施，也无法为其安全漏洞或信息泄露负责。</strong></p>
+        
+        <h3>4. 联系我们</h3>
+        <p>如果您对本隐私政策有任何疑问，请通过以下方式联系我们：</p>
+        <ul>
+          <li>Telegram: <a href="https://t.me/kelvin8chong" target="_blank">@kelvin8chong</a></li>
+          <li>Email: <a href="mailto:kelvinchong6880@gmail.com">kelvinchong6880@gmail.com</a></li>
+        </ul>
+        
+    </article>
+  </div>
+
+  <style is:inline>
+    .legal-page-shell {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .lp-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    .lp-header h1 {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin: 0;
+    }
+    
+    .lp-content {
+      font-size: 1.1rem;
+      color: #334155;
+      line-height: 1.8;
+    }
+    .lp-content h3 {
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lp-content h3::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: #3b82f6;
+      border-radius: 2px;
+    }
+    .lp-content p {
+      margin-bottom: 20px;
+    }
+    .lp-content ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .lp-content li {
+      margin-bottom: 12px;
+      color: #475569;
+    }
+    .lp-content strong {
+      color: #0f172a;
+    }
+    .lp-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .lp-content a:hover {
+      color: #2563eb;
+    }
+    
+    .lead-text {
+      font-size: 1.25rem !important;
+      color: #475569 !important;
+      line-height: 1.8 !important;
+      margin-bottom: 40px !important;
+    }
+    
+    .update-time {
+      font-size: 0.95rem !important;
+      color: #94a3b8 !important;
+      font-style: italic;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 40px !important;
+    }
+    
+    /* 联系我们卡片样式 */
+    .contact-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 40px 0;
+    }
+    .contact-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .cc-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .contact-card h3 {
+      font-size: 1.25rem;
+      margin: 0 0 12px 0;
+      color: #0f172a;
+      justify-content: center;
+    }
+    .contact-card h3::before {
+      display: none;
+    }
+    .contact-card p {
+      font-size: 1rem;
+      color: #64748b;
+      margin-bottom: 24px;
+      min-height: 70px;
+    }
+    .cc-btn {
+      display: inline-block;
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid #cbd5e1;
+      text-decoration: none !important;
+      transition: all 0.2s;
+    }
+    .cc-btn:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+    
+    @media (max-width: 600px) {
+      .lp-header h1 {
+        font-size: 2rem;
+      }
+      .contact-card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>

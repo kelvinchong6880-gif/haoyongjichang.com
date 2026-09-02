@@ -1,0 +1,190 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="免责声明 - 好用机场" 
+  description="好用机场免责声明。本站不对第三方机场的稳定性、跑路风险及服务中断承担连带责任，请理性消费。"
+>
+  <div class="legal-page-shell">
+    <div class="lp-header">
+      <h1>免责声明</h1>
+    </div>
+    
+    <article class="lp-content">
+
+        <p class="update-time">最后更新日期：2026年9月2日</p>
+        
+        <p>在您根据好用机场的推荐进行消费决策前，请务必阅读并理解以下免责声明，以保障您的个人权益。</p>
+        
+        <h3>1. 信息时效性与准确性</h3>
+        <p>本站的测速数据、流媒体解锁情况以及套餐价格均基于我们撰写评测时的真实状态。由于代理行业的特殊性，机场的线路架构、服务器 IP 库和价格可能会随时发生变动。本站不对因信息滞后或机场单方面更改规则而造成的用户体验落差承担任何责任。</p>
+        
+        <h3>2. 第三方服务中断与跑路风险</h3>
+        <p><strong>代理（机场）行业属于高风险行业，没有任何一家服务商可以保证 100% 绝对安全且永不跑路。</strong></p>
+        <p>本站仅作为信息展示平台，不对任何第三方机场的运营状况提供担保。若您购买的服务商遭遇 DDOS 攻击、不可抗力断网或老板卷款跑路（拔线），本站不提供退款、赔偿或任何形式的连带法律责任。</p>
+        
+        <h3>3. 消费建议 (防坑指南)</h3>
+        <p>为了最大化降低您的风险，我们强烈建议所有用户：</p>
+        <ul>
+          <li><strong>拒绝年付：</strong> 除非是已经稳定运营多年的顶级老牌专线，否则对于新机场或便宜机场，请务必优先选择<strong>按月付费</strong>或最多<strong>按季付费</strong>。</li>
+          <li><strong>备用原则：</strong> 强烈建议准备两个以上的机场（例如一家包月主用，一家按量付费备用），以防单一机场出现故障导致您与外部网络彻底失联。</li>
+        </ul>
+        
+        <p>最终的购买决定由您自行做出，并由您自行承担相应的交易风险。</p>
+        
+    </article>
+  </div>
+
+  <style is:inline>
+    .legal-page-shell {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+    .lp-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding-bottom: 30px;
+      border-bottom: 2px solid #f1f5f9;
+    }
+    .lp-header h1 {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin: 0;
+    }
+    
+    .lp-content {
+      font-size: 1.1rem;
+      color: #334155;
+      line-height: 1.8;
+    }
+    .lp-content h3 {
+      font-size: 1.4rem;
+      color: #0f172a;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lp-content h3::before {
+      content: "";
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: #3b82f6;
+      border-radius: 2px;
+    }
+    .lp-content p {
+      margin-bottom: 20px;
+    }
+    .lp-content ul {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+    .lp-content li {
+      margin-bottom: 12px;
+      color: #475569;
+    }
+    .lp-content strong {
+      color: #0f172a;
+    }
+    .lp-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .lp-content a:hover {
+      color: #2563eb;
+    }
+    
+    .lead-text {
+      font-size: 1.25rem !important;
+      color: #475569 !important;
+      line-height: 1.8 !important;
+      margin-bottom: 40px !important;
+    }
+    
+    .update-time {
+      font-size: 0.95rem !important;
+      color: #94a3b8 !important;
+      font-style: italic;
+      text-align: center;
+      margin-top: -10px;
+      margin-bottom: 40px !important;
+    }
+    
+    /* 联系我们卡片样式 */
+    .contact-card-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 40px 0;
+    }
+    .contact-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .contact-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+    .cc-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .contact-card h3 {
+      font-size: 1.25rem;
+      margin: 0 0 12px 0;
+      color: #0f172a;
+      justify-content: center;
+    }
+    .contact-card h3::before {
+      display: none;
+    }
+    .contact-card p {
+      font-size: 1rem;
+      color: #64748b;
+      margin-bottom: 24px;
+      min-height: 70px;
+    }
+    .cc-btn {
+      display: inline-block;
+      background: #f8fafc;
+      color: #0f172a;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid #cbd5e1;
+      text-decoration: none !important;
+      transition: all 0.2s;
+    }
+    .cc-btn:hover {
+      background: #3b82f6;
+      color: #ffffff;
+      border-color: #3b82f6;
+    }
+    
+    @media (max-width: 600px) {
+      .lp-header h1 {
+        font-size: 2rem;
+      }
+      .contact-card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</BaseLayout>
