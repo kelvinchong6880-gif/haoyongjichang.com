@@ -58,7 +58,7 @@ const structuredData = isHomePage
         author: {
           '@type': 'Person',
           name: 'Kelvin Chong',
-          url: `${siteUrl}/author/#kelvin-chong`,
+          url: `${siteUrl}/contact/`,
         },
         publisher: organization,
         image: `${siteUrl}/images/logo.png`,
@@ -131,7 +131,7 @@ const displayModified = dateModified?.slice(0, 10);
     <main class="flex-grow">
       {isArticle && datePublished && dateModified && (
         <div class="article-meta-bar" aria-label="文章信息">
-          <span>作者：<a href="/author/#kelvin-chong">Kelvin Chong</a></span>
+          <span>作者：<a href="/about/">Kelvin Chong</a></span>
           <span>首次发布：<time datetime={datePublished}>{displayPublished}</time></span>
           <span>最近更新：<time datetime={dateModified}>{displayModified}</time></span>
         </div>
