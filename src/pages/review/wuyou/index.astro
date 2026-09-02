@@ -8,10 +8,21 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 >
   <div class="review-page-shell">
     <div class="rp-header">
-      <img src="/images/brands/wuyou.png" alt="无忧链接" class="rp-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='" />
-      <div class="rp-title-wrap">
+      <div class="rp-header-left">
+        <img src="/images/brands/wuyou.png" alt="无忧链接" class="rp-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='" />
+        <div class="rp-title-wrap">
         <h1>无忧链接机场深度测评</h1>
         <p class="rp-subtitle">2026年最新测速与解锁报告</p>
+      </div>
+      </div>
+      <div class="rp-header-right">
+        <div class="rp-top-promo">
+          <span>专属优惠码</span>
+          <code>s1kH64A8</code>
+        </div>
+        <a href="https://wep01.worryfreeaff.com/#/?code=s1kH64A8" target="_blank" rel="nofollow sponsored noopener noreferrer" class="rp-btn-official-top">
+          前往官网注册 <span>↗</span>
+        </a>
       </div>
     </div>
 
@@ -50,19 +61,87 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 
   <style is:inline>
+
+    .rp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .rp-header-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .rp-header-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .rp-top-promo {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: #b45309;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rp-top-promo code {
+      background: #fef3c7;
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #ea580c;
+      font-weight: 700;
+      user-select: all;
+    }
+    .rp-btn-official-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(59,130,246,0.25);
+      transition: all 0.2s;
+    }
+    .rp-btn-official-top:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(59,130,246,0.35);
+      color: #fff;
+    }
+    @media (max-width: 768px) {
+      .rp-header {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+      }
+      .rp-header-left {
+        flex-direction: column;
+      }
+      .rp-header-right {
+        align-items: center;
+        margin-top: 10px;
+      }
+    }
+
     .review-page-shell {
       max-width: 900px;
       margin: 0 auto;
       padding: 60px 20px 100px;
     }
-    .rp-header {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      margin-bottom: 40px;
-      padding-bottom: 30px;
-      border-bottom: 1px solid #e2e8f0;
-    }
+    
     .rp-logo {
       width: 90px;
       height: 90px;
@@ -142,10 +221,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
     }
     
     @media (max-width: 600px) {
-      .rp-header {
-        flex-direction: column;
-        text-align: center;
-      }
+      
       .bcp-text-intro {
         padding: 24px;
       }
