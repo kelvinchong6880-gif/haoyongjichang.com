@@ -79,18 +79,22 @@ const displayModified = dateModified?.slice(0, 10);
   <link rel="canonical" href={canonicalURL}>
   <title>{title}</title>
   
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="好用机场">
-  <meta property="og:title" content={title}>
-  <meta property="og:description" content={description}>
-  <meta property="og:url" content={canonicalURL}>
-  <meta property="og:image" content={`${siteUrl}/images/logo.png`}>
-  
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content={title}>
-  <meta name="twitter:description" content={description}>
-  <meta name="twitter:image" content={`${siteUrl}/images/logo.png`}>
-  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={isArticle ? "article" : "website"} />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:site_name" content="好用机场" />
+  <meta property="og:image" content={`${siteUrl}/images/logo.png`} />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={canonicalURL} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={`${siteUrl}/images/logo.png`} />
+
+
   {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 </head>
 <body>
