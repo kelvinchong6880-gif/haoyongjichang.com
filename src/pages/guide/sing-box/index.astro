@@ -1,0 +1,322 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="[2026最新] Sing-box 教程：新一代全平台通用代理工具节点配置与排坑指南" 
+  description="详细的 Sing-box 教程与节点配置指南。带您了解新一代通用代理工具的轻量化优势，完美支持 Hysteria 2 / TUIC 等新兴协议，并详解全平台 GUI 客户端的配置步骤。"
+>
+  <div class="tutorial-container page-shell">
+    <article class="tutorial-article">
+      <div class="article-header">
+        <div class="ah-meta">全平台前沿指南</div>
+        <h1 class="ah-title">[2026最新] Sing-box 教程：新一代全平台通用代理工具节点配置与排坑指南</h1>
+        <p class="ah-desc">本文将带您入门被誉为“新一代瑞士军刀”的 Sing-box，深度解析其在 Hysteria 2 / TUIC 等新兴协议上的轻量化优势，并手把手教您在各大平台通过 GUI（图形客户端）完成节点配置。</p>
+      </div>
+
+      <div class="article-content">
+        <h2 id="intro">什么是 Sing-box？为什么它是新一代通用代理工具？</h2>
+        <p>在 V2Ray 和 Clash 占据主流市场的今天，<strong>Sing-box</strong> 作为后起之秀正以惊人的速度崛起。它是一个使用 Go 语言编写的通用代理平台，被社区公认为下一代翻墙利器。</p>
+        
+        <h3>Sing-box 的三大核心优势：</h3>
+        <ul>
+          <li><strong>极致的轻量化：</strong> 相比于臃肿的 V2Ray 内核，Sing-box 的资源占用极低，哪怕运行在性能孱弱的老旧路由器上也能游刃有余。</li>
+          <li><strong>原生支持新兴协议：</strong> 完美原生支持 <strong>Hysteria 2</strong> 和 <strong>TUIC</strong> 等基于 QUIC (UDP) 的新兴抗封锁协议，这些协议在晚高峰网络拥堵时有着极其恐怖的加速能力。</li>
+          <li><strong>真正的全平台制霸：</strong> 它不仅提供了核心引擎，还破天荒地为 iOS、Android、Windows、macOS 甚至 Apple TV 提供了官方的图形化客户端 (GUI)，彻底打通了多端体验。</li>
+        </ul>
+
+        <h2 id="step1">第一步：各平台图形客户端 (GUI) 下载指南</h2>
+        <p>很多新手害怕 Sing-box，以为它只能通过敲打黑框命令行来运行。其实官方已经推出了非常好用的图形界面客户端 (SFI / SFD)。</p>
+        
+        <ul>
+          <li><strong>iOS / iPadOS / Apple TV：</strong> 直接在非大陆区的 App Store 搜索 <code>Sing-box</code> 即可免费下载。</li>
+          <li><strong>Android 安卓端：</strong> 前往 GitHub 搜索 <code>SagerNet/sing-box</code> 的 Releases 页面，下载带有 <code>SFA</code> (Sing-box for Android) 和 <code>universal.apk</code> 字样的安装包。</li>
+          <li><strong>Windows 电脑：</strong> 同样在 GitHub Releases 页面，下载带有 <code>SFW</code> (Sing-box for Windows) 字样的 <code>.zip</code> 压缩包，解压后双击运行即可。</li>
+          <li><strong>macOS 苹果电脑：</strong> 下载带有 <code>SFM</code> (Sing-box for Mac) 的安装包。</li>
+        </ul>
+
+        <h2 id="step2">第二步：Sing-box 节点配置与订阅导入</h2>
+        <p>与其他客户端不同，Sing-box 由于其极高的定制性，它的配置文件采用的是 <code>JSON</code> 格式。目前导入节点主要有两种主流方式：</p>
+        
+        <h3>方式一：直接导入机场提供的 Sing-box 专属订阅（最推荐）</h3>
+        <p>目前越来越多与时俱进的机场，已经开始在后台提供专属的 Sing-box 订阅链接。这通常是一串 URL 链接：</p>
+        <ol>
+          <li>打开 Sing-box 客户端，找到 <strong>Profiles（配置文件）</strong> 选项卡。</li>
+          <li>点击 <strong>New Profile（新建配置）</strong>，将类型选择为 <strong>Remote（远程）</strong>。</li>
+          <li>在 <strong>URL</strong> 栏中粘贴机场提供的订阅链接，在 <strong>Name（名称）</strong> 中随意填写（如“我的 Hysteria2 机场”）。</li>
+          <li>点击保存，然后点击 <strong>Update（更新）</strong>。客户端会自动拉取包含所有分流规则和节点信息的 JSON 文件。</li>
+          <li>回到 <strong>Dashboard（仪表盘）</strong>，点击中间大大的启动按钮即可翻墙。</li>
+        </ol>
+
+        <div class="recommend-box">
+          <h4>💡 想要体验 Hysteria 2 协议的极致丝滑？</h4>
+          <p>普通的 Shadowsocks 或 Trojan 机场可能无法发挥 Sing-box 的全部实力。如果您想体验晚高峰 4K 视频秒开的震撼，强烈推荐查看我们的 <a href="/best-value-airport/">高性价比机场推荐</a>。我们精选的顶级机场不仅原生支持 Hysteria 2 / TUIC，更是直接提供了 Sing-box 的一键订阅链接，让您免去手动写代码的烦恼！</p>
+        </div>
+
+        <h3>方式二：使用在线订阅转换器</h3>
+        <p>如果您购买的机场比较老旧，只提供了 Clash 或 V2Ray 的订阅链接，您可以借助第三方的“在线订阅转换器”：</p>
+        <ul>
+          <li>在谷歌搜索“订阅转换”，进入任意一个转换网站。</li>
+          <li>在“订阅链接”处粘贴原有的 Clash 链接。</li>
+          <li>在“客户端”选项中下拉，选择 <strong>Sing-box</strong>。</li>
+          <li>点击生成后，复制生成的新链接，按照“方式一”的步骤添加到客户端即可。</li>
+        </ul>
+
+        <h2 id="step3">第三步：Dashboard 面板与分流节点选择</h2>
+        <p>Sing-box 的界面非常极简。在 <strong>Dashboard</strong>（仪表盘）开启连接后，您可以点击进入 <strong>Groups（节点组）</strong> 或 <strong>Proxies（代理列表）</strong> 进行节点选择：</p>
+        <ul>
+          <li><strong>Proxy / 节点组：</strong> 这里会展示所有的国家和地区节点，您可以点击右上角的闪电图标进行延迟测试，并手动选择速度最快的节点。</li>
+          <li><strong>自动选择 (URL Test)：</strong> Sing-box 支持智能优选，如果在规则中配置了自动测速，它会在后台默默为您切换到延迟最低的节点，让您彻底忘记软件的存在。</li>
+        </ul>
+
+        <hr />
+
+        <h2 id="faq">常见问题排坑指南 (FAQ)</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3>Q1: 为什么导入订阅后，点击启动按钮毫无反应或报错？</h3>
+            <p>答：由于 Sing-box 迭代非常快，很多机场后台生成的 JSON 配置文件使用的还是旧版格式（如废弃的字段），导致新版客户端解析报错。解决办法是：更换最新版的订阅转换器重新转换，或者联系机场客服要求适配最新的 Sing-box 内核标准。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q2: Hysteria 2 协议真的比 Trojan / Vmess 快吗？</h3>
+            <p>答：是的，尤其在网络环境较差（如丢包率高、跨国晚高峰）的情况下，Hysteria 2 基于 UDP 的暴力发包机制能无视网络拥堵，带来极大的加速效果。但请注意，部分地区运营商可能会对 UDP 流量进行 QOS（限速），此时建议切换回传统的 TCP 协议。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q3: Sing-box 配置好了，如何解锁 ChatGPT 等 AI 工具？</h3>
+            <p>答：Sing-box 自带强大的 DNS 分流与路由机制。只要您的订阅文件中包含了正确的 AI 分流规则，并且选择了干净的原生 IP 节点，即可顺利解锁。详细的 AI 节点挑选策略，请查阅我们的 <a href="/ai-streaming/">Ai 与流媒体解锁专区</a>。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q4: 除了 Sing-box，Windows 端还有其他易用的客户端推荐吗？</h3>
+            <p>答：如果您觉得 Sing-box 的纯英文界面或强自定义性门槛较高，在电脑端我们依然推荐您使用具有完美中文界面的 <a href="/guide/clash-verge-rev/">Windows 篇：Clash Verge Rev 教程</a>，它的内部同样可以使用 Meta 内核来支持新协议。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <aside class="tutorial-sidebar">
+      <div class="toc-sticky">
+        <h3>📋 本文目录</h3>
+        <ul class="toc-list">
+          <li><a href="#intro">新一代代理工具：Sing-box</a></li>
+          <li><a href="#step1">第一步：全平台 GUI 下载指南</a></li>
+          <li><a href="#step2">第二步：节点配置与订阅导入</a></li>
+          <li><a href="#step3">第三步：面板与分流节点选择</a></li>
+          <li><a href="#faq">常见问题排坑指南 (FAQ)</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <style is:inline>
+    .tutorial-container {
+      display: flex;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 20px 100px 20px;
+      align-items: stretch;
+    }
+
+    .tutorial-article {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .article-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .ah-meta {
+      display: inline-block;
+      background: #fdf4ff;
+      color: #c026d3;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .ah-title {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    
+    .ah-desc {
+      font-size: 1.1rem;
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .article-content h2 {
+      font-size: 1.8rem;
+      color: #1e293b;
+      margin-top: 50px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .article-content h3 {
+      font-size: 1.3rem;
+      color: #334155;
+      margin-top: 30px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .article-content p {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+
+    .article-content li {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .article-content strong {
+      color: #0f172a;
+    }
+
+    .article-content code {
+      background: #f1f5f9;
+      color: #ef4444;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    
+    .article-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .recommend-box {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .recommend-box h4 {
+      font-size: 1.2rem;
+      color: #b45309;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .recommend-box p {
+      margin-bottom: 0;
+      color: #92400e;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 60px 0;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #0f172a;
+      font-size: 1.15rem;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+
+    .tutorial-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      display: none;
+    }
+    
+    @media (min-width: 768px) {
+      .tutorial-sidebar {
+        display: block;
+      }
+    }
+
+    .toc-sticky {
+      position: sticky;
+      top: 100px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    .toc-sticky h3 {
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toc-list li a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .toc-list li a:hover {
+      color: #3b82f6;
+    }
+    
+    @media (max-width: 768px) {
+      .tutorial-container {
+        padding-top: 40px;
+      }
+      .ah-title { font-size: 2rem; }
+      .article-content h2 { font-size: 1.5rem; }
+      .article-content p, .article-content li { font-size: 1rem; }
+    }
+  </style>
+</BaseLayout>
