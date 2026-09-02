@@ -22,8 +22,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 
-  <section class="showcase-section page-shell">
+  <section class="showcase-section">
     <div class="brand-card-premium">
+      <div class="bcp-content-wrapper">
       <div class="bcp-header">
         <img src="/images/brands/weifeng.png" alt="微风" class="bcp-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U0ZTlmMiIvPjwvc3ZnPg=='" />
         <div class="bcp-title-area">
@@ -177,25 +178,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           前往官网注册 <span>↗</span>
         </a>
       </div>
+      </div>
     </div>
   </section>
 
   <style is:inline>
     .showcase-section {
-      padding: 20px 0 80px 0;
+      padding: 40px 0 80px 0;
       width: 100%;
     }
     .brand-card-premium {
       background: #ffffff;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: 40px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 40px 0;
       box-shadow: 0 20px 40px rgba(0,0,0,0.04);
       width: 100%;
       margin: 0 auto;
       position: relative;
       overflow: hidden;
       transition: box-shadow 0.3s ease;
+    }
+    .bcp-content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
     .brand-card-premium:hover {
       box-shadow: 0 30px 60px rgba(36, 87, 230, 0.08);
