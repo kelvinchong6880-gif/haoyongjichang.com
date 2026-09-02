@@ -71,6 +71,24 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <p>答：IEPL（国际以太网专线）是二层网络专线，IPLC 是一层网络专线。对咱们普通翻墙用户来说，不需要懂这么深，它们的体验几乎是 100% 相同的，都是不过墙、不拥堵的顶级专线，看到这两个词放心买就对了。</p>
           </div>
         </div>
+
+        <hr style="margin-top: 60px; margin-bottom: 40px; border-top: 2px dashed #e2e8f0;" />
+        <h2 id="related-reading">🔗 相关阅读与延伸推荐</h2>
+        <div class="related-links-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 24px;">
+
+          <a href="/recommend/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #f0fdf4; border-color: #bbf7d0;">
+            <div style="font-size: 1.1rem; color: #15803d; font-weight: 600; margin-bottom: 8px;">🔥 2026 高性价比推荐</div>
+            <div style="font-size: 0.95rem; color: #166534;">懂了底层逻辑后，快来看看我们精挑细选的优质梯子吧。</div>
+          </a>
+          <a href="/cheap-airport/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #f0f9ff; border-color: #bae6fd;">
+            <div style="font-size: 1.1rem; color: #0369a1; font-weight: 600; margin-bottom: 8px;">💰 便宜机场选购大全</div>
+            <div style="font-size: 0.95rem; color: #075985;">学生党专属！月付十元以内的高性价比中转/直连机场。</div>
+          </a>
+          <a href="/guide/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #f8fafc;">
+            <div style="font-size: 1.1rem; color: #0f172a; font-weight: 600; margin-bottom: 8px;">📚 教程中心总览</div>
+            <div style="font-size: 0.95rem; color: #64748b;">返回教程大全，学习更多科学上网的进阶技巧与客户端配置。</div>
+          </a>
+        </div>
       </div>
     </article>
 
@@ -89,6 +107,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 
   <style is:inline>
+
+    .rl-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border-color: #3b82f6 !important;
+    }
+
     .tutorial-container {
       display: flex;
       gap: 40px;

@@ -88,6 +88,24 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
             <p>答：流媒体不需要像 Telegram 这样手动填端口，但它需要更严苛的“原生解锁 IP”。如果您有追剧需求，请务必阅读我们的 <a href="/guide/scenario-streaming-unblock/">Netflix / Disney+ 流媒体解锁与跨区排坑指南</a>。</p>
           </div>
         </div>
+
+        <hr style="margin-top: 60px; margin-bottom: 40px; border-top: 2px dashed #e2e8f0;" />
+        <h2 id="related-reading">🔗 相关阅读与延伸推荐</h2>
+        <div class="related-links-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 24px;">
+
+          <a href="/guide/knowledge-airport-buying-guide/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #f8fafc;">
+            <div style="font-size: 1.1rem; color: #0f172a; font-weight: 600; margin-bottom: 8px;">避坑：新手选购指南</div>
+            <div style="font-size: 0.95rem; color: #64748b;">解锁流媒体与 AI 需要高质量节点，看看如何避免跑路坑。</div>
+          </a>
+          <a href="/guide/knowledge-subconverter/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #f8fafc;">
+            <div style="font-size: 1.1rem; color: #0f172a; font-weight: 600; margin-bottom: 8px;">🔒 订阅转换安全防泄露</div>
+            <div style="font-size: 0.95rem; color: #64748b;">在使用第三方工具导入节点时，如何保护流量不被盗用。</div>
+          </a>
+          <a href="/top-10-airports/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #fffbeb; border-color: #fde68a;">
+            <div style="font-size: 1.1rem; color: #b45309; font-weight: 600; margin-bottom: 8px;">👑 顶级专线机场排行</div>
+            <div style="font-size: 0.95rem; color: #92400e;">无需自己折腾 IP，官方自带全链路流媒体与 OpenAI 解锁。</div>
+          </a>
+        </div>
       </div>
     </article>
 
@@ -106,6 +124,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 
   <style is:inline>
+
+    .rl-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border-color: #3b82f6 !important;
+    }
+
     .tutorial-container {
       display: flex;
       gap: 40px;

@@ -93,6 +93,25 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
           <p>答：如果您同时是手机用户，安卓端推荐参考 <a href="/guide/">Clash for Android 教程</a>，iOS 苹果端推荐参考 <a href="/guide/">Shadowrocket 小火箭使用教程</a>。</p>
         </div>
       </div>
+
+        <hr style="margin-top: 60px; margin-bottom: 40px; border-top: 2px dashed #e2e8f0;" />
+        <h2 id="related-reading">🔗 相关阅读与延伸推荐</h2>
+        <div class="related-links-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 24px;">
+
+          <a href="/guide/troubleshooting-no-internet/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #f8fafc;">
+            <div style="font-size: 1.1rem; color: #0f172a; font-weight: 600; margin-bottom: 8px;">🔧 连上了但没网？</div>
+            <div style="font-size: 0.95rem; color: #64748b;">排查 DNS 污染与系统代理冲突，5 分钟恢复网络。</div>
+          </a>
+          <a href="/guide/scenario-streaming-unblock/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #f8fafc;">
+            <div style="font-size: 1.1rem; color: #0f172a; font-weight: 600; margin-bottom: 8px;">🎬 流媒体解锁指南</div>
+            <div style="font-size: 0.95rem; color: #64748b;">配置好客户端后，如何丝滑观看 Netflix 与 Disney+。</div>
+          </a>
+          <a href="/guide/troubleshooting-routing-mode/" class="rl-card" style="padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px; text-decoration: none; display: block; transition: all 0.2s; background: #f8fafc;">
+            <div style="font-size: 1.1rem; color: #0f172a; font-weight: 600; margin-bottom: 8px;">🚦 路由模式怎么选？</div>
+            <div style="font-size: 0.95rem; color: #64748b;">详解全局、规则与直连模式的区别，告别流量浪费。</div>
+          </a>
+        </div>
+
     </div>
     </article>
 
@@ -112,6 +131,13 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
   </div>
 
   <style is:inline>
+
+    .rl-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border-color: #3b82f6 !important;
+    }
+
     .tutorial-container {
       display: flex;
       gap: 40px;
