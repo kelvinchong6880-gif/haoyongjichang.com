@@ -115,4 +115,35 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <a class="button" href="/">查看这些机场的详细测评资料 <span>→</span></a>
     </div>
   </div>
+
+  <style is:inline>
+    .bcp-plans {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+    .bcp-plans th, .bcp-plans td {
+      padding: 16px 24px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+    }
+    .bcp-plans th {
+      font-weight: 600;
+      color: var(--ink);
+      background: #f8fafc;
+      font-size: 0.95rem;
+    }
+    .bcp-plans td {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .bcp-plans tr:last-child td {
+      border-bottom: none;
+    }
+    .price-highlight {
+      font-weight: 700;
+      color: #2457e6 !important;
+      font-size: 1.1rem !important;
+    }
+  </style>
 </BaseLayout>
