@@ -1,0 +1,158 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="404 页面未找到 - 好用机场"
+  description="抱歉，您访问的页面不存在或已被移除。好用机场为您提供最专业的机场评测与网络环境指南。"
+>
+  <div class="not-found-container">
+    <div class="nf-content">
+      <div class="nf-error-code">404</div>
+      <h1 class="nf-title">哎呀，页面迷路了！</h1>
+      <p class="nf-desc">您想找的内容可能已经被移动、改名，或者永远消失在了赛博空间中。</p>
+      
+      <div class="nf-actions">
+        <a href="/" class="btn-primary">返回首页</a>
+        <a href="/top-10-airports/" class="btn-secondary">查看 2026 顶级机场排行</a>
+      </div>
+      
+      <div class="nf-help">
+        <p>或者您可以查阅以下热门指南：</p>
+        <div class="nf-links">
+          <a href="/guide/knowledge-airport-buying-guide/">避坑指南</a>
+          <a href="/guide/scenario-ai-unblock/">AI 解锁</a>
+          <a href="/guide/scenario-streaming-unblock/">流媒体观影</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found-container {
+    min-height: 65vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  
+  .nf-content {
+    max-width: 600px;
+    background: #fff;
+    padding: 60px 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.05);
+    border: 1px solid var(--line);
+  }
+  
+  .nf-error-code {
+    font-size: 6rem;
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--blue) 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: -2px;
+  }
+  
+  .nf-title {
+    font-size: 2rem;
+    color: var(--ink);
+    margin-bottom: 16px;
+    font-weight: 800;
+  }
+  
+  .nf-desc {
+    color: #64748b;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  
+  .nf-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+  
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+  }
+  
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+  }
+  
+  .btn-secondary {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 14px 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.2s;
+  }
+  
+  .btn-secondary:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: translateY(-2px);
+  }
+  
+  .nf-help {
+    border-top: 1px solid var(--line);
+    padding-top: 32px;
+  }
+  
+  .nf-help p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+  
+  .nf-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .nf-links a {
+    color: var(--blue);
+    background: #eff6ff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  
+  .nf-links a:hover {
+    background: #dbeafe;
+    transform: translateY(-1px);
+  }
+  
+  @media (max-width: 600px) {
+    .nf-content {
+      padding: 40px 20px;
+    }
+    .nf-actions {
+      flex-direction: column;
+    }
+  }
+</style>
