@@ -13,7 +13,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url);
 const siteUrl = (Astro.site ? Astro.site.toString() : Astro.url.origin).replace(/\/$/, '');
 const pathname = Astro.url.pathname;
 const isHomePage = pathname === '/';
-const isArticle = /^\/(guide|knowledge|jichang|speed-test|recommend)\/[^/]+\/$/.test(pathname);
+const isArticle = /^\/(guide|knowledge|review|jichang|speed-test|recommend)\/[^/]+\/$/.test(pathname);
 const datePublished = (pagePublished as Record<string, string>)[pathname];
 const dateModified = (pageModified as Record<string, string>)[pathname];
 const organizationDescription = '好用机场提供机场测评、测速资料、线路知识和客户端使用教程，并说明测试条件、信息来源与推广关系。';
