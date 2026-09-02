@@ -1,0 +1,301 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="[2026最新] 常用代理协议对比：SS / V2Ray / Trojan / Hysteria 2 排坑指南" 
+  description="详细解析 Shadowsocks、V2Ray (Vmess)、Trojan 与新生代的 Hysteria 2、TUIC 等翻墙协议的演进史。为您解答 Trojan 和 V2ray 哪个好，以及 Hysteria 2 速度怎么样的核心问题。"
+>
+  <div class="tutorial-container page-shell">
+    <article class="tutorial-article">
+      <div class="article-header">
+        <div class="ah-meta" style="background: #f3e8ff; color: #7e22ce;">底层常识与防坑</div>
+        <h1 class="ah-title">[2026最新] 常用代理协议对比：SS / V2Ray / Trojan / Hysteria 2 排坑指南</h1>
+        <p class="ah-desc">翻墙协议字母满天飞，到底是老牌的 Trojan 和 V2Ray 好，还是新生代的 Hysteria 2 速度快？带您看懂翻墙协议的演进史，告别选择困难症。</p>
+      </div>
+
+      <div class="article-content">
+        <h2 id="intro">为什么有这么多种翻墙协议？</h2>
+        <p>在寻找机场时，您一定在节点列表里看过 <code>SS</code>, <code>Vmess</code>, <code>Trojan</code> 甚至是最新的 <code>Hy2</code>。很多新手满头问号：<strong>常用代理协议对比起来究竟有何不同？</strong></p>
+        <p>其实，翻墙协议的演进史，就是一部与 GFW（国家防火墙）博弈的“猫鼠游戏”史。旧的协议特征被识别封杀，开发者就会创造出伪装性更强、速度更快的新协议。下面我们将按年代顺序列出它们的核心特点。</p>
+
+        <h2 id="classic">第一阶段：经典老兵，廉颇老矣？</h2>
+        
+        <h3>1. Shadowsocks (SS / SSR)</h3>
+        <p>它是翻墙圈真正的祖师爷。通过混淆流量来骗过防火墙。由于出现得太早，其原生的流量特征早就被 GFW 的 AI 算法摸透了。如今，纯粹的 SS 协议在敏感时期几乎活不过一天（除非是跑在不过墙的 IPLC 专线上）。</p>
+        
+        <h3>2. V2Ray (Vmess / Vless)</h3>
+        <p>V2Ray 曾是翻墙界的王者，它的标志性特征就是“伪装”。它能把代理流量伪装成正常的网站 HTTPS 流量（例如伪装成访问苹果官网）。</p>
+        <p><strong>Trojan 和 V2ray 哪个好？</strong> V2Ray 的伪装逻辑非常复杂，这也导致了它的加密解密过程极度消耗手机和路由器的 CPU 性能。如果在旧手机或低配路由器上运行，速度会大打折扣。</p>
+        
+        <h3>3. Trojan (特洛伊木马)</h3>
+        <p>Trojan 放弃了 V2Ray 那种复杂的“强行伪装”套路，而是直接将流量伪装成最常见的 <code>HTTPS</code> 网页加密流量。它的理念是“大隐隐于市”——因为 GFW 不可能把全网正常的网页流量都封杀。Trojan 在相当长的一段时间内，是兼顾了<strong>高安全性与低性能损耗</strong>的最优解，至今仍被各大主流机场广泛使用。</p>
+
+        <h2 id="next-gen">第二阶段：UDP 崛起，新生代暴力协议</h2>
+        <p>传统的协议（包括 Trojan/V2Ray）都是基于 TCP 协议的。TCP 有个致命弱点：一旦跨国线路发生拥堵丢包，它就会不断要求对方“重传数据”，导致您的网速变得像蜗牛一样慢。</p>
+        
+        <h3>Hysteria 2 / TUIC 的诞生</h3>
+        <p>为了解决高丢包率的网络环境，基于 <strong>UDP 协议 (QUIC)</strong> 的新生代工具横空出世，其中最耀眼的就是 <strong>Hysteria 2 (Hy2)</strong> 和 <strong>TUIC</strong>。</p>
+        <p><strong>Hysteria 2 速度怎么样？</strong> 它的名字翻译过来叫“歇斯底里”，因为它的原理非常暴力。哪怕您的宽带丢包率高达 30%，它也会无视丢包，疯狂地把数据塞给您。在普通的直连线路上，Hy2 能把看 YouTube 的速度从 1080P 强行拉升到 4K 甚至 8K 秒开！</p>
+
+        <div class="recommend-box">
+          <h4>💡 注意：新生代协议并非万能的“神药”</h4>
+          <p>虽然 Hysteria 2 速度极快，但目前国内部分地区的运营商存在 <strong>UDP 严格限速或阻断 (QoS)</strong>。这意味着如果您的当地宽带封杀了 UDP 流量，再强的 Hy2 也连不上网。如果您想要永远不卡顿、不受地方宽带限制的极致体验，唯一的解法依然是 <strong>无需伪装协议的顶级物理专线 (IPLC)</strong>。了解更多请查看我们的 <a href="/top-10-airports/">高端 IPLC 专线机场推荐排行榜</a>。</p>
+        </div>
+
+        <h2 id="conclusion">总结：您应该选择哪种协议？</h2>
+        <ul>
+          <li><strong>如果您购买的是 IPLC 专线机场：</strong> 选什么协议都不重要！甚至最古老的 SS 协议也是最好的，因为专线不过墙，SS 极致轻量，能发挥专线的最大带宽潜力。详见 <a href="/guide/knowledge-network-lines/">直连与专线区别科普</a>。</li>
+          <li><strong>如果您买的是便宜中转/直连机场：</strong> 请优先尝试连接带有 <code>Hy2</code>, <code>Hysteria</code>, <code>TUIC</code> 字样的节点，能极大拯救晚高峰的网速。目前完美支持这些新协议的客户端是 Sing-box，您可以参考 <a href="/guide/sing-box/">全平台 Sing-box 配置教程</a>。</li>
+          <li><strong>追求极致稳定（怕被封号）：</strong> 请使用 Trojan 或 Vless + 真实网页伪装。</li>
+        </ul>
+
+        <hr />
+
+        <h2 id="faq">常见问题排坑指南 (FAQ)</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3>Q1: 为什么我的手机连 Hysteria 2 节点非常费电？</h3>
+            <p>答：因为 Hysteria 2 是基于 UDP 协议进行暴力发包的，它会长时间唤醒手机的网络基带，并且维持大量的连接数。如果您在意手机续航，建议在不看视频时切换回 Trojan 或 V2Ray 节点。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q2: 为什么我的 Clash Verge 看不到 Hy2 节点？</h3>
+            <p>答：旧版的 Clash 内核是不支持 Hysteria 2 和 TUIC 协议的。您必须使用最新的 <strong>Clash Verge Rev (Meta 内核)</strong> 或者 <strong>Sing-box</strong> 才能正常解析并使用这些新生代协议节点。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q3: Vmess 和 Vless 有什么区别？</h3>
+            <p>答：Vless 是 Vmess 的升级精简版。Vless 去掉了 Vmess 中冗余的加密环节，不再严格依赖系统时间同步，速度更快，性能开销也更低。因此，目前主流机场都已经逐渐用 Vless 淘汰了 Vmess。</p>
+          </div>
+          <div class="faq-item">
+            <h3>Q4: 玩游戏用什么协议比较好？</h3>
+            <p>答：千万不要用 Hysteria 2 玩游戏！它虽然看视频快，但它的暴力抢占机制会导致游戏延迟极度不稳定（疯狂跳 Ping）。玩主机联机游戏最好的方式是使用普通中转或专线节点，并配置局域网共享。详见 <a href="/guide/troubleshooting-lan-proxy/">局域网主机游戏代理设置</a>。</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <aside class="tutorial-sidebar">
+      <div class="toc-sticky">
+        <h3>📋 本文目录</h3>
+        <ul class="toc-list">
+          <li><a href="#intro">为何有那么多协议？</a></li>
+          <li><a href="#classic">第一阶段：SS / V2Ray / Trojan</a></li>
+          <li><a href="#next-gen">第二阶段：Hysteria 2 / TUIC</a></li>
+          <li><a href="#conclusion">总结：你应该如何选择？</a></li>
+          <li><a href="#faq">常见问题排坑指南 (FAQ)</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <style is:inline>
+    .tutorial-container {
+      display: flex;
+      gap: 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 20px 100px 20px;
+      align-items: stretch;
+    }
+
+    .tutorial-article {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .article-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .ah-meta {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .ah-title {
+      font-size: 2.5rem;
+      color: #0f172a;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    
+    .ah-desc {
+      font-size: 1.1rem;
+      color: #64748b;
+      line-height: 1.7;
+    }
+
+    .article-content h2 {
+      font-size: 1.8rem;
+      color: #1e293b;
+      margin-top: 50px;
+      margin-bottom: 24px;
+      font-weight: 700;
+      border-bottom: 2px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .article-content h3 {
+      font-size: 1.3rem;
+      color: #334155;
+      margin-top: 30px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .article-content p {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .article-content ul, .article-content ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+    }
+
+    .article-content li {
+      font-size: 1.05rem;
+      color: #475569;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .article-content strong {
+      color: #0f172a;
+    }
+
+    .article-content code {
+      background: #f1f5f9;
+      color: #ef4444;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.95em;
+    }
+    
+    .article-content a {
+      color: #3b82f6;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .recommend-box {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 24px;
+      margin: 30px 0;
+    }
+    .recommend-box h4 {
+      font-size: 1.2rem;
+      color: #b45309;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .recommend-box p {
+      margin-bottom: 0;
+      color: #92400e;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: #e2e8f0;
+      margin: 60px 0;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .faq-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .faq-item h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      color: #0f172a;
+      font-size: 1.15rem;
+    }
+    .faq-item p {
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+
+    .tutorial-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      display: none;
+    }
+    
+    @media (min-width: 768px) {
+      .tutorial-sidebar {
+        display: block;
+      }
+    }
+
+    .toc-sticky {
+      position: sticky;
+      top: 100px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    
+    .toc-sticky h3 {
+      font-size: 1.1rem;
+      color: #0f172a;
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-weight: 700;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toc-list li a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      display: block;
+      line-height: 1.5;
+    }
+
+    .toc-list li a:hover {
+      color: #3b82f6;
+    }
+    
+    @media (max-width: 768px) {
+      .tutorial-container {
+        padding-top: 40px;
+      }
+      .ah-title { font-size: 2rem; }
+      .article-content h2 { font-size: 1.5rem; }
+      .article-content p, .article-content li { font-size: 1rem; }
+    }
+  </style>
+</BaseLayout>
