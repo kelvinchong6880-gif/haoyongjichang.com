@@ -264,8 +264,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
     .bcp-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 32px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px 24px;
       margin: 32px 0;
       padding: 32px 0;
       border-top: 1px dashed var(--line);
@@ -283,18 +283,21 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       list-style: none;
       padding: 0;
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
     .bcp-feature-box li {
       font-size: 0.95rem;
       color: var(--muted);
-      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      max-width: 180px; /* Keeps text and values perfectly aligned and close */
     }
     .bcp-feature-box li.flex-start {
       justify-content: flex-start;
-      gap: 8px;
+      gap: 12px;
     }
     .bcp-feature-box li strong {
       color: var(--ink);
