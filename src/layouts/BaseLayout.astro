@@ -72,7 +72,7 @@ const displayModified = dateModified?.slice(0, 10);
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content={description}>
   <meta name="robots" content="index, follow">
   <meta name="bingbot" content="index, follow">
@@ -108,20 +108,13 @@ const displayModified = dateModified?.slice(0, 10);
             <span class="brand-word">好用机场</span>
           </span>
         </a>
-        <nav class="desktop-nav" aria-label="主导航">
-          <a href="/recommend/">机场推荐</a>
-          <a href="/cheap-airport/">便宜机场</a>
-          <a href="/best-value-airport/">性价比机场</a>
-          <a href="/top-10-airports/">十大机场排行榜</a>
-          <a href="/guide/">使用教程</a>
-          <a href="/ai-streaming/">Ai 与流媒体解锁</a>
-          <a href="/buying-guide/">机场选购指南</a>
-        </nav>
-        <a class="button button-small desktop-cta" href="/recommend/">查看推荐 <span>→</span></a>
+        
+        <a class="button button-small desktop-cta" style="margin-left: auto; margin-right: 24px;" href="/recommend/">查看推荐 <span>→</span></a>
         <details class="mobile-menu">
           <summary aria-label="打开导航菜单"><span></span><span></span><span></span></summary>
           <nav aria-label="手机导航">
-            <a href="/recommend/">机场推荐</a>
+            <a href="/quick-guide/" style="color: var(--primary); font-weight: bold;">⏱️ 一分钟选购指南</a>
+              <a href="/recommend/">机场推荐</a>
             <a href="/cheap-airport/">便宜机场</a>
             <a href="/best-value-airport/">性价比机场</a>
             <a href="/top-10-airports/">十大机场排行榜</a>
@@ -131,7 +124,20 @@ const displayModified = dateModified?.slice(0, 10);
           </nav>
         </details>
       </div>
-    </header>
+    
+        <div class="desktop-nav-row" style="background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0;">
+          <nav class="desktop-nav" style="justify-content: center; flex-wrap: wrap; gap: 32px; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <a href="/quick-guide/" style="color: var(--primary); font-weight: bold;">⏱️ 一分钟选购指南</a>
+            <a href="/recommend/">机场推荐</a>
+            <a href="/cheap-airport/">便宜机场</a>
+            <a href="/best-value-airport/">性价比机场</a>
+            <a href="/top-10-airports/">十大机场排行榜</a>
+            <a href="/guide/">使用教程</a>
+            <a href="/ai-streaming/">Ai 与流媒体解锁</a>
+            <a href="/buying-guide/">机场选购指南</a>
+          </nav>
+        </div>
+      </header>
 
     <main class="flex-grow">
       {isArticle && datePublished && dateModified && (

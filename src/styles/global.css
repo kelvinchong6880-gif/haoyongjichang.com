@@ -1338,3 +1338,130 @@ svg {
     min-width: 0;
   }
 }
+
+
+/* --- Refactored CSS Classes --- */
+.data-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 60px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 900px;
+  background: #fff;
+}
+.data-table thead {
+  background: var(--surface);
+}
+.data-table th {
+  padding: 16px 20px;
+  color: var(--muted);
+  border-bottom: 2px solid var(--line);
+}
+.data-table td {
+  padding: 20px;
+}
+.data-table tr {
+  border-bottom: 1px solid var(--line);
+}
+.data-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+.quick-guide-wrapper {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.quick-guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 600px;
+}
+.quick-guide-table th {
+  padding: 16px 8px;
+  color: var(--muted);
+}
+.quick-guide-table td {
+  padding: 24px 8px;
+}
+.scenario-block {
+  margin-top: 100px;
+}
+.scenario-block.first {
+  margin-top: 20px;
+}
+.scenario-title {
+  font-size: 2rem;
+  border-bottom: 3px solid var(--primary);
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+.scenario-desc {
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+.faq-wrapper {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+}
+.faq-title {
+  margin-top: 0;
+  font-size: 1.8rem;
+  margin-bottom: 32px;
+  text-align: center;
+}
+.faq-item {
+  margin-bottom: 24px;
+}
+.faq-q {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.faq-a {
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+.pros-cons-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 24px 0;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--line);
+}
+.pros-cons-col {
+  flex: 1;
+  min-width: 250px;
+}
+.pros-cons-title {
+  font-size: 1.1rem;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pros-cons-list {
+  padding-left: 20px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
