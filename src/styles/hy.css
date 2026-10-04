@@ -82,3 +82,8 @@ a.h-box strong { color: var(--blue); }
   .h-section { margin: 30px 0; }
   .h-card { padding: 16px; }
 }
+
+/* 布局对齐：面包屑、作者栏、页脚底栏与内容同宽 */
+.h-crumbs { max-width: 1200px; }
+.h-crumbs + .article-meta-bar { padding-top: 10px; }
+.footer-bottom { max-width: 1200px; margin: 40px auto 0; padding: 32px 20px 0; }
