@@ -7,9 +7,10 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/submit-indexnow.js",
+    "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "indexnow": "node scripts/submit-indexnow.js"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

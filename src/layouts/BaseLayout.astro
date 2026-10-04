@@ -1,71 +1,90 @@
 ---
 import '../styles/global.css';
+import '../styles/hy.css';
 import pagePublished from '../data/page-published.json';
 import pageModified from '../data/sitemap-lastmod.json';
+import { SITE, SITE_NAME } from '../data/airports';
 
 interface Props {
   title: string;
   description: string;
+  /** 额外结构化数据（FAQ、ItemList、Product 等） */
+  structuredData?: object[];
+  /** 面包屑（不含首页）。传入后自动输出 BreadcrumbList */
+  breadcrumbs?: { name: string; path: string }[];
+  /** 页面自带可见面包屑时设为 true */
+  hideCrumbs?: boolean;
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || Astro.url);
-const siteUrl = (Astro.site ? Astro.site.toString() : Astro.url.origin).replace(/\/$/, '');
-const pathname = Astro.url.pathname;
+const { title, description, structuredData = [], breadcrumbs = [], hideCrumbs = false, noindex = false } = Astro.props;
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalURL = new URL(pathname, SITE).href;
 const isHomePage = pathname === '/';
-const isArticle = /^\/(guide|knowledge|review|jichang|speed-test|recommend)\/[^/]+\/$/.test(pathname);
-const datePublished = (pagePublished as Record<string, string>)[pathname];
-const dateModified = (pageModified as Record<string, string>)[pathname];
-const organizationDescription = '好用机场提供机场测评、测速资料、线路知识和客户端使用教程，并说明测试条件、信息来源与推广关系。';
+const isArticle = /^\/(guide|review)\/[^/]+\/$/.test(pathname) || /^\/(recommend|cheap-airport|best-value-airport|top-10-airports|ai-streaming|buying-guide|quick-guide)\/$/.test(pathname);
+const datePublished = (pagePublished as Record<string, string>)[pathname] ?? '2026-09-01T00:00:00+08:00';
+const dateModified = (pageModified as Record<string, string>)[pathname] ?? '2026-10-04T00:00:00+08:00';
+const ogImage = `${SITE}/images/og-image.jpg`;
+
 const organization = {
   '@type': 'Organization',
-  '@id': `${siteUrl}/#organization`,
-  name: '好用机场',
-  url: siteUrl,
-  description: organizationDescription,
-  logo: {
-    '@type': 'ImageObject',
-    url: `${siteUrl}/images/logo.png`,
-  },
+  '@id': `${SITE}/#organization`,
+  name: SITE_NAME,
+  url: `${SITE}/`,
+  logo: { '@type': 'ImageObject', url: `${SITE}/images/logo.webp` },
 };
-const structuredData = isHomePage
-  ? {
-      '@context': 'https://schema.org',
-      '@graph': [
-        organization,
-        {
-          '@type': 'WebSite',
-          '@id': `${siteUrl}/#website`,
-          name: '好用机场',
-          url: siteUrl,
-          description: organizationDescription,
-          inLanguage: 'zh-CN',
-          publisher: { '@id': `${siteUrl}/#organization` },
-        },
-      ],
-    }
-  : isArticle && datePublished && dateModified
-    ? {
-        '@context': 'https://schema.org',
-        '@type': 'Article',
-        headline: title,
-        description,
-        url: canonicalURL.href,
-        mainEntityOfPage: canonicalURL.href,
-        inLanguage: 'zh-CN',
-        datePublished,
-        dateModified,
-        author: {
-          '@type': 'Person',
-          name: 'Kelvin Chong',
-          url: `${siteUrl}/contact/`,
-        },
-        publisher: organization,
-        image: `${siteUrl}/images/logo.png`,
-      }
-    : undefined;
-const displayPublished = datePublished?.slice(0, 10);
-const displayModified = dateModified?.slice(0, 10);
+const schemas: object[] = [];
+if (isHomePage) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@graph': [
+      organization,
+      { '@type': 'WebSite', '@id': `${SITE}/#website`, name: SITE_NAME, url: `${SITE}/`, inLanguage: 'zh-CN', publisher: { '@id': `${SITE}/#organization` } },
+    ],
+  });
+} else if (isArticle) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: title,
+    description,
+    url: canonicalURL,
+    mainEntityOfPage: canonicalURL,
+    inLanguage: 'zh-CN',
+    datePublished,
+    dateModified,
+    author: { '@type': 'Person', name: 'Kelvin Chong', url: `${SITE}/about/` },
+    publisher: organization,
+    image: ogImage,
+  });
+}
+if (breadcrumbs.length) {
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [{ name: '首页', path: '/' }, ...breadcrumbs].map((b, i) => ({ '@type': 'ListItem', position: i + 1, name: b.name, item: `${SITE}${b.path}` })),
+  });
+}
+schemas.push(...structuredData);
+
+const nav = [
+  { href: '/quick-guide/', text: '⏱️ 一分钟选购指南', strong: true },
+  { href: '/recommend/', text: '机场推荐' },
+  { href: '/cheap-airport/', text: '便宜机场' },
+  { href: '/best-value-airport/', text: '性价比机场' },
+  { href: '/top-10-airports/', text: '十大机场排行榜' },
+  { href: '/guide/', text: '使用教程' },
+  { href: '/ai-streaming/', text: 'AI 与流媒体解锁' },
+  { href: '/buying-guide/', text: '机场选购指南' },
+];
+const friends = [
+  { name: 'clashwiki.blog', url: 'https://clashwiki.blog/' },
+  { name: 'jichangblog.net', url: 'https://jichangblog.net/' },
+  { name: 'vpn-clash.net', url: 'https://vpn-clash.net/' },
+  { name: 'jichangmao.com', url: 'https://jichangmao.com/' },
+  { name: 'bestjichang.com', url: 'https://bestjichang.com/' },
+];
+const active = (href: string) => pathname.startsWith(href);
 ---
 
 <!DOCTYPE html>
@@ -73,78 +92,73 @@ const displayModified = dateModified?.slice(0, 10);
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
   <meta name="description" content={description}>
-  <meta name="robots" content="index, follow">
-  <meta name="bingbot" content="index, follow">
+  <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'}>
   <meta name="msvalidate.01" content="87D7FDBF3B41B1DBE0C94064F8A3F337" />
   <link rel="canonical" href={canonicalURL}>
-  <title>{title}</title>
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content={isArticle ? "article" : "website"} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+
+  <meta property="og:type" content={isArticle ? 'article' : 'website'} />
+  <meta property="og:locale" content="zh_CN" />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:site_name" content="好用机场" />
-  <meta property="og:image" content={`${siteUrl}/images/og-image.png`} />
-
-  <!-- Twitter -->
+  <meta property="og:site_name" content={SITE_NAME} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content={canonicalURL} />
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={`${siteUrl}/images/og-image.png`} />
+  <meta name="twitter:image" content={ogImage} />
 
-
-  {structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
+  {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
 </head>
 <body>
+  <a class="h-skip" href="#main">跳到正文</a>
   <div class="flex min-h-screen flex-col">
     <header class="site-header">
       <div class="nav-shell">
         <a href="/" aria-label="好用机场首页">
-          <span class="brand-logo" aria-label="好用机场">
-            <img src="/images/logo.png" alt="好用机场 Logo" width="64" height="64" style="border-radius: 12px; object-fit: cover;" />
+          <span class="brand-logo">
+            <img src="/images/logo.webp" alt="好用机场" width="40" height="40" style="border-radius: 10px; object-fit: cover;" />
             <span class="brand-word">好用机场</span>
           </span>
         </a>
-        
         <a class="button button-small desktop-cta" style="margin-left: auto; margin-right: 24px;" href="/recommend/">查看推荐 <span>→</span></a>
         <details class="mobile-menu">
           <summary aria-label="打开导航菜单"><span></span><span></span><span></span></summary>
           <nav aria-label="手机导航">
-            <a href="/quick-guide/" style="color: var(--primary); font-weight: bold;">⏱️ 一分钟选购指南</a>
-              <a href="/recommend/">机场推荐</a>
-            <a href="/cheap-airport/">便宜机场</a>
-            <a href="/best-value-airport/">性价比机场</a>
-            <a href="/top-10-airports/">十大机场排行榜</a>
-            <a href="/guide/">使用教程</a>
-            <a href="/ai-streaming/">Ai 与流媒体解锁</a>
-            <a href="/buying-guide/">机场选购指南</a>
+            {nav.map((n) => <a href={n.href} style={n.strong ? 'color: var(--primary); font-weight: bold;' : undefined}>{n.text}</a>)}
           </nav>
         </details>
       </div>
-    
-        <div class="desktop-nav-row" style="background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0;">
-          <nav class="desktop-nav" style="justify-content: center; flex-wrap: wrap; gap: 32px; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <a href="/quick-guide/" style="color: var(--primary); font-weight: bold;">⏱️ 一分钟选购指南</a>
-            <a href="/recommend/">机场推荐</a>
-            <a href="/cheap-airport/">便宜机场</a>
-            <a href="/best-value-airport/">性价比机场</a>
-            <a href="/top-10-airports/">十大机场排行榜</a>
-            <a href="/guide/">使用教程</a>
-            <a href="/ai-streaming/">Ai 与流媒体解锁</a>
-            <a href="/buying-guide/">机场选购指南</a>
-          </nav>
-        </div>
-      </header>
+      <div class="desktop-nav-row" style="background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 12px 0;">
+        <nav class="desktop-nav" aria-label="主导航" style="justify-content: center; flex-wrap: wrap; gap: 32px; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+          {nav.map((n) => <a href={n.href} aria-current={active(n.href) ? 'page' : undefined} style={n.strong ? 'color: var(--primary); font-weight: bold;' : undefined}>{n.text}</a>)}
+        </nav>
+      </div>
+    </header>
 
-    <main class="flex-grow">
-      {isArticle && datePublished && dateModified && (
+    <main id="main" class="flex-grow">
+      {breadcrumbs.length > 0 && !hideCrumbs && (
+        <nav class="h-crumbs" aria-label="面包屑">
+          <a href="/">首页</a>
+          {breadcrumbs.map((b, i) => (
+            <>
+              <span aria-hidden="true">›</span>
+              {i === breadcrumbs.length - 1 ? <span aria-current="page">{b.name}</span> : <a href={b.path}>{b.name}</a>}
+            </>
+          ))}
+        </nav>
+      )}
+      {isArticle && /^\/(guide|review)\//.test(pathname) && (
         <div class="article-meta-bar" aria-label="文章信息">
           <span>作者：<a href="/about/">Kelvin Chong</a></span>
-          <span>首次发布：<time datetime={datePublished}>{displayPublished}</time></span>
-          <span>最近更新：<time datetime={dateModified}>{displayModified}</time></span>
+          <span>首次发布：<time datetime={datePublished}>{datePublished.slice(0, 10)}</time></span>
+          <span>最近更新：<time datetime={dateModified}>{dateModified.slice(0, 10)}</time></span>
         </div>
       )}
       <slot />
@@ -154,26 +168,38 @@ const displayModified = dateModified?.slice(0, 10);
       <div class="footer-shell">
         <div class="footer-intro">
           <a href="/" class="footer-brand" aria-label="好用机场">
-            <img src="/images/logo.png" alt="好用机场 Logo" width="48" height="48" />
+            <img src="/images/logo.webp" alt="" width="40" height="40" />
             <span class="brand-word">好用机场</span>
           </a>
-          <p class="footer-slogan">致力于将极其复杂的翻墙网络与机场节点信息，整理成真正能让小白看懂、极客也能获益的硬核评测基准。</p>
+          <p class="footer-slogan">按用途帮你选机场：追剧、学生、全家共用、AI 办公、偶尔使用，各有对应推荐。价格每月对照官网核对。</p>
         </div>
-        
+
         <div class="footer-links-group">
+          <div class="footer-links-col">
+            <h4>机场推荐</h4>
+            <nav aria-label="机场推荐">
+              <a href="/recommend/">机场推荐</a>
+              <a href="/top-10-airports/">十大机场排行榜</a>
+              <a href="/cheap-airport/">便宜机场</a>
+              <a href="/best-value-airport/">性价比机场</a>
+              <a href="/ai-streaming/">AI 与流媒体解锁</a>
+            </nav>
+          </div>
+          <div class="footer-links-col">
+            <h4>新手入门</h4>
+            <nav aria-label="新手入门">
+              <a href="/quick-guide/">一分钟选购指南</a>
+              <a href="/buying-guide/">机场选购指南</a>
+              <a href="/guide/">使用教程</a>
+              <a href="/guide/clash-verge-rev/">Clash Verge 教程</a>
+              <a href="/guide/shadowrocket/">小火箭教程</a>
+            </nav>
+          </div>
           <div class="footer-links-col">
             <h4>关于本站</h4>
             <nav aria-label="关于本站">
               <a href="/about/">关于好用机场</a>
-
               <a href="/contact/">联系我们</a>
-
-            </nav>
-          </div>
-          <div class="footer-links-col">
-            <h4>法律说明</h4>
-            <nav aria-label="法律条款">
-
               <a href="/privacy/">隐私政策</a>
               <a href="/terms/">使用条款</a>
               <a href="/disclaimer/">免责声明</a>
@@ -182,51 +208,31 @@ const displayModified = dateModified?.slice(0, 10);
           <div class="footer-links-col">
             <h4>友情链接</h4>
             <nav aria-label="友情链接">
-              <a href="https://clashjiedian.org/" target="_blank" rel="nofollow noopener noreferrer">Clash节点</a>
-              <a href="https://findjichang.com/" target="_blank" rel="nofollow noopener noreferrer">找机场</a>
-              <a href="https://clash-vpn.org/" target="_blank" rel="nofollow noopener noreferrer">Clash VPN</a>
-              <a href="https://jichangdog.com/" target="_blank" rel="nofollow noopener noreferrer">机场狗</a>
-            </nav>
-          </div>
-          <div class="footer-links-col">
-            <h4>技术生态</h4>
-            <nav aria-label="核心技术资源">
-              <a href="https://github.com/clash-verge-rev/clash-verge-rev" target="_blank" rel="noopener noreferrer">Clash Verge Rev</a>
-              <a href="https://github.com/2dust/v2rayN" target="_blank" rel="noopener noreferrer">v2rayN 客户端</a>
-              <a href="https://www.netflix.com/" target="_blank" rel="nofollow noopener noreferrer">Netflix 奈飞</a>
-              <a href="https://chatgpt.com/" target="_blank" rel="nofollow noopener noreferrer">OpenAI ChatGPT</a>
-              <a href="https://telegram.org/" target="_blank" rel="nofollow noopener noreferrer">Telegram 电报</a>
-              <a href="https://www.speedtest.net/" target="_blank" rel="nofollow noopener noreferrer">Speedtest 测速</a>
+              {friends.map((f) => <a href={f.url} target="_blank" rel="nofollow noopener">{f.name}</a>)}
             </nav>
           </div>
         </div>
       </div>
-      
+
       <div class="footer-bottom">
-        <div class="copyright">© 2026 好用机场 (JiChangDog). All rights reserved.</div>
-        <div class="footer-disclaimer">信息与数据仅供选择参考，不构成任何服务可用性保证。</div>
+        <div class="copyright">© 2026 好用机场 haoyongjichang.com</div>
+        <div class="footer-disclaimer">本站部分链接为推广链接，不影响你的购买价格。价格以各机场官网结算页为准。</div>
       </div>
     </footer>
   </div>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.copy-code-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const code = btn.getAttribute('data-code');
-          if(code && code !== '无需填写') {
-            navigator.clipboard.writeText(code).then(() => {
-              const originalHTML = btn.innerHTML;
-              btn.classList.add('copied');
-              btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-              setTimeout(() => {
-                btn.classList.remove('copied');
-                btn.innerHTML = originalHTML;
-              }, 2000);
-            });
-          }
-        });
-      });
+    document.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest('[data-copy], .copy-code-btn') as HTMLElement | null;
+      if (!btn) return;
+      const code = btn.getAttribute('data-copy') || btn.getAttribute('data-code');
+      if (!code || code === '无需填写') return;
+      e.preventDefault();
+      const done = () => {
+        const old = btn.textContent;
+        btn.textContent = '已复制';
+        setTimeout(() => (btn.textContent = old), 1500);
+      };
+      navigator.clipboard ? navigator.clipboard.writeText(code).then(done, done) : done();
     });
   </script>
 </body>

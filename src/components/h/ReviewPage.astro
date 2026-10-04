@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Promo from './Promo.astro';
+import Brand from './Brand.astro';
+import Disclosure from './Disclosure.astro';
+import {
+  AIRPORTS, bySlug, entry, yearly, oneTime, priced, planPrice, planTraffic, perGB, billingLabel, lineLabel, trafficRange, unlockText, fmtGB, fmtPrice,
+  USAGE, cheapestFor, usagePrice, isPremium, faqSchema, SITE, UPDATED, UPDATED_LABEL, UPDATED_MONTH, reviewUrl,
+} from '../../data/airports';
+import { prosCons, brandFaq } from '../../data/review';
+
+interface Props { slug: string }
+const a = bySlug(Astro.props.slug);
+const rank = AIRPORTS.indexOf(a) + 1;
+const e = entry(a); const y = yearly(a)[0]; const o = oneTime(a);
+const { pros, cons } = prosCons(a);
+const faq = brandFaq(a);
+const rivals = AIRPORTS.filter((x) => x !== a && entry(x))
+  .sort((x, z) => Math.abs(entry(x)!.price - e!.price) - Math.abs(entry(z)!.price - e!.price))
+  .slice(0, 3);
+const title = `${a.name}怎么样？${a.name}机场测评：套餐价格、线路与优惠码（2026）`;
+const description = `${a.name}机场测评（${UPDATED_MONTH}更新）：${a.verdict}。完整套餐价格表、按用量怎么选、优缺点和同价位对比${a.promo ? `，优惠码 ${a.promo}` : ''}。`;
+const schemas = [
+  faqSchema(faq),
+  {
+    '@context': 'https://schema.org', '@type': 'Product', name: `${a.name} 机场订阅`, brand: { '@type': 'Brand', name: a.name }, description: a.verdict,
+    image: `${SITE}${a.logo}`,
+    offers: { '@type': 'AggregateOffer', priceCurrency: 'CNY', lowPrice: Math.min(...priced(a).map((p) => p.price)), highPrice: Math.max(...priced(a).map((p) => p.price)), offerCount: priced(a).length, url: `${SITE}${reviewUrl(a)}` },
+  },
+];
+---
+<BaseLayout title={title} description={description} structuredData={schemas} breadcrumbs={[{ name: '十大机场排行榜', path: '/top-10-airports/' }, { name: `${a.name}测评`, path: reviewUrl(a) }]}>
+  <article class="h-page">
+    <p class="h-eyebrow">更新于 <time datetime={UPDATED}>{UPDATED_LABEL}</time> · 十大机场排行榜第 {rank} 名</p>
+    <div class="h-actions" style="gap:12px">
+      <img src={a.logo} alt={`${a.name} logo`} width="56" height="56" style="border-radius:12px;border:1px solid var(--line);background:#fff;object-fit:contain" />
+      <h1 style="margin:0">{a.name}怎么样？{a.name}机场测评</h1>
+    </div>
+    <p class="h-lead"><strong>{a.name}</strong>：{a.verdict}。适合{a.bestFor}。</p>
+    <Disclosure />
+
+    <div class="h-callout">
+      <dl class="h-facts" style="background:#fff">
+        <div><dt>月付起步</dt><dd class="h-num">{e ? planPrice(e) : '无'}</dd></div>
+        <div><dt>年付最低</dt><dd class="h-num">{y ? planPrice(y) : '无'}</dd></div>
+        <div><dt>线路</dt><dd>{lineLabel(a)}{!isPremium(a) && <span class="h-tag h-tag-warn" style="margin-left:4px">非专线</span>}</dd></div>
+        <div><dt>每月流量</dt><dd class="h-num">{trafficRange(a)}</dd></div>
+        <div><dt>不限时包</dt><dd>{o.length ? `${o.length} 款` : '无'}</dd></div>
+        <div><dt>解锁（官网写明）</dt><dd>{unlockText(a)}</dd></div>
+        <div><dt>设备数</dt><dd>{a.devices}</dd></div>
+      </dl>
+      <div class="h-actions">
+        <a class="h-btn" href={a.aff} target="_blank" rel="nofollow sponsored noopener">前往 {a.name} 官网 ↗</a>
+        <Promo code={a.promo} />
+      </div>
+    </div>
+
+    <section class="h-section">
+      <h2>{a.name}全部套餐价格</h2>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">套餐</th><th scope="col">价格</th><th scope="col">流量</th><th scope="col">付费方式</th><th scope="col">每 GB</th></tr></thead>
+          <tbody>
+            {a.plans.map((p) => <tr class={p === e ? 'is-hl' : ''}><td>{p.name}</td><td class="h-num h-price">{planPrice(p)}</td><td class="h-num">{planTraffic(p)}</td><td>{p.custom ? '定制' : billingLabel(p.billing)}</td><td class="h-num">¥{perGB(p).toFixed(3)}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="h-muted">价格核对于 {UPDATED_LABEL}，以 {a.name} 官网结算页为准。</p>
+    </section>
+
+    <section class="h-section">
+      <h2>{a.name}套餐怎么选</h2>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">你的用量</th><th scope="col">每月需要</th><th scope="col">推荐套餐</th><th scope="col">价格</th></tr></thead>
+          <tbody>
+            {USAGE.map((u) => { const p = cheapestFor(a, u.need); return <tr><td><strong>{u.label}</strong><br /><span class="h-muted">{u.desc}</span></td><td class="h-num">{u.need}GB+</td><td>{p ? `${p.name}（${fmtGB(p.traffic)}/月）` : '没有合适档位'}</td><td class="h-num">{p ? usagePrice(p) : '—'}</td></tr>; })}
+          </tbody>
+        </table>
+      </div>
+      {o.length > 0 && <p>一个月只用几次的话，买不限时包更省：{o.map((p) => `${p.name} ${planPrice(p)}（${fmtGB(p.traffic)}）`).join('、')}。</p>}
+    </section>
+
+    <section class="h-section">
+      <h2>{a.name}线路与节点</h2>
+      <ul class="h-list">
+        <li><strong>线路</strong>：{lineLabel(a)}{isPremium(a) ? '（专线，不经过拥堵的公网国际出口）' : ''}</li>
+        <li><strong>节点地区</strong>：{a.nodeRegions}</li>
+        <li><strong>流媒体 / AI</strong>：{unlockText(a)}</li>
+        <li><strong>设备数</strong>：{a.devices}</li>
+      </ul>
+      <p class="h-muted">线路知识：<a href="/guide/knowledge-network-lines/">直连、BGP 中转与 IPLC/IEPL 专线的区别</a></p>
+    </section>
+
+    <section class="h-section">
+      <h2>{a.name}优缺点</h2>
+      <div class="h-grid">
+        <div class="h-box"><h3>优点</h3><ul class="h-list">{pros.map((x) => <li>{x}</li>)}</ul></div>
+        <div class="h-box"><h3>需要注意</h3><ul class="h-list">{cons.length ? cons.map((x) => <li>{x}</li>) : <li>暂无明显短板，建议先月付确认本地网络体验。</li>}</ul></div>
+      </div>
+    </section>
+
+    <section class="h-section">
+      <h2>{a.name}和同价位机场对比</h2>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">机场</th><th scope="col">月付起步</th><th scope="col">每月流量</th><th scope="col">线路</th><th scope="col">不限时包</th><th scope="col">解锁</th></tr></thead>
+          <tbody>
+            {[a, ...rivals].map((x) => <tr class={x === a ? 'is-hl' : ''}><td><Brand a={x} /></td><td class="h-num">{`${fmtPrice(entry(x)!.price)} / ${fmtGB(entry(x)!.traffic)}`}</td><td class="h-num">{trafficRange(x)}</td><td>{lineLabel(x)}</td><td>{oneTime(x).length ? '有' : '无'}</td><td>{unlockText(x)}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p>更多选择：<a href="/recommend/">机场推荐</a> · <a href="/top-10-airports/">十大机场排行榜</a> · <a href="/cheap-airport/">便宜机场</a> · <a href="/best-value-airport/">性价比机场</a></p>
+    </section>
+
+    <section class="h-section">
+      <h2>{a.name}购买和使用步骤</h2>
+      <ol class="h-list">
+        <li>点上方“前往 {a.name} 官网”，用邮箱注册账号。</li>
+        <li>按上面的用量表选套餐，第一次建议买月付。</li>
+        {a.promo ? <li>结算页填写优惠码 <code>{a.promo}</code>，确认金额后付款。</li> : <li>结算前留意官网公告里的限时折扣。</li>}
+        <li>在用户中心复制订阅链接，导入客户端：<a href="/guide/clash-verge-rev/">Windows（Clash Verge Rev）</a> · <a href="/guide/mac/">Mac</a> · <a href="/guide/shadowrocket/">iPhone（小火箭）</a> · <a href="/guide/clash-for-android/">安卓</a>。</li>
+        <li>晚上 8–11 点测一下常用网站，满意再考虑年付。</li>
+      </ol>
+    </section>
+
+    <section class="h-section">
+      <h2>{a.name}常见问题</h2>
+      {faq.map((f) => <div class="h-qa"><h3>{f.q}</h3><p>{f.a}</p></div>)}
+    </section>
+  </article>
+</BaseLayout>

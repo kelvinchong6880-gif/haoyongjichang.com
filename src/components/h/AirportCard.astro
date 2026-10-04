@@ -1,0 +1,44 @@
+---
+// 机场卡片：推荐理由 + 关键参数 + 完整套餐表 + 按钮（套餐表直接读数据文件）
+import Promo from './Promo.astro';
+import {
+  priced, planPrice, planTraffic, perGB, billingLabel, lineLabel, trafficRange, unlockText, reviewUrl, entry, isPremium, type Airport,
+} from '../../data/airports';
+interface Props { a: Airport; rank?: number; tag?: string; top?: boolean; headingLevel?: 'h2' | 'h3' }
+const { a, rank, tag, top = false, headingLevel = 'h3' } = Astro.props;
+const H = headingLevel;
+const e = entry(a);
+---
+<article class={`h-card ${top ? 'is-top' : ''}`} id={a.slug}>
+  <div class="h-card-head">
+    {rank && <span class={`h-rank ${rank === 1 ? 'h-rank-1' : ''}`}>{rank}</span>}
+    <img src={a.logo} alt={`${a.name} logo`} width="44" height="44" loading="lazy" decoding="async" />
+    <H><a href={reviewUrl(a)}>{a.name}</a></H>
+    {tag && <span class="h-tag">{tag}</span>}
+    {!isPremium(a) && <span class="h-tag h-tag-warn">非专线</span>}
+  </div>
+  <p style="margin:0 0 6px"><strong>推荐理由：</strong>{a.verdict}。</p>
+  <p class="h-muted" style="margin:0">适合：{a.bestFor}</p>
+  <dl class="h-facts">
+    <div><dt>月付起步</dt><dd class="h-num">{e ? planPrice(e) : '—'}</dd></div>
+    <div><dt>线路</dt><dd>{lineLabel(a)}</dd></div>
+    <div><dt>每月流量</dt><dd class="h-num">{trafficRange(a)}</dd></div>
+    <div><dt>解锁（官网写明）</dt><dd>{unlockText(a)}</dd></div>
+    <div><dt>设备数</dt><dd>{a.devices}</dd></div>
+  </dl>
+  <div class="h-table-wrap">
+    <table class="h-table" style="min-width:480px">
+      <thead><tr><th scope="col">套餐</th><th scope="col">价格</th><th scope="col">流量</th><th scope="col">付费方式</th><th scope="col">每 GB</th></tr></thead>
+      <tbody>
+        {priced(a).map((p) => (
+          <tr class={p === e ? 'is-hl' : ''}><td>{p.name}</td><td class="h-num h-price">{planPrice(p)}</td><td class="h-num">{planTraffic(p)}</td><td>{billingLabel(p.billing)}</td><td class="h-num">¥{perGB(p).toFixed(3)}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="h-actions">
+    <a class="h-btn" href={a.aff} target="_blank" rel="nofollow sponsored noopener">前往 {a.name} 官网 ↗</a>
+    <a class="h-btn h-btn-ghost" href={reviewUrl(a)}>{a.name}怎么样</a>
+    <Promo code={a.promo} />
+  </div>
+</article>

@@ -1,58 +1,95 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Brand from '../../components/h/Brand.astro';
+import Promo from '../../components/h/Promo.astro';
+import Disclosure from '../../components/h/Disclosure.astro';
+import { bySlug, planPrice, fmtGB, isPremium, faqSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH } from '../../data/airports';
+
+const s = bySlug;
+const p = (slug: string, name: string) => s(slug).plans.find((x) => x.name === name)!;
+const needs = [
+  { q: '只查资料、用 ChatGPT', need: '约 50GB/月', a: s('feimao'), plan: p('feimao', '学生版'), alt: s('wuyou'), altPlan: p('wuyou', 'MINI链接') },
+  { q: '每天刷 1–2 小时视频', need: '约 150GB/月', a: s('sogo'), plan: p('sogo', '基础版'), alt: s('shanyue'), altPlan: p('shanyue', '闪动 Flicker') },
+  { q: '经常看 4K、YouTube、Netflix', need: '约 300GB/月', a: s('sogo'), plan: p('sogo', '优选版'), alt: s('weifeng'), altPlan: p('weifeng', '破风') },
+  { q: '全家共用、经常下载', need: '600GB 以上/月', a: s('kuajie'), plan: p('kuajie', '凌云 Soar'), alt: s('weifeng'), altPlan: p('weifeng', '御风') },
+  { q: '一个月只用几次', need: '不想每月付钱', a: s('firefly'), plan: p('firefly', '不限时'), alt: s('flybit'), altPlan: p('flybit', '不限时 128G') },
+];
+const budgets = [
+  { b: '¥10 以内', pick: `${s('xxyun').name} 初级 ¥9.99/月 100GB`, note: '最便宜，但走 BGP 中转，晚上可能变慢', slug: 'xxyun' },
+  { b: '¥20 左右', pick: '无忧链接 ¥19/月 100GB、跨界云 ¥20/月 120GB', note: '专线里最便宜的两家', slug: 'wuyou' },
+  { b: '¥25 左右（最多人选）', pick: 'Sogo云 ¥25/月 150GB', note: 'IPLC + IEPL 双专线，同价位里线路最好', slug: 'sogo' },
+  { b: '¥45 左右', pick: 'Sogo云 优选版 ¥45/月 350GB', note: '追剧够用，每 GB 约 ¥0.13', slug: 'sogo' },
+  { b: '一年 ¥100 以内', pick: '飞猫云学生版 ¥84/年、无忧链接 ¥79/年、Sogo云 ¥98/年', note: '一年只付一次，适合轻度使用', slug: 'feimao' },
+];
+const faq = [
+  { q: '完全不懂，怎么最快选到机场？', a: '只回答两个问题：每月大概用多少流量、每月预算多少。对照本页两张表就能直接得到推荐。实在拿不定，选 Sogo云 基础版（¥25/月 150GB）基本不会错。' },
+  { q: '第一次买机场应该月付还是年付？', a: '月付。先用一个月，确认晚上在你家也稳定、用着顺手，再换年付省钱。' },
+  { q: '买完机场之后怎么用？', a: '在官网复制订阅链接，导入客户端（电脑 Clash Verge Rev，iPhone 小火箭，安卓 Clash Meta），选一个节点打开就能用。本站使用教程有详细步骤。' },
+  { q: '优惠码在哪里填？', a: '在机场官网下单的结算页，有“优惠码 / 折扣码”输入框，填进去点使用，金额会直接变化。' },
+];
+const title = `一分钟选购指南：新手3步选对机场，机场怎么选（2026）`;
+const description = `机场怎么选？一分钟选购指南（${UPDATED_MONTH}更新）：按用量（查资料、刷视频、追剧、全家用、偶尔用）和预算（¥10、¥20、¥25、¥45、年付）两张表直接告诉你买哪家、哪个套餐，新手不用看懂参数。`;
+const schemas = [faqSchema(faq)];
 ---
+<BaseLayout title={title} description={description} structuredData={schemas} breadcrumbs={[{ name: '一分钟选购指南', path: '/quick-guide/' }]}>
+  <div class="h-page">
+    <p class="h-eyebrow">新手必看 · 更新于 <time datetime={UPDATED}>{UPDATED_LABEL}</time></p>
+    <h1>⏱️ 一分钟选购指南：3 步选对机场</h1>
+    <p class="h-lead">不用看懂 IPLC、倍率这些词。按顺序回答 3 个问题，就能知道买哪家、买哪个套餐。</p>
+    <Disclosure />
 
-<BaseLayout 
-  title="一分钟选购指南 - 2026按场景快速选购 | 2026年最新科学上网与翻墙梯子配置教程大全" 
-  description="通过一分钟选购指南，按打游戏、刷TikTok、奈飞追剧、极致性价比等不同需求快速找到最适合你的专线机场。 无论您是刚接触翻墙的新手小白，还是追求极致路由分流规则的高阶极客用户，都能在这里找到手把手的图文配置指南。好用机场（haoyongjichang.com）持续为您更新各平台最新版科学上网客户端的使用技巧，以及底层协议与线路网络基础知识，助您一分钟极速连通全球网络，畅游无阻。"
->
-  <div class="page-shell" style="padding-top: 40px; padding-bottom: 60px;">
-    <header style="text-align: center; margin-bottom: 40px;">
-      <h1 style="font-size: 2.5rem; margin-bottom: 16px;">⏱️ 一分钟选购指南</h1>
-      <p style="color: var(--muted); max-width: 700px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6;">
-        根据您的主要使用场景，我们为您精选了以下最适合的方案。只需对号入座，一分钟即可找到您的心水之选。
-      </p>
-    </header>
-
-    <div class="quick-guide-wrapper">
-      <div style="overflow-x: auto;">
-                <table class="quick-guide-table">
-          <thead>
-            <tr >
-              <th style="width: 25%;">你的需求</th>
-              <th style="width: 20%;">首选推荐</th>
-              <th style="width: 40%;">特点 / 为什么选它</th>
-              <th style="width: 15%; text-align: center;">直达</th>
-            </tr>
-          </thead>
+    <section class="h-section">
+      <h2>第 1 步：你主要拿来做什么？</h2>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">你的用法</th><th scope="col">大概需要</th><th scope="col">首选</th><th scope="col">备选</th></tr></thead>
           <tbody>
-            <tr >
-              <td ><strong>🎮 打游戏首选</strong></td>
-              <td ><a href="/review/firefly/" style="color: var(--primary); font-weight: bold; text-decoration: none; font-size: 1.1rem;">Firefly</a></td>
-              <td style="padding: 24px 8px; color: var(--muted); line-height: 1.6;">主打低延迟，全 IPLC 专线</td>
-              <td style="text-align: center;"><a href="/review/firefly/" class="button button-small" style="padding: 6px 16px; font-size: 0.9rem; border-radius: 6px;">查看详情</a></td>
-            </tr>
-            <tr >
-              <td ><strong>📱 刷 TikTok 首选</strong></td>
-              <td ><a href="/review/weifeng/" style="color: var(--primary); font-weight: bold; text-decoration: none; font-size: 1.1rem;">微风</a></td>
-              <td style="padding: 24px 8px; color: var(--muted); line-height: 1.6;">主打原生住宅 IP，完美解锁跨区限制</td>
-              <td style="text-align: center;"><a href="/review/weifeng/" class="button button-small" style="padding: 6px 16px; font-size: 0.9rem; border-radius: 6px;">查看详情</a></td>
-            </tr>
-            <tr >
-              <td ><strong>🎬 奈飞追剧首选</strong></td>
-              <td ><a href="/review/sogo/" style="color: var(--primary); font-weight: bold; text-decoration: none; font-size: 1.1rem;">Sogo云</a></td>
-              <td style="padding: 24px 8px; color: var(--muted); line-height: 1.6;">主打大流量全解锁，<strong style="color:var(--text)">不限速不限设备</strong></td>
-              <td style="text-align: center;"><a href="/review/sogo/" class="button button-small" style="padding: 6px 16px; font-size: 0.9rem; border-radius: 6px;">查看详情</a></td>
-            </tr>
-            <tr>
-              <td ><strong>💰 极致性价比</strong></td>
-              <td ><a href="/review/wuyou/" style="color: var(--primary); font-weight: bold; text-decoration: none; font-size: 1.1rem;">无忧</a></td>
-              <td style="padding: 24px 8px; color: var(--muted); line-height: 1.6;">主打便宜，白菜价专属，性价比极高</td>
-              <td style="text-align: center;"><a href="/review/wuyou/" class="button button-small" style="padding: 6px 16px; font-size: 0.9rem; border-radius: 6px;">查看详情</a></td>
-            </tr>
+            {needs.map((x) => (
+              <tr><td><strong>{x.q}</strong></td><td class="h-num">{x.need}</td>
+                <td><Brand a={x.a} /><br /><span class="h-muted">{x.plan.name} · </span><span class="h-num h-price">{planPrice(x.plan)}</span></td>
+                <td><Brand a={x.alt} /><br /><span class="h-muted">{x.altPlan.name} · </span><span class="h-num">{planPrice(x.altPlan)}</span>{!isPremium(x.alt) && <span class="h-tag h-tag-warn" style="margin-left:4px">非专线</span>}</td></tr>
+            ))}
           </tbody>
         </table>
       </div>
+      <p class="h-muted">不确定用多少？看 <a href="/guide/knowledge-airport-buying-guide/">按量付费和周期订阅怎么选</a>。</p>
+    </section>
+
+    <section class="h-section">
+      <h2>第 2 步：每月预算多少？</h2>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">预算</th><th scope="col">推荐</th><th scope="col">说明</th></tr></thead>
+          <tbody>
+            {budgets.map((x) => <tr class={x.slug === 'sogo' && x.b.includes('最多人') ? 'is-hl' : ''}><td><strong>{x.b}</strong></td><td>{x.pick}</td><td>{x.note}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="h-muted">更多低价选择看 <a href="/cheap-airport/">便宜机场</a>；想比单价看 <a href="/best-value-airport/">性价比机场</a>。</p>
+    </section>
+
+    <section class="h-section">
+      <h2>第 3 步：有没有特殊需求？</h2>
+      <div class="h-grid">
+        <div class="h-box"><h3>要用 ChatGPT、看 Netflix</h3><p class="h-muted" style="margin:0">选官网写明支持解锁的机场：Sogo云、飞猫云、无忧链接、跨界云、灵猫、闪跃。<a href="/ai-streaming/">AI 与流媒体解锁</a></p></div>
+        <div class="h-box"><h3>做 TikTok、外贸，要固定 IP</h3><p class="h-muted" style="margin:0">飞猫云有独享原生 IP 定制套餐（¥550/月 500GB）。<a href="/review/feimao/">飞猫云测评</a></p></div>
+        <div class="h-box"><h3>想季付</h3><p class="h-muted" style="margin:0">灵猫有季付 Big：¥125/季，每月 300GB。<a href="/review/lingmao/">灵猫测评</a></p></div>
+        <div class="h-box"><h3>想要冷门国家节点</h3><p class="h-muted" style="margin:0">飞猫云节点地区最多，含韩国、越南、印度、阿根廷等。</p></div>
+      </div>
+    </section>
+
+    <div class="h-callout">
+      <p style="margin:0 0 10px"><strong>还是拿不定？</strong>大多数新手选 Sogo云 基础版：{planPrice(p('sogo', '基础版'))}，每月 {fmtGB(150)}，买完照着 <a href="/guide/">使用教程</a> 就能用。</p>
+      <div class="h-actions">
+        <a class="h-btn" href={s('sogo').aff} target="_blank" rel="nofollow sponsored noopener">前往 Sogo云 官网 ↗</a>
+        <Promo code={s('sogo').promo} />
+      </div>
     </div>
+
+    <section class="h-section">
+      <h2>选购常见问题</h2>
+      {faq.map((f) => <div class="h-qa"><h3>{f.q}</h3><p>{f.a}</p></div>)}
+      <p style="margin-top:12px">想了解更多选购细节，看 <a href="/buying-guide/">机场选购指南</a>。</p>
+    </section>
   </div>
 </BaseLayout>

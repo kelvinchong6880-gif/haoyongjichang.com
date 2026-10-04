@@ -1,0 +1,6 @@
+---
+import { reviewUrl, type Airport } from '../../data/airports';
+interface Props { a: Airport }
+const { a } = Astro.props;
+---
+<a class="h-brand" href={reviewUrl(a)}><img src={a.logo} alt="" width="28" height="28" loading="lazy" decoding="async" /><span>{a.name}</span></a>

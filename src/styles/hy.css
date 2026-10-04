@@ -1,0 +1,84 @@
+/* 好用机场 · 关键词页与测评页组件样式（h- 前缀） */
+:root {
+  --primary: #2457e6;
+  --surface: #ffffff;
+  --text: #0b1736;
+  --hl: #eef3ff;
+  --amber: #b45309;
+}
+.desktop-nav a[aria-current='page'] { color: var(--blue); }
+@media (max-width: 992px) { .desktop-nav-row { display: none; } }
+
+.h-skip { position: absolute; left: -9999px; top: 0; z-index: 100; background: var(--blue); color: #fff; padding: 8px 14px; }
+.h-skip:focus { left: 8px; top: 8px; }
+.h-crumbs { max-width: 1120px; margin: 18px auto 0; padding: 0 20px; font-size: 0.85rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; }
+.h-crumbs a { color: var(--blue); text-decoration: none; }
+
+.h-page { max-width: 1120px; margin: 0 auto; padding: 20px 20px 56px; }
+.h-page h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); line-height: 1.3; margin: 8px 0 12px; }
+.h-page h2 { font-size: clamp(1.25rem, 3vw, 1.6rem); margin: 0 0 12px; line-height: 1.35; }
+.h-page h3 { font-size: 1.08rem; margin: 0 0 8px; }
+.h-page p { line-height: 1.75; }
+.h-eyebrow { color: var(--blue); font-weight: 700; font-size: 0.85rem; margin: 0; }
+.h-lead { font-size: 1.05rem; color: #344054; max-width: 860px; }
+.h-muted { color: var(--muted); font-size: 0.88rem; }
+.h-section { margin: 40px 0; }
+.h-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.h-box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+a.h-box { display: block; color: inherit; text-decoration: none; transition: border-color .2s, box-shadow .2s; }
+a.h-box:hover { border-color: #9db5f5; box-shadow: 0 8px 22px rgba(36, 87, 230, .08); }
+a.h-box strong { color: var(--blue); }
+.h-callout { background: var(--hl); border: 1px solid #c7d6fb; border-radius: 14px; padding: 18px; margin: 18px 0; }
+.h-list { padding-left: 1.2rem; margin: 0; }
+.h-list li { margin-bottom: 6px; line-height: 1.7; }
+.h-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.h-btn { display: inline-flex; align-items: center; gap: 4px; background: var(--blue); color: #fff !important; padding: 9px 16px; border-radius: 9px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.h-btn:hover { background: #1b46c0; }
+.h-btn-sm { padding: 5px 11px; font-size: .85rem; font-weight: 600; }
+.h-btn-ghost { background: #fff; color: var(--blue) !important; border: 1px solid #b9cbf8; }
+.h-disclosure { background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 0 10px 10px 0; padding: 10px 14px; color: #78350f; font-size: .85rem; margin: 14px 0 20px; }
+
+/* tables */
+.h-table-wrap { position: relative; overflow-x: auto; background: #fff; border: 1px solid var(--line); border-radius: 14px; margin: 12px 0; }
+.h-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: .93rem; }
+.h-table th, .h-table td { padding: 11px 12px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.h-table th { background: #f3f6fb; font-size: .84rem; color: #475467; white-space: nowrap; font-weight: 700; }
+.h-table tr:last-child td { border-bottom: 0; }
+.h-table tr.is-hl td { background: var(--hl); }
+.h-num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.h-price { color: var(--blue); font-weight: 800; }
+.h-rank { display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; border-radius: 999px; background: #eef1f6; font-weight: 800; color: #475467; font-size: .85rem; }
+.h-rank-1 { background: var(--blue); color: #fff; }
+.h-brand { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.h-brand img { width: 28px; height: 28px; object-fit: contain; border-radius: 6px; background: #fff; }
+.h-tag { display: inline-block; font-size: .75rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: #eef3ff; color: var(--blue); }
+.h-tag-warn { background: #fff4e5; color: var(--amber); }
+
+/* promo */
+.h-promo { display: inline-flex; align-items: center; gap: 6px; background: #fffbeb; border: 1px dashed #f59e0b; color: #92400e; border-radius: 9px; padding: 4px 6px 4px 10px; font-size: .86rem; white-space: nowrap; }
+.h-promo code { font-weight: 800; color: var(--amber); background: none; }
+.h-promo button { border: 0; background: #f59e0b; color: #fff; border-radius: 6px; padding: 3px 9px; font-size: .8rem; cursor: pointer; }
+
+/* scenario / brand cards */
+.h-scenes { display: grid; gap: 16px; }
+.h-scenes > *, .h-grid > *, .h-card { min-width: 0; }
+.h-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+.h-card.is-top { border: 2px solid var(--blue); box-shadow: 0 12px 30px rgba(36, 87, 230, .1); }
+.h-card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 10px; }
+.h-card-head img { width: 44px; height: 44px; object-fit: contain; border-radius: 10px; border: 1px solid var(--line); background: #fff; }
+.h-card-head h3 { margin: 0; font-size: 1.25rem; flex: 1; }
+.h-card-head h3 a { color: var(--ink); text-decoration: none; }
+.h-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px 14px; background: #f6f8fc; border-radius: 12px; padding: 12px 14px; margin: 10px 0; }
+.h-facts dt { font-size: .78rem; color: var(--muted); }
+.h-facts dd { margin: 0; font-weight: 700; font-size: .93rem; }
+
+/* faq */
+.h-qa { border-bottom: 1px solid var(--line); padding: 14px 0; }
+.h-qa h3 { margin: 0 0 6px; font-size: 1.02rem; }
+.h-qa p { margin: 0; color: #344054; }
+
+@media (max-width: 640px) {
+  .h-page { padding: 14px 16px 44px; }
+  .h-section { margin: 30px 0; }
+  .h-card { padding: 16px; }
+}

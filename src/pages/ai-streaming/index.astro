@@ -1,288 +1,77 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Brand from '../../components/h/Brand.astro';
+import AirportCard from '../../components/h/AirportCard.astro';
+import Disclosure from '../../components/h/Disclosure.astro';
+import { AIRPORTS, bySlug, entry, planPrice, fmtGB, lineLabel, faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH } from '../../data/airports';
+
+const ok = AIRPORTS.filter((a) => a.streaming && a.ai);
+const unknown = AIRPORTS.filter((a) => !(a.streaming && a.ai));
+const claims: Record<string, string> = {
+  sogo: 'Netflix、Disney+、ChatGPT、TikTok',
+  feimao: '原生 IP 解锁 Netflix 等流媒体',
+  wuyou: 'ChatGPT、Gemini 等 AI，4K Netflix',
+  kuajie: '流媒体和 AI 平台全解锁',
+  lingmao: '原生 IP 解锁 Netflix 等流媒体及 AI',
+  shanyue: '原生 IP 解锁流媒体，ChatGPT、TikTok',
+};
+const services = [
+  { name: 'ChatGPT / Claude / Gemini', node: '日本、新加坡、美国、台湾', tip: 'OpenAI、Anthropic 和 Google Gemini 都不对中国大陆和香港地区提供服务，用香港节点会提示地区不支持。' },
+  { name: 'Netflix', node: '看想看的片在哪个地区上架', tip: '各地区片库不同，日本、美国、新加坡节点片源较多；提示“代理”就换同地区其他节点。' },
+  { name: 'Disney+', node: '香港、新加坡、日本、美国', tip: '需要节点所在地区已经上线 Disney+，台湾、香港、新加坡、日本均已上线。' },
+  { name: 'YouTube', node: '任意地区', tip: '不挑节点，看 4K 主要看带宽和流量，300GB 以上的套餐更从容。' },
+  { name: 'TikTok', node: '美国、新加坡、日本等目标市场', tip: '账号运营最好固定同一地区的独享 IP，频繁换 IP 容易被风控。' },
+];
+const faq = [
+  { q: '哪个机场能稳定用 ChatGPT？', a: `官网写明支持 ChatGPT 的有：${ok.map((a) => a.name).join('、')}。首推 Sogo云（¥25/月 150GB，IPLC + IEPL 双专线）。用的时候选日本、新加坡、美国或台湾节点，不要用香港节点。` },
+  { q: '为什么用香港节点打不开 ChatGPT？', a: 'OpenAI 不对中国大陆和香港地区提供服务，香港 IP 会被直接拒绝。换成日本、新加坡、美国、台湾节点即可。Claude 和 Gemini 也是一样。' },
+  { q: 'Netflix 提示在使用代理怎么办？', a: '说明当前节点的 IP 被 Netflix 识别了。换同地区的其他节点，或者换一个官网写明支持 Netflix 解锁的机场。' },
+  { q: '做 TikTok 运营用哪个机场？', a: '账号运营建议用固定的独享 IP，飞猫云有独享原生 IP 定制套餐（¥550/月 500GB）。只是刷 TikTok 看视频的话，普通专线机场就够。' },
+];
+const title = `AI与流媒体解锁机场推荐2026：能用ChatGPT、看Netflix的机场`;
+const description = `能用ChatGPT、Claude、看Netflix和Disney+的机场推荐（${UPDATED_MONTH}更新）：${ok.length}家官网写明支持AI和流媒体解锁的专线机场，附各服务该选哪个地区节点、香港节点为什么打不开ChatGPT、Netflix提示代理怎么办。`;
+const schemas = [itemListSchema(`${UPDATED_MONTH}AI与流媒体解锁机场`, ok), faqSchema(faq)];
 ---
+<BaseLayout title={title} description={description} structuredData={schemas} breadcrumbs={[{ name: 'AI 与流媒体解锁', path: '/ai-streaming/' }]}>
+  <div class="h-page">
+    <p class="h-eyebrow">更新于 <time datetime={UPDATED}>{UPDATED_LABEL}</time></p>
+    <h1>AI 与流媒体解锁：能用 ChatGPT、看 Netflix 的机场推荐</h1>
+    <p class="h-lead">想用 ChatGPT、Claude，或者看 Netflix、Disney+，机场要满足两点：<strong>官网写明支持解锁</strong>，以及 <strong>有对应地区的节点</strong>。下面先列出符合条件的机场，再告诉你每个服务该选哪个地区的节点。</p>
+    <Disclosure />
 
-<BaseLayout 
-  title="AI 与流媒体解锁 - 全球顶级服务无缝访问 | 2026年最新科学上网与翻墙梯子配置教程大全" 
-  description="使用推荐机场，轻松解锁 Netflix, Disney+, ChatGPT, Midjourney 等全球顶尖流媒体与 AI 服务，享受无缝的网络体验。 在【好用机场】推荐平台（haoyongjichang.com），我们通过长期自费实测与晚高峰严格数据追踪，为您筛选出2026年市面上真正稳定、不跑路的高端 IPLC/IEPL 专线机场与高性价比入门梯子。无论您是外贸办公、跨境电商运营，还是纯粹的 4K 追剧与硬核游戏玩家，都能在这里找到最匹配的科学上网解决方案。"
->
-  <div class="page-shell unlock-page">
-    <header class="unlock-header">
-      <h1>使用机场翻墙后可以访问什么？</h1>
-      <p>翻墙后，您可以直接打开很多以前上不去的网站，获取海外最新信息和资源。<br/>以下是最常用的 <strong>流媒体</strong> 与 <strong>AI 工具</strong> 平台：</p>
-    </header>
-
-    <section class="unlock-section">
-      <h2 class="section-title">🎬 流媒体平台</h2>
-      <div class="unlock-grid">
-        <!-- Netflix -->
-        <div class="unlock-card">
-          <div class="card-icon">🎬</div>
-          <h3>Netflix</h3>
-          <p>全球最大流媒体平台</p>
-        </div>
-        <!-- Disney+ -->
-        <div class="unlock-card">
-          <div class="card-icon">🪄</div>
-          <h3>Disney+</h3>
-          <p>迪士尼官方流媒体</p>
-        </div>
-        <!-- YouTube -->
-        <div class="unlock-card">
-          <div class="card-icon">📺</div>
-          <h3>YouTube</h3>
-          <p>全球最大视频平台</p>
-        </div>
-        <!-- TikTok -->
-        <div class="unlock-card">
-          <div class="card-icon">🎵</div>
-          <h3>TikTok</h3>
-          <p>短视频社交平台</p>
-        </div>
-        <!-- HBO Max -->
-        <div class="unlock-card">
-          <div class="card-icon">🍿</div>
-          <h3>HBO Max</h3>
-          <p>优质美剧与影视内容</p>
-        </div>
-        <!-- Hulu -->
-        <div class="unlock-card">
-          <div class="card-icon">🎞️</div>
-          <h3>Hulu</h3>
-          <p>美国本土流媒体平台</p>
-        </div>
-        <!-- Prime Video -->
-        <div class="unlock-card">
-          <div class="card-icon">📦</div>
-          <h3>Prime Video</h3>
-          <p>亚马逊独家影视库</p>
-        </div>
-        <!-- Spotify -->
-        <div class="unlock-card">
-          <div class="card-icon">🎧</div>
-          <h3>Spotify</h3>
-          <p>全球最大音乐流媒体</p>
-        </div>
+    <section class="h-section">
+      <h2>官网写明支持 AI 与流媒体的机场（{ok.length} 家）</h2>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">机场</th><th scope="col">官网写明支持</th><th scope="col">月付起步</th><th scope="col">线路</th><th scope="col">节点地区</th></tr></thead>
+          <tbody>
+            {ok.map((a, i) => <tr class={i === 0 ? 'is-hl' : ''}><td><Brand a={a} /></td><td style="min-width:200px">{claims[a.slug]}</td><td class="h-num">{planPrice(entry(a)!)} · {fmtGB(entry(a)!.traffic)}</td><td>{lineLabel(a)}</td><td style="min-width:220px">{a.nodeRegions}</td></tr>)}
+          </tbody>
+        </table>
       </div>
+      <p class="h-muted">{unknown.map((a) => a.name).join('、')} 的官网没有写明解锁情况，主要用途是 AI 或流媒体的话，建议优先选上表里的机场。</p>
     </section>
 
-    <section class="unlock-section">
-      <h2 class="section-title">🤖 AI 工具</h2>
-      <div class="unlock-grid">
-        <!-- ChatGPT -->
-        <div class="unlock-card">
-          <div class="card-icon">💬</div>
-          <h3>ChatGPT</h3>
-          <p>OpenAI 智能对话模型</p>
-        </div>
-        <!-- Claude -->
-        <div class="unlock-card">
-          <div class="card-icon">🧠</div>
-          <h3>Claude</h3>
-          <p>Anthropic 强大 AI</p>
-        </div>
-        <!-- Midjourney -->
-        <div class="unlock-card">
-          <div class="card-icon">🎨</div>
-          <h3>Midjourney</h3>
-          <p>全球顶尖 AI 绘图</p>
-        </div>
-        <!-- Gemini -->
-        <div class="unlock-card">
-          <div class="card-icon">✨</div>
-          <h3>Gemini</h3>
-          <p>Google 最新 AI 模型</p>
-        </div>
-        <!-- Copilot -->
-        <div class="unlock-card">
-          <div class="card-icon">💻</div>
-          <h3>Copilot</h3>
-          <p>微软全能 AI 助手</p>
-        </div>
-        <!-- Perplexity -->
-        <div class="unlock-card">
-          <div class="card-icon">🔍</div>
-          <h3>Perplexity</h3>
-          <p>AI 智能搜索引擎</p>
-        </div>
-        <!-- Poe -->
-        <div class="unlock-card">
-          <div class="card-icon">🔮</div>
-          <h3>Poe</h3>
-          <p>Quora 聚合 AI 平台</p>
-        </div>
-        <!-- Notion AI -->
-        <div class="unlock-card">
-          <div class="card-icon">📝</div>
-          <h3>Notion AI</h3>
-          <p>智能文档与工作空间</p>
-        </div>
+    <section class="h-section">
+      <h2>各服务该选哪个地区的节点</h2>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">服务</th><th scope="col">推荐节点地区</th><th scope="col">注意事项</th></tr></thead>
+          <tbody>{services.map((x) => <tr><td><strong>{x.name}</strong></td><td>{x.node}</td><td style="min-width:280px">{x.tip}</td></tr>)}</tbody>
+        </table>
       </div>
-    </section>
-    
-    <section class="unlock-section">
-      <h2 class="section-title">🌐 社交与开发</h2>
-      <div class="unlock-grid">
-        <!-- Twitter -->
-        <div class="unlock-card">
-          <div class="card-icon">🐦</div>
-          <h3>X (Twitter)</h3>
-          <p>全球实时热门社交平台</p>
-        </div>
-        <!-- Instagram -->
-        <div class="unlock-card">
-          <div class="card-icon">📸</div>
-          <h3>Instagram</h3>
-          <p>知名图片与视频分享</p>
-        </div>
-        <!-- Telegram -->
-        <div class="unlock-card">
-          <div class="card-icon">✈️</div>
-          <h3>Telegram</h3>
-          <p>安全加密通讯软件</p>
-        </div>
-        <!-- GitHub -->
-        <div class="unlock-card">
-          <div class="card-icon">🐙</div>
-          <h3>GitHub</h3>
-          <p>全球最大开源代码托管</p>
-        </div>
-      </div>
+      <p>详细排查步骤：<a href="/guide/scenario-ai-unblock/">ChatGPT / Claude 访问受限怎么办</a> · <a href="/guide/scenario-streaming-unblock/">Netflix / Disney+ 解锁教程</a></p>
     </section>
 
+    <section class="h-section">
+      <h2>首选推荐：Sogo云</h2>
+      <p>官网写明支持 Netflix、Disney+、ChatGPT、TikTok，节点覆盖港台日新美等 60 多个，IPLC + IEPL 双专线，用 AI 和看剧都不用频繁换机场。</p>
+      <AirportCard a={bySlug('sogo')} rank={1} tag="AI / 流媒体首选" top />
+    </section>
+
+    <section class="h-section">
+      <h2>AI 与流媒体解锁常见问题</h2>
+      {faq.map((f) => <div class="h-qa"><h3>{f.q}</h3><p>{f.a}</p></div>)}
+    </section>
   </div>
-
-  <style is:inline>
-    .unlock-page {
-      padding-top: 60px;
-      padding-bottom: 80px;
-    }
-    .unlock-header {
-      text-align: center;
-      margin-bottom: 60px;
-    }
-    .unlock-header h1 {
-      font-size: 2.5rem;
-      color: var(--ink);
-      margin-bottom: 16px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-    .unlock-header p {
-      font-size: 1.1rem;
-      color: var(--muted);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-    
-    .unlock-section {
-      margin-bottom: 70px;
-    }
-    .section-title {
-      text-align: center;
-      font-size: 1.6rem;
-      color: var(--ink);
-      margin-bottom: 35px;
-      font-weight: 700;
-      position: relative;
-    }
-    
-    .unlock-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 24px;
-      max-width: 1050px;
-      margin: 0 auto;
-    }
-    
-    .unlock-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 30px 20px;
-      text-align: center;
-      border: 1px solid rgba(226, 232, 240, 0.8);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      position: relative;
-      overflow: hidden;
-      cursor: default;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .unlock-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(36, 87, 230, 0.08);
-      border-color: rgba(36, 87, 230, 0.2);
-    }
-    .unlock-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 4px;
-      background: linear-gradient(90deg, transparent, transparent);
-      transition: all 0.3s ease;
-    }
-    .unlock-card:hover::before {
-      background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-    }
-    
-    .card-icon {
-      width: 72px;
-      height: 72px;
-      background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-      border-radius: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04), inset 0 2px 4px rgba(255,255,255,0.8);
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .unlock-card:hover .card-icon {
-      transform: scale(1.1) translateY(-4px);
-      background: linear-gradient(135deg, #eff6ff, #dbeafe);
-      box-shadow: 0 8px 20px rgba(37,99,235,0.15), inset 0 2px 4px rgba(255,255,255,0.9);
-    }
-    
-    .unlock-card h3 {
-      font-size: 1.15rem;
-      color: var(--ink);
-      margin: 0 0 8px 0;
-      font-weight: 700;
-    }
-    .unlock-card p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    @media (max-width: 768px) {
-      .unlock-header h1 {
-        font-size: 2rem;
-      }
-      .unlock-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 16px;
-      }
-      .unlock-card {
-        padding: 24px 12px;
-      }
-      .card-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.8rem;
-        border-radius: 16px;
-        margin-bottom: 16px;
-      }
-      .unlock-card h3 {
-        font-size: 1rem;
-      }
-      .unlock-card p {
-        font-size: 0.8rem;
-      }
-    }
-  </style>
 </BaseLayout>

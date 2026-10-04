@@ -1,0 +1,34 @@
+---
+// 编辑推荐榜：Sogo云 排第一（综合排名），下方页面表格再按价格 / 单价客观排序
+import Promo from './Promo.astro';
+import Brand from './Brand.astro';
+import { fmtGB, planPrice, perGB, entry, bestValue, yearly, lineLabel, reviewUrl, type Airport } from '../../data/airports';
+interface Props { list: Airport[]; mode: 'cheap' | 'value'; title: string; firstReason: string }
+const { list, mode, title, firstReason } = Astro.props;
+const [first, ...rest] = list;
+const text = (a: Airport) => {
+  if (mode === 'cheap') { const e = entry(a); const y = yearly(a)[0]; return `月付 ${e ? `${planPrice(e)} ${fmtGB(e.traffic)}` : '—'}${y ? `，年付 ${planPrice(y)} 起` : ''}`; }
+  const b = bestValue(a); return b ? `${b.name} ${planPrice(b)} ${fmtGB(b.traffic)}，约 ¥${perGB(b).toFixed(3)}/GB` : '—';
+};
+---
+<section class="h-section" id="picks">
+  <h2>{title}</h2>
+  <div class="h-callout">
+    <p style="margin:0 0 6px"><span class="h-rank h-rank-1" style="margin-right:6px">1</span><strong>首选：<a href={reviewUrl(first)}>{first.name}</a></strong> · {lineLabel(first)} 专线</p>
+    <p class="h-num h-price" style="margin:0 0 6px">{text(first)}</p>
+    <p style="margin:0 0 12px">{firstReason}</p>
+    <div class="h-actions">
+      <a class="h-btn" href={first.aff} target="_blank" rel="nofollow sponsored noopener">前往 {first.name} 官网 ↗</a>
+      <Promo code={first.promo} />
+    </div>
+  </div>
+  <div class="h-table-wrap">
+    <table class="h-table">
+      <thead><tr><th scope="col">#</th><th scope="col">机场</th><th scope="col">{mode === 'cheap' ? '价格' : '最划算套餐'}</th><th scope="col">推荐理由</th><th scope="col">优惠码</th></tr></thead>
+      <tbody>
+        {rest.map((a, i) => <tr><td><span class="h-rank">{i + 2}</span></td><td><Brand a={a} /></td><td class="h-num">{text(a)}</td><td style="min-width:240px">{a.verdict}</td><td><code>{a.promo ?? '—'}</code></td></tr>)}
+      </tbody>
+    </table>
+  </div>
+  <p class="h-muted">推荐榜综合价格、线路、稳定性和解锁情况排序；下面各表按{mode === 'cheap' ? '价格' : '每 GB 单价'}客观排序。</p>
+</section>

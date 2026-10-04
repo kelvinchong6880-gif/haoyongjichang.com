@@ -1,297 +1,110 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Brand from '../../components/h/Brand.astro';
+import Promo from '../../components/h/Promo.astro';
+import Disclosure from '../../components/h/Disclosure.astro';
+import {
+  AIRPORTS, entry, yearly, oneTime, bestValue, perGB, fmtGB, fmtPrice, planPrice, lineLabel, trafficRange, unlockText, isPremium, reviewUrl,
+  faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH, type Airport,
+} from '../../data/airports';
+
+const max = (a: Airport) => Math.max(...a.plans.filter((p) => !p.custom && p.billing !== 'One-Time').map((p) => p.traffic));
+const subs = [
+  { title: '月付最便宜（专线）', rows: AIRPORTS.filter(isPremium).sort((x, y) => entry(x)!.price - entry(y)!.price).slice(0, 5), val: (a: Airport) => `${planPrice(entry(a)!)} · ${fmtGB(entry(a)!.traffic)}`, link: { href: '/cheap-airport/', text: '便宜机场推荐' } },
+  { title: '每 GB 最便宜（专线）', rows: AIRPORTS.filter(isPremium).sort((x, y) => perGB(bestValue(x)!) - perGB(bestValue(y)!)).slice(0, 5), val: (a: Airport) => `¥${perGB(bestValue(a)!).toFixed(3)}/GB`, link: { href: '/best-value-airport/', text: '性价比机场' } },
+  { title: '大流量', rows: [...AIRPORTS].sort((x, y) => max(y) - max(x)).slice(0, 5), val: (a: Airport) => `最高 ${fmtGB(max(a))}/月`, link: { href: '/best-value-airport/#huge', text: '1TB 以上套餐' } },
+  { title: '不限时流量包', rows: AIRPORTS.filter((a) => oneTime(a).length).sort((x, y) => oneTime(x)[0].price - oneTime(y)[0].price).slice(0, 5), val: (a: Airport) => `${planPrice(oneTime(a)[0])} · ${fmtGB(oneTime(a)[0].traffic)}`, link: { href: '/cheap-airport/#no-expiry', text: '不限时包排行' } },
+];
+
+const faq = [
+  { q: '十大机场排行榜第一名是哪家？', a: `${UPDATED_MONTH}排第一的是 Sogo云：IPLC + IEPL 双专线，¥25/月 150GB 起，9 款套餐里有 4 款不限时包，优惠码 sogo10000。` },
+  { q: '机场排名是怎么排的？', a: '综合 4 项：线路（IPLC / IEPL 专线优先）、价格和每 GB 成本、流量档位是否从轻度覆盖到重度、套餐灵活性（年付小包、季付、不限时包）。每月按官网价格重新核对。' },
+  { q: '排名靠后的机场就不好吗？', a: '不是。很多机场在单项上排第一，比如跨界云大流量单价最低、无忧链接专线月付最便宜、Flybit 不限时包门槛最低。按自己最在意的那一项看分榜更准。' },
+  { q: '为什么小新云便宜却排在最后？', a: '小新云价格最低（¥9.99/月 100GB），但走 BGP 中转不是专线，晚高峰稳定性不如前面的专线机场，所以综合排名靠后，适合预算非常紧的人。' },
+];
+const title = `十大机场排行榜2026：机场排名前十与推荐理由（10月更新）`;
+const description = `2026十大机场排行榜（${UPDATED_MONTH}更新）：Sogo云、微风、飞猫云、Firefly、无忧链接等10家机场综合排名，逐家写明排名理由、月付价格、流量、线路和优惠码，另附月付最便宜、每GB最便宜、大流量、不限时包4个机场排行。`;
+const schemas = [itemListSchema(`${UPDATED_MONTH}十大机场排行榜`, AIRPORTS), faqSchema(faq)];
 ---
+<BaseLayout title={title} description={description} structuredData={schemas} breadcrumbs={[{ name: '十大机场排行榜', path: '/top-10-airports/' }]}>
+  <div class="h-page">
+    <p class="h-eyebrow">更新于 <time datetime={UPDATED}>{UPDATED_LABEL}</time></p>
+    <h1>十大机场排行榜 2026：机场排名前十</h1>
+    <p class="h-lead">按线路、价格、流量档位和套餐灵活性，给 10 家机场排出前十名。每家都写了排名理由；只在意价格或流量的话，直接看下面的 4 个单项排行。</p>
+    <Disclosure />
 
-<BaseLayout 
-  title="十大机场排行榜 - 2026年最新稳定高性价比机场推荐 | 2026年最新高性价比翻墙机场与稳定梯子推荐" 
-  description="2026年最新十大机场排行榜。为您精选全网最稳定、速度最快、最具性价比的十大优质机场，完美解锁流媒体与AI服务。 在【好用机场】推荐平台（haoyongjichang.com），我们通过长期自费实测与晚高峰严格数据追踪，为您筛选出2026年市面上真正稳定、不跑路的高端 IPLC/IEPL 专线机场与高性价比入门梯子。无论您是外贸办公、跨境电商运营，还是纯粹的 4K 追剧与硬核游戏玩家，都能在这里找到最匹配的科学上网解决方案。"
->
-  <div class="page-shell" style="padding-top: 40px; padding-bottom: 60px;">
-    <header style="text-align: center; margin-bottom: 40px;">
-      <h1 style="font-size: 2.5rem; margin-bottom: 16px;">🏆 十大机场排行榜 (2026最新)</h1>
-      <p style="color: var(--muted); max-width: 700px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6;">
-        基于2026年最新评测数据，从数千家机场中层层筛选，综合考量<strong style="color: var(--fg);">速度、稳定性、流媒体解锁能力、性价比与售后服务</strong>。以下是脱颖而出的十大优质机场，为您提供极速无忧的科学上网体验。
-      </p>
-    </header>
-
-    <div class="ranking-container">
-            <div class="data-table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th style="width: 6%;">排名</th>
-              <th style="width: 12%;">机场名称</th>
-              <th style="width: 15%;">线路类型</th>
-              <th style="width: 10%;">节点数</th>
-              <th style="width: 12%;">流媒体解锁</th>
-              <th style="width: 10%;">设备限制</th>
-              <th style="width: 15%;">起步价 (最低)</th>
-              <th style="width: 20%; text-align: center;">操作</th>
-            </tr>
-          </thead>
+    <section class="h-section">
+      <h2>{UPDATED_MONTH}十大机场排名</h2>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">排名</th><th scope="col">机场</th><th scope="col">排名理由</th><th scope="col">月付起步</th><th scope="col">每月流量</th><th scope="col">线路</th><th scope="col">解锁</th><th scope="col"><span style="position:absolute;left:-9999px">操作</span></th></tr></thead>
           <tbody>
-            <tr >
-              <td style="text-align: center;"><span style="background: #ef4444; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">1</span></td>
-              <td ><strong>Sogo云</strong></td>
-              <td style="padding: 20px; color: var(--ink);">全 IPLC 专线</td>
-              <td style="padding: 20px; color: var(--muted);">70+</td>
-              <td ><span style="color: #10b981; font-weight: bold;">全原生解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);"><strong>不限</strong></td>
-              <td style="padding: 20px; color: var(--text);">¥98 / 年起</td>
-              <td style="text-align: center;">
-                <a href="/review/sogo/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="https://wzjc.sogoyunaff.cc/#/?code=BC2BL855" target="_blank" rel="nofollow sponsored noopener noreferrer" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #f97316; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">2</span></td>
-              <td ><strong>微风</strong></td>
-              <td style="padding: 20px; color: var(--ink);">全 IPLC 专线</td>
-              <td style="padding: 20px; color: var(--muted);">80+</td>
-              <td ><span style="color: #10b981; font-weight: bold;">全原生解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);"><strong>不限</strong></td>
-              <td style="padding: 20px; color: var(--text);">¥19.9 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/weifeng/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/weifeng/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #eab308; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">3</span></td>
-              <td ><strong>飞猫云</strong></td>
-              <td style="padding: 20px; color: var(--ink);">全 IEPL 专线</td>
-              <td style="padding: 20px; color: var(--muted);">50+</td>
-              <td ><span style="color: #10b981; font-weight: bold;">稳定解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);">5台</td>
-              <td style="padding: 20px; color: var(--text);">¥20.0 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/feimao/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/feimao/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #94a3b8; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">4</span></td>
-              <td ><strong>Firefly</strong></td>
-              <td style="padding: 20px; color: var(--ink);">IPLC 专线</td>
-              <td style="padding: 20px; color: var(--muted);">60+</td>
-              <td ><span style="color: #10b981; font-weight: bold;">全解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);"><strong>不限</strong></td>
-              <td style="padding: 20px; color: var(--text);">¥22.0 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/firefly/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/firefly/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #94a3b8; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">5</span></td>
-              <td ><strong>无忧</strong></td>
-              <td style="padding: 20px; color: var(--ink);">IEPL 专线</td>
-              <td style="padding: 20px; color: var(--muted);">50+</td>
-              <td ><span style="color: #64748b; font-weight: bold;">基本解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);"><strong>不限</strong></td>
-              <td style="padding: 20px; color: var(--text);">¥12.0 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/wuyou/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/wuyou/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #94a3b8; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">6</span></td>
-              <td ><strong>跨界云</strong></td>
-              <td style="padding: 20px; color: var(--ink);">IPLC 专线</td>
-              <td style="padding: 20px; color: var(--muted);">100+</td>
-              <td ><span style="color: #10b981; font-weight: bold;">稳定解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);"><strong>不限</strong></td>
-              <td style="padding: 20px; color: var(--text);">¥28.0 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/kuajie/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/kuajie/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #94a3b8; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">7</span></td>
-              <td ><strong>灵猫</strong></td>
-              <td style="padding: 20px; color: var(--ink);">IPLC 专线</td>
-              <td style="padding: 20px; color: var(--muted);">90+</td>
-              <td ><span style="color: #10b981; font-weight: bold;">全原生解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);"><strong>不限</strong></td>
-              <td style="padding: 20px; color: var(--text);">¥30.0 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/lingmao/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/lingmao/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #94a3b8; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">8</span></td>
-              <td ><strong>闪跃</strong></td>
-              <td style="padding: 20px; color: var(--ink);">IPLC 专线</td>
-              <td style="padding: 20px; color: var(--muted);">70+</td>
-              <td ><span style="color: #10b981; font-weight: bold;">稳定解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);"><strong>不限</strong></td>
-              <td style="padding: 20px; color: var(--text);">¥25.0 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/shanyue/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/shanyue/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #94a3b8; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">9</span></td>
-              <td ><strong>Flybit</strong></td>
-              <td style="padding: 20px; color: var(--ink);">SS 隧道</td>
-              <td style="padding: 20px; color: var(--muted);">40+</td>
-              <td ><span style="color: #64748b; font-weight: bold;">基本解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);">3台</td>
-              <td style="padding: 20px; color: var(--text);">¥15.0 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/flybit/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/flybit/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
-
-            <tr >
-              <td style="text-align: center;"><span style="background: #94a3b8; color: #fff; width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; font-weight: bold; font-size: 0.9rem;">10</span></td>
-              <td ><strong>小新云</strong></td>
-              <td style="padding: 20px; color: var(--ink);">BGP 中转</td>
-              <td style="padding: 20px; color: var(--muted);">60+</td>
-              <td ><span style="color: #64748b; font-weight: bold;">基本解锁</span></td>
-              <td style="padding: 20px; color: var(--muted);">5台</td>
-              <td style="padding: 20px; color: var(--text);">¥18.0 / 月起</td>
-              <td style="text-align: center;">
-                <a href="/review/xxyun/" style="display: inline-block; padding: 6px 12px; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-right: 8px;">评测</a>
-                <a href="/review/xxyun/" style="display: inline-block; padding: 6px 12px; background: var(--primary); color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.9rem;">直达官网</a>
-              </td>
-            </tr>
+            {AIRPORTS.map((a, i) => (
+              <tr class={i === 0 ? 'is-hl' : ''}>
+                <td><span class={`h-rank ${i === 0 ? 'h-rank-1' : ''}`}>{i + 1}</span></td>
+                <td><Brand a={a} /></td>
+                <td style="min-width:260px">{a.verdict}</td>
+                <td class="h-num"><span class="h-price">{fmtPrice(entry(a)!.price)}</span> / {fmtGB(entry(a)!.traffic)}</td>
+                <td class="h-num">{trafficRange(a)}</td>
+                <td>{lineLabel(a)}{!isPremium(a) && <span class="h-tag h-tag-warn" style="margin-left:4px">非专线</span>}</td>
+                <td>{unlockText(a)}</td>
+                <td><a class="h-btn h-btn-sm" href={a.aff} target="_blank" rel="nofollow sponsored noopener">官网</a></td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
-    </div>
-    
-    <div style="text-align: center; margin-top: 50px;">
-      <a class="button" href="/">查看这些机场的详细测评资料 <span>→</span></a>
-    </div>
-  </div>
+    </section>
 
-  <style is:inline>
-    .ranking-container {
-      overflow-x: auto;
-      border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      background: #ffffff;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
-      margin-top: 20px;
-    }
-    .top-ranking-table {
-      width: 100%;
-      min-width: 800px;
-      border-collapse: collapse;
-      text-align: left;
-    }
-    .top-ranking-table th, .top-ranking-table td {
-      padding: 20px 24px;
-      border-bottom: 1px solid #f1f5f9;
-      vertical-align: middle;
-    }
-    .top-ranking-table th {
-      font-weight: 600;
-      color: #64748b;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      background: #f8fafc;
-    }
-    .top-ranking-table tbody tr {
-      transition: all 0.2s ease;
-    }
-    .top-ranking-table tbody tr:hover {
-      background-color: #f8fafc;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-    }
-    .top-ranking-table tr:last-child td {
-      border-bottom: none;
-    }
-    
-    /* Rank Badges */
-    .rank-col {
-      width: 80px;
-      text-align: center;
-    }
-    .rank-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      background: #f1f5f9;
-      color: #64748b;
-    }
-    .rank-badge.gold {
-      background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-    }
-    .rank-badge.silver {
-      background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%);
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(148, 163, 184, 0.3);
-    }
-    .rank-badge.bronze {
-      background: linear-gradient(135deg, #fdba74 0%, #ea580c 100%);
-      color: #fff;
-      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.3);
-    }
-    
-    /* Typography */
-    .name-col strong {
-      font-size: 1.15rem;
-      color: #0f172a;
-    }
-    .star-col {
-      color: #f59e0b;
-      font-weight: 600;
-      font-size: 1.05rem;
-    }
-    .feature-col {
-      color: #475569;
-      font-size: 0.95rem;
-    }
-    .price-col {
-      font-weight: 700;
-      color: #2563eb;
-      font-size: 1.1rem;
-    }
-    
-    /* Action Button */
-    .action-col {
-      text-align: right;
-    }
-    .rank-action-btn {
-      display: inline-flex;
-      align-items: center;
-      padding: 10px 20px;
-      background: #eff6ff;
-      color: #2563eb;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .rank-action-btn:hover {
-      background: #2563eb;
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-    }
-  </style>
+    <section class="h-section">
+      <h2>机场单项排行</h2>
+      <div class="h-grid">
+        {subs.map((s) => (
+          <div class="h-box">
+            <h3>{s.title}</h3>
+            <ol class="h-list" style="margin-bottom:8px">{s.rows.map((a) => <li><a href={reviewUrl(a)}>{a.name}</a>：<span class="h-num">{s.val(a)}</span></li>)}</ol>
+            <a href={s.link.href}>{s.link.text} →</a>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="h-section">
+      <h2>前十名逐一点评</h2>
+      {AIRPORTS.map((a, i) => {
+        const y = yearly(a)[0]; const o = oneTime(a);
+        return (
+          <div class="h-box" style="margin-bottom:12px" id={a.slug}>
+            <div class="h-actions" style="margin-bottom:6px">
+              <span class={`h-rank ${i === 0 ? 'h-rank-1' : ''}`}>{i + 1}</span>
+              <h3 style="margin:0"><a href={reviewUrl(a)}>{a.name}</a></h3>
+              {!isPremium(a) && <span class="h-tag h-tag-warn">非专线</span>}
+            </div>
+            <p style="margin:0 0 6px"><strong>排名理由：</strong>{a.verdict}。适合{a.bestFor}。</p>
+            <p class="h-muted" style="margin:0 0 10px">月付 {planPrice(entry(a)!)} 起{y ? ` · 年付 ${planPrice(y)} 起` : ''}{o.length ? ` · 不限时包 ${fmtPrice(o[0].price)} 起` : ''} · {lineLabel(a)} · {a.devices}</p>
+            <div class="h-actions">
+              <a class="h-btn h-btn-sm" href={a.aff} target="_blank" rel="nofollow sponsored noopener">前往官网 ↗</a>
+              <a href={reviewUrl(a)}>{a.name}怎么样</a>
+              <Promo code={a.promo} />
+            </div>
+          </div>
+        );
+      })}
+    </section>
+
+    <section class="h-section">
+      <h2>排名方法</h2>
+      <ul class="h-list">
+        <li><strong>线路</strong>：IPLC / IEPL 专线优先，双专线更高；中转或官网未写线路的排在后面。</li>
+        <li><strong>价格</strong>：比较真实月付价，年付折成每月，再算每 GB 价格。</li>
+        <li><strong>流量覆盖</strong>：从 50GB 到 1TB 以上都有档位的加分。</li>
+        <li><strong>套餐灵活性</strong>：有年付小包、季付、不限时包的加分。</li>
+      </ul>
+    </section>
+
+    <section class="h-section">
+      <h2>十大机场排行榜常见问题</h2>
+      {faq.map((f) => <div class="h-qa"><h3>{f.q}</h3><p>{f.a}</p></div>)}
+    </section>
+  </div>
 </BaseLayout>
