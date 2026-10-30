@@ -3,30 +3,80 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TopPicks from '../../components/h/TopPicks.astro';
 import Brand from '../../components/h/Brand.astro';
 import Disclosure from '../../components/h/Disclosure.astro';
-import { AIRPORTS, bySlug, priced, perGB, monthlyEq, bestValue, fmtGB, fmtPrice, planPrice, billingLabel, isPremium, lineLabel, faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH } from '../../data/airports';
+import UsageTable from '../../components/h/UsageTable.astro';
+import PromoTable from '../../components/h/PromoTable.astro';
+import { AIRPORTS, bySlug, priced, perGB, monthlyEq, bestValue, fmtGB, fmtPrice, planPrice, billingLabel, isPremium, lineLabel, faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH, UPDATED_TAG, cheapestFor, promoText, type Airport, type Billing } from '../../data/airports';
 
 const periodic = AIRPORTS.flatMap((a) => priced(a).filter((p) => p.billing !== 'One-Time').map((plan) => ({ a, plan })));
 const tiers = [
-  { key: 'daily', title: '100–200GB 档（日常使用）', min: 100, max: 200 },
-  { key: 'video', title: '200–400GB 档（追剧）', min: 200, max: 400 },
-  { key: 'heavy', title: '400–900GB 档（重度 / 多设备）', min: 400, max: 900 },
-  { key: 'huge', title: '1TB 以上（全家 / 下载）', min: 900, max: 1e9 },
+  { key: 'daily', title: '100–200GB 档（日常使用）', min: 100, max: 200, intro: '每天看 1–2 小时视频、用 ChatGPT 的人看这一档。下表按每 GB 价格从低到高，只列最划算的 8 个套餐，年付已折成每月。' },
+  { key: 'video', title: '200–400GB 档（追剧）', min: 200, max: 400, intro: '经常看 4K、YouTube、Netflix 的人看这一档，这是多数机场竞争最激烈的价位，单价差距不大，可以多看线路和解锁。' },
+  { key: 'heavy', title: '400–900GB 档（重度 / 多设备）', min: 400, max: 900, intro: '多设备一起用、常看 4K 的重度用户看这一档。到这个用量，每 GB 价格开始明显下降。' },
+  { key: 'huge', title: '1TB 以上（全家 / 下载）', min: 900, max: 1e9, intro: '全家共用、经常下载大文件的人看这一档。这一档每 GB 最便宜，但用不完反而最贵，见下方“流量用不完的代价”。' },
 ].map((t) => ({ ...t, rows: periodic.filter(({ plan }) => plan.traffic >= t.min && plan.traffic < t.max).sort((x, y) => perGB(x.plan) - perGB(y.plan)).slice(0, 8) }));
 const brandBest = AIRPORTS.filter((a) => bestValue(a)).sort((x, y) => perGB(bestValue(x)!) - perGB(bestValue(y)!));
 const premiumBest = brandBest.filter(isPremium);
 const champ = premiumBest[0];
 const sogo = bySlug('sogo');
 const sogoPick = sogo.plans.find((p) => p.name === '优选版')!;
+// 同一家机场：月付 / 年付 / 不限时 各自最低的每 GB 价格
+const minPerGB = (a: Airport, b: Billing) => {
+  const ps = priced(a).filter((p) => p.billing === b);
+  return ps.length ? Math.min(...ps.map(perGB)) : null;
+};
+const byBilling = AIRPORTS.map((a) => {
+  const vals = [minPerGB(a, 'Monthly'), minPerGB(a, 'Yearly'), minPerGB(a, 'One-Time')];
+  const best = Math.min(...vals.filter((v) => v != null).map(Number));
+  return { a, cells: vals.map((v) => ({ text: v == null ? '无' : `¥${v.toFixed(3)}`, best: v === best, none: v == null })) };
+});
+
+// 流量用不完的代价：按需买 vs 直接买 1TB 以上
+const premium = AIRPORTS.filter(isPremium);
+const cheapestPlan = (need: number) => premium.map((a) => ({ a, plan: cheapestFor(a, need)! })).filter((x) => x.plan).sort((x, y) => monthlyEq(x.plan)! - monthlyEq(y.plan)!)[0];
+const big = cheapestPlan(1000);
+const bigMonthly = monthlyEq(big.plan) ?? 0;
+const waste = [50, 150, 300, 600].map((need) => {
+  const right = cheapestPlan(need);
+  const rightMonthly = monthlyEq(right.plan) ?? 0;
+  return { need, right, rightMonthly, rightPerGB: rightMonthly / need, bigPerGB: bigMonthly / need };
+});
+
+// 用优惠码后的每 GB 单价
+const afterPromo = AIRPORTS.filter((a) => a.promoRate && bestValue(a)).map((a) => {
+  const b = bestValue(a)!;
+  return { a, b, before: perGB(b), after: perGB(b) * a.promoRate! };
+}).sort((x, y) => x.after - y.after);
+
+// 同样的钱买多少流量：每个价位里各家流量最多的月付套餐
+const bands = [
+  { label: '¥19–¥27/月', min: 19, max: 27 },
+  { label: '¥40–¥57/月', min: 40, max: 57 },
+  { label: '¥77–¥90/月', min: 77, max: 90 },
+  { label: '¥117–¥150/月', min: 117, max: 150 },
+].map((b) => {
+  const rows = premium.flatMap((a) => priced(a).filter((p) => p.billing === 'Monthly' && p.price >= b.min && p.price <= b.max).map((plan) => ({ a, plan }))).sort((x, y) => perGB(x.plan) - perGB(y.plan));
+  return { ...b, best: rows[0], worst: rows[rows.length - 1], count: rows.length };
+});
+
+const howTo = [
+  { s: '1. 先定流量档', d: '查资料 50GB、刷视频 150GB、追剧 300GB、全家 600GB 以上' },
+  { s: '2. 在自己那一档比单价', d: '不要为用不完的流量买单，看上方“流量用不完的代价”' },
+  { s: '3. 看线路和倍率', d: '中转线路便宜但晚上可能慢；2 倍率节点的实际单价要乘 2' },
+  { s: '4. 确定长期用再长付', d: '跨界云年付 8 折、两年 7 折、三年 6 折，可叠加优惠码' },
+  { s: '5. 结算填优惠码', d: '微风 7 折，Firefly、灵猫、闪跃 8 折，Sogo云 9 折' },
+];
+
 const picks = ['sogo', 'kuajie', 'weifeng', 'wuyou', 'feimao', 'shanyue'].map(bySlug);
 
 const faq = [
-  { q: '性价比最高的机场是哪家？', a: `综合价格、线路和稳定性，本站首推 Sogo云 优选版：¥45/月 350GB（约 ¥${perGB(sogoPick).toFixed(2)}/GB），IPLC + IEPL 双专线，优惠码 sogo10000。只看专线单价，最低的是 ${champ.name} ${bestValue(champ)!.name}（约 ¥${perGB(bestValue(champ)!).toFixed(3)}/GB）。` },
+  { q: '性价比最高的机场是哪家？', a: `综合价格、线路和稳定性，本站首推 Sogo云 优选版：¥45/月 350GB（约 ¥${perGB(sogoPick).toFixed(2)}/GB），IPLC 专线 + 原生 IP，优惠码 sogo10000。只看专线单价，最低的是 ${champ.name} ${bestValue(champ)!.name}（约 ¥${perGB(bestValue(champ)!).toFixed(3)}/GB）。` },
   { q: '机场性价比怎么算？', a: '用“每月价格 ÷ 每月流量”得到每 GB 价格；年付、季付先折成每月价格。单价相近时，优先选专线、全节点 1 倍率的机场。' },
   { q: '大流量套餐一定更划算吗？', a: '每 GB 更便宜，但用不完就是浪费。每月只用 100GB 的人买 1TB，实际每 GB 成本反而更高。先估算用量，再在自己那一档里比单价。' },
+  { q: '年付一定比月付划算吗？', a: '不一定。年付小包每月流量少（40–100GB），每 GB 单价往往比月付大套餐还高；它便宜的是总价，不是单价。用量大的人买月付大档更划算。' },
   { q: '性价比机场和便宜机场有什么区别？', a: '便宜机场看“最少花多少钱能用上”，性价比机场看“同样的钱买到多少流量”。用量小看便宜机场，用量大看性价比。' },
 ];
-const title = `性价比机场推荐2026：10家机场每GB价格排行（10月更新）`;
-const description = `2026性价比机场推荐（${UPDATED_MONTH}更新）：把10家机场的每个套餐换算成每GB价格，按150GB、300GB、500GB、1TB分档排行，专线机场最低约¥${perGB(bestValue(champ)!).toFixed(2)}/GB，附性价比最高的机场推荐和优惠码。`;
+const title = `性价比机场推荐2026：每GB价格排行，专线低至¥${perGB(bestValue(champ)!).toFixed(2)}/GB${UPDATED_TAG}`;
+const description = `${UPDATED_MONTH}性价比机场推荐：把${AIRPORTS.length}家机场每个套餐换算成每GB价格，按150GB、300GB、500GB、1TB分档排行，专线最低约¥${perGB(bestValue(champ)!).toFixed(2)}/GB，附性价比首选和优惠码。`;
 const schemas = [itemListSchema(`${UPDATED_MONTH}性价比机场推荐`, picks), faqSchema(faq)];
 ---
 <BaseLayout title={title} description={description} structuredData={schemas} breadcrumbs={[{ name: '性价比机场', path: '/best-value-airport/' }]}>
@@ -36,10 +86,11 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}性价比机场推荐`, picks),
     <p class="h-lead">性价比高不是越便宜越好，而是同样的钱能买到多少流量、线路好不好。我们把 10 家机场的每个周期套餐都换算成 <strong>每 GB 价格</strong>，再按你需要的流量分档排名。</p>
     <Disclosure />
 
-    <TopPicks list={picks} mode="value" title="性价比机场推荐 Top 6（综合排名）" firstReason="优选版 ¥45/月 350GB，约 ¥0.13/GB；在 300GB 左右的追剧用量里，价格、双专线质量和稳定性最均衡。套餐从 60GB 到 1.05TB 都有，长期付费最低 6 折。" />
+    <TopPicks list={picks} mode="value" title="性价比机场推荐 Top 6（综合排名）" intro="综合每 GB 价格、线路质量和稳定性排出的 6 家性价比机场。第一名单独写出推荐理由，其余列出各自最划算的套餐。" firstReason="优选版 ¥45/月 350GB，约 ¥0.13/GB；在 300GB 左右的追剧用量里，价格、专线质量和稳定性最均衡。套餐从 60GB 到 1.05TB 都有，用量变了也不用换机场。" />
 
     <section class="h-section" id="brands">
       <h2>每 GB 单价排行：各家最划算的套餐</h2>
+      <p class="h-intro">每家机场只取它最划算的一个周期套餐（不含不限时包），再按每 GB 价格从低到高排，可以快速看出哪家的流量最便宜。</p>
       <div class="h-table-wrap">
         <table class="h-table">
           <thead><tr><th scope="col">#</th><th scope="col">机场</th><th scope="col">最划算套餐</th><th scope="col">价格</th><th scope="col">每月流量</th><th scope="col">每 GB</th><th scope="col">线路</th></tr></thead>
@@ -53,6 +104,7 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}性价比机场推荐`, picks),
     {tiers.map((t) => (
       <section class="h-section" id={t.key}>
         <h2>性价比机场：{t.title}</h2>
+        <p class="h-intro">{t.intro}</p>
         <div class="h-table-wrap">
           <table class="h-table">
             <thead><tr><th scope="col">#</th><th scope="col">机场</th><th scope="col">套餐</th><th scope="col">价格</th><th scope="col">折合每月</th><th scope="col">每月流量</th><th scope="col">每 GB</th></tr></thead>
@@ -64,19 +116,92 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}性价比机场推荐`, picks),
       </section>
     ))}
 
-    <section class="h-section">
+    <section class="h-section" id="usage">
+      <h2>按用量选：每档性价比最高的 3 个专线套餐</h2>
+      <p class="h-intro">和上面分档排行不同，这张表从“我每月要用多少”出发：每档列出能满足用量、折合每月最便宜的 3 个专线套餐，并附上每 GB 价格。</p>
+      <UsageTable list={premium} showPerGB />
+    </section>
+
+    <section class="h-section" id="billing">
+      <h2>月付、年付、不限时：同一家机场哪种最划算</h2>
+      <p class="h-intro">同一家机场，月付、年付、不限时的单价可能差很多。下表把每家三种付费方式的最低每 GB 价格放在一起，蓝色是最划算的那种。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">机场</th><th scope="col">月付最低 / GB</th><th scope="col">年付最低 / GB</th><th scope="col">不限时最低 / GB</th><th scope="col">线路</th></tr></thead>
+          <tbody>
+            {byBilling.map(({ a, cells }) => <tr><td><Brand a={a} /></td>{cells.map((c) => <td class={`h-num ${c.best ? 'h-price' : ''} ${c.none ? 'h-no' : ''}`}>{c.text}</td>)}<td>{lineLabel(a)}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+      <p class="h-muted">蓝色为该机场最划算的付费方式。年付按“年付价 ÷ 12 ÷ 每月流量”计算，不限时按“价格 ÷ 总流量”计算。</p>
+    </section>
+
+    <section class="h-section" id="waste">
+      <h2>流量用不完的代价：按需买 vs 直接买 1TB</h2>
+      <p class="h-intro">大套餐的每 GB 标称价格最低，但只有用完才划算。下表对比按实际用量买套餐和直接买 1TB 以上套餐的真实成本。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">实际每月用量</th><th scope="col">按需买（最便宜专线）</th><th scope="col">实际每 GB</th><th scope="col">直接买 {big.a.name} {fmtGB(big.plan.traffic)}</th><th scope="col">实际每 GB</th></tr></thead>
+          <tbody>
+            {waste.map(({ need, right, rightMonthly, rightPerGB, bigPerGB }) => (
+              <tr>
+                <th scope="row">{fmtGB(need)}</th>
+                <td><Brand a={right.a} /> <span class="h-muted">{right.plan.name}</span><br /><span class="h-num">{fmtPrice(+rightMonthly.toFixed(1))}/月</span></td>
+                <td class="h-num h-price">¥{rightPerGB.toFixed(3)}</td>
+                <td class="h-num">{fmtPrice(bigMonthly)}/月</td>
+                <td class="h-num">¥{bigPerGB.toFixed(3)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="h-muted">“实际每 GB” = 每月价格 ÷ 实际用掉的流量。大套餐标称单价最低，但用不完时反而最贵。</p>
+    </section>
+
+    <section class="h-section" id="promo-price">
+      <h2>用优惠码后的每 GB 单价排行</h2>
+      <p class="h-intro">有些机场原价单价不是最低，但优惠码折扣大，用码后反而更划算。下表取每家最划算的套餐，按用码后的单价重新排序（只列写明折扣的机场）。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">#</th><th scope="col">机场</th><th scope="col">套餐</th><th scope="col">原价每 GB</th><th scope="col">折扣</th><th scope="col">用码后每 GB</th></tr></thead>
+          <tbody>{afterPromo.map((x, i) => <tr><td><span class="h-rank">{i + 1}</span></td><td><Brand a={x.a} /></td><td>{x.b.name} <span class="h-muted">{planPrice(x.b)}</span></td><td class="h-num">¥{x.before.toFixed(3)}</td><td class="h-num">{promoText(x.a)}</td><td class="h-num h-price">¥{x.after.toFixed(3)}</td></tr>)}</tbody>
+        </table>
+      </div>
+      <p class="h-muted">优惠码通常只限新用户首单，续费按原价计算。</p>
+    </section>
+
+    <section class="h-section" id="bands">
+      <h2>同样的钱能买多少流量</h2>
+      <p class="h-intro">把专线机场的月付套餐按价位分组，每组列出流量最多和最少的两个，能直观看出同价位的差距有多大。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">价位</th><th scope="col">套餐数</th><th scope="col">流量最多</th><th scope="col">流量最少</th></tr></thead>
+          <tbody>{bands.filter((b) => b.best).map((b) => <tr><th scope="row">{b.label}</th><td class="h-num">{b.count} 个</td><td class="h-best"><Brand a={b.best.a} /> <span class="h-muted">{b.best.plan.name}</span><br /><span class="h-num h-price">{planPrice(b.best.plan)} · {fmtGB(b.best.plan.traffic)}</span></td><td><Brand a={b.worst.a} /> <span class="h-muted">{b.worst.plan.name}</span><br /><span class="h-num">{planPrice(b.worst.plan)} · {fmtGB(b.worst.plan.traffic)}</span></td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" id="how">
       <h2>怎么挑性价比机场</h2>
-      <ol class="h-list">
-        <li><strong>先定流量档</strong>：查资料 50GB、刷视频 150GB、追剧 300GB、全家 600GB 以上。</li>
-        <li><strong>在自己那一档比单价</strong>：不要为用不完的流量买单。</li>
-        <li><strong>看线路和倍率</strong>：中转线路便宜但晚上可能慢；2 倍率节点的实际单价要乘 2。</li>
-        <li><strong>确定长期用再年付</strong>：飞猫云、跨界云等年付约 8 折，Sogo云 三年付约 6 折。</li>
-      </ol>
+      <p class="h-intro">挑性价比机场按下面 5 步，基本能买到适合自己用量、又最划算的套餐。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">步骤</th><th scope="col">怎么做</th></tr></thead>
+          <tbody>{howTo.map((x) => <tr><th scope="row">{x.s}</th><td>{x.d}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" id="promo">
+      <h2>性价比机场优惠码：用码后再便宜一截</h2>
+      <p class="h-intro">性价比机场用优惠码后单价还会再降。表里“用码后约”按入门月付价估算，实际以结算页为准。</p>
+      <PromoTable list={AIRPORTS} />
       <p>只想花最少的钱，看 <a href="/cheap-airport/">便宜机场推荐</a>；想看综合排名，看 <a href="/top-10-airports/">十大机场排行榜</a>。</p>
     </section>
 
     <section class="h-section">
       <h2>性价比机场常见问题</h2>
+      <p class="h-intro">关于性价比机场，读者问得最多的问题。</p>
       {faq.map((f) => <div class="h-qa"><h3>{f.q}</h3><p>{f.a}</p></div>)}
     </section>
   </div>

@@ -69,7 +69,7 @@ schemas.push(...structuredData);
 
 const nav = [
   { href: '/quick-guide/', text: '⏱️ 一分钟选购指南', strong: true },
-  { href: '/recommend/', text: '机场推荐' },
+  { href: '/recommend/', text: '稳定机场推荐' },
   { href: '/cheap-airport/', text: '便宜机场' },
   { href: '/best-value-airport/', text: '性价比机场' },
   { href: '/top-10-airports/', text: '十大机场排行榜' },
@@ -127,7 +127,7 @@ const active = (href: string) => pathname.startsWith(href);
             <span class="brand-word">好用机场</span>
           </span>
         </a>
-        <a class="button button-small desktop-cta" style="margin-left: auto; margin-right: 24px;" href="/recommend/">查看推荐 <span>→</span></a>
+        <a class="button button-small desktop-cta" style="margin-left: auto; margin-right: 24px;" href="/top-10-airports/">机场排行榜 <span>→</span></a>
         <details class="mobile-menu">
           <summary aria-label="打开导航菜单"><span></span><span></span><span></span></summary>
           <nav aria-label="手机导航">
@@ -178,7 +178,8 @@ const active = (href: string) => pathname.startsWith(href);
           <div class="footer-links-col">
             <h4>机场推荐</h4>
             <nav aria-label="机场推荐">
-              <a href="/recommend/">机场推荐</a>
+              <a href="/">机场推荐</a>
+              <a href="/recommend/">稳定机场推荐</a>
               <a href="/top-10-airports/">十大机场排行榜</a>
               <a href="/cheap-airport/">便宜机场</a>
               <a href="/best-value-airport/">性价比机场</a>

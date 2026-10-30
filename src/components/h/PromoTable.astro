@@ -1,0 +1,29 @@
+---
+// 优惠码汇总：折扣、入门月付原价、用码后的价格
+import Brand from './Brand.astro';
+import Promo from './Promo.astro';
+import { entry, fmtPrice, fmtGB, promoText, type Airport } from '../../data/airports';
+interface Props { list: Airport[] }
+const rows = Astro.props.list.filter((a) => a.promo);
+---
+<div class="h-table-wrap">
+  <table class="h-table">
+    <thead><tr><th scope="col">机场</th><th scope="col">优惠码</th><th scope="col">折扣</th><th scope="col">入门月付原价</th><th scope="col">用码后约</th><th scope="col">说明</th></tr></thead>
+    <tbody>
+      {rows.map((a) => {
+        const e = entry(a);
+        return (
+          <tr>
+            <td><Brand a={a} /></td>
+            <td><Promo code={a.promo} /></td>
+            <td class="h-num">{promoText(a)}</td>
+            <td class="h-num">{e ? `${fmtPrice(e.price)} / ${fmtGB(e.traffic)}` : '—'}</td>
+            <td class="h-num h-price">{e && a.promoRate ? fmtPrice(+(e.price * a.promoRate).toFixed(1)) : '—'}</td>
+            <td style="min-width:180px">{a.promoNote ?? '结算页填写优惠码'}</td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>
+<p class="h-muted">“用码后约”按入门月付价 × 折扣估算，实际以结算页为准；部分优惠码只限新用户首单。</p>

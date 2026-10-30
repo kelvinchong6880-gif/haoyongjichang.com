@@ -87,3 +87,15 @@ a.h-box strong { color: var(--blue); }
 .h-crumbs { max-width: 1200px; }
 .h-crumbs + .article-meta-bar { padding-top: 10px; }
 .footer-bottom { max-width: 1200px; margin: 40px auto 0; padding: 32px 20px 0; }
+
+/* 扩写表格 */
+.h-intro { color: #475467; margin: -4px 0 14px; max-width: 900px; }
+.h-table td.h-best { background: #f5f8ff; }
+.h-yes { color: #067647; font-weight: 700; }
+.h-no { color: #98a2b3; }
+.h-table-compact td, .h-table-compact th { padding: 9px 10px; }
+.h-table th[scope="row"] { background: #fafbfd; white-space: nowrap; color: var(--ink); font-size: .93rem; }
+.h-shots { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 14px; }
+.h-shots figure { margin: 0; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 10px; }
+.h-shots img { width: 100%; height: auto; border-radius: 8px; display: block; }
+.h-shots figcaption { font-size: .82rem; color: var(--muted); margin-top: 8px; line-height: 1.6; }

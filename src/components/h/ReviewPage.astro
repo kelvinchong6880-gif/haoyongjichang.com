@@ -8,6 +8,8 @@ import {
   USAGE, cheapestFor, usagePrice, isPremium, faqSchema, SITE, UPDATED, UPDATED_LABEL, UPDATED_MONTH, reviewUrl,
 } from '../../data/airports';
 import { prosCons, brandFaq } from '../../data/review';
+import { speedTestFor } from '../../data/speedtests';
+import SpeedTestDetail from './SpeedTestDetail.astro';
 
 interface Props { slug: string }
 const a = bySlug(Astro.props.slug);
@@ -15,6 +17,7 @@ const rank = AIRPORTS.indexOf(a) + 1;
 const e = entry(a); const y = yearly(a)[0]; const o = oneTime(a);
 const { pros, cons } = prosCons(a);
 const faq = brandFaq(a);
+const test = speedTestFor(a.slug);
 const rivals = AIRPORTS.filter((x) => x !== a && entry(x))
   .sort((x, z) => Math.abs(entry(x)!.price - e!.price) - Math.abs(entry(z)!.price - e!.price))
   .slice(0, 3);
@@ -67,6 +70,8 @@ const schemas = [
       </div>
       <p class="h-muted">价格核对于 {UPDATED_LABEL}，以 {a.name} 官网结算页为准。</p>
     </section>
+
+    {test && <SpeedTestDetail test={test} name={a.name} />}
 
     <section class="h-section">
       <h2>{a.name}套餐怎么选</h2>

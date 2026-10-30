@@ -23,7 +23,7 @@ const services = [
   { name: 'TikTok', node: '美国、新加坡、日本等目标市场', tip: '账号运营最好固定同一地区的独享 IP，频繁换 IP 容易被风控。' },
 ];
 const faq = [
-  { q: '哪个机场能稳定用 ChatGPT？', a: `官网写明支持 ChatGPT 的有：${ok.map((a) => a.name).join('、')}。首推 Sogo云（¥25/月 150GB，IPLC + IEPL 双专线）。用的时候选日本、新加坡、美国或台湾节点，不要用香港节点。` },
+  { q: '哪个机场能稳定用 ChatGPT？', a: `官网写明支持 ChatGPT 的有：${ok.map((a) => a.name).join('、')}。首推 Sogo云（¥25/月 150GB，IPLC 专线 + 原生 IP）。用的时候选日本、新加坡、美国或台湾节点，不要用香港节点。` },
   { q: '为什么用香港节点打不开 ChatGPT？', a: 'OpenAI 不对中国大陆和香港地区提供服务，香港 IP 会被直接拒绝。换成日本、新加坡、美国、台湾节点即可。Claude 和 Gemini 也是一样。' },
   { q: 'Netflix 提示在使用代理怎么办？', a: '说明当前节点的 IP 被 Netflix 识别了。换同地区的其他节点，或者换一个官网写明支持 Netflix 解锁的机场。' },
   { q: '做 TikTok 运营用哪个机场？', a: '账号运营建议用固定的独享 IP，飞猫云有独享原生 IP 定制套餐（¥550/月 500GB）。只是刷 TikTok 看视频的话，普通专线机场就够。' },
@@ -65,7 +65,7 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}AI与流媒体解锁机场`, ok
 
     <section class="h-section">
       <h2>首选推荐：Sogo云</h2>
-      <p>官网写明支持 Netflix、Disney+、ChatGPT、TikTok，节点覆盖港台日新美等 60 多个，IPLC + IEPL 双专线，用 AI 和看剧都不用频繁换机场。</p>
+      <p>官网写明支持 Netflix、Disney+、ChatGPT、TikTok，节点覆盖港台日新美等 60 多个，IPLC 专线 + 原生 IP，用 AI 和看剧都不用频繁换机场。</p>
       <AirportCard a={bySlug('sogo')} rank={1} tag="AI / 流媒体首选" top />
     </section>
 

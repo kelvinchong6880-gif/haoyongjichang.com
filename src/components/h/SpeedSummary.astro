@@ -1,0 +1,28 @@
+---
+// 已实测机场的汇总：每家一行，链接到测评页的实测部分
+import Brand from './Brand.astro';
+import { bySlug, reviewUrl } from '../../data/airports';
+import { SPEEDTESTS, fastest, lowestRtt, mbps, totalNodes, totalOk } from '../../data/speedtests';
+---
+<div class="h-table-wrap">
+  <table class="h-table">
+    <thead><tr><th scope="col">机场</th><th scope="col">测试时间</th><th scope="col">测试线路</th><th scope="col">测速成功</th><th scope="col">最快地区</th><th scope="col">延迟最低</th><th scope="col">详细数据</th></tr></thead>
+    <tbody>
+      {SPEEDTESTS.map((t) => {
+        const a = bySlug(t.slug); const f = fastest(t); const l = lowestRtt(t);
+        return (
+          <tr>
+            <td><Brand a={a} /></td>
+            <td class="h-num">{t.date}{t.peak && <><br /><span class="h-tag">晚高峰</span></>}</td>
+            <td>{t.line}<br /><span class="h-muted">{t.threads} 线程</span></td>
+            <td class="h-num">{totalOk(t)}/{totalNodes(t)}</td>
+            <td class="h-num">{f.region} <span class="h-price">{f.speed}MB/s</span><br /><span class="h-muted">约 {mbps(f.speed)}Mbps</span></td>
+            <td class="h-num">{l.region} {l.rtt}ms</td>
+            <td><a href={`${reviewUrl(a)}#speedtest`}>截图和分地区数据 →</a></td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>
+<p class="h-muted">两家的测试线路带宽不同（1Gbps 和 9Gbps），速度数字不能直接互相比较；更多机场的实测会陆续补上。</p>

@@ -4,9 +4,13 @@ import AirportCard from '../components/h/AirportCard.astro';
 import Brand from '../components/h/Brand.astro';
 import Promo from '../components/h/Promo.astro';
 import Disclosure from '../components/h/Disclosure.astro';
+import UsageTable from '../components/h/UsageTable.astro';
+import PromoTable from '../components/h/PromoTable.astro';
+import SpeedSummary from '../components/h/SpeedSummary.astro';
 import {
   AIRPORTS, bySlug, entry, yearly, oneTime, fmtGB, fmtPrice, planPrice, usagePrice, lineLabel, trafficRange, isPremium,
-  faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH,
+  billingTypes, billingLabel, priced, type Billing,
+  faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH, UPDATED_TAG,
 } from '../data/airports';
 
 const n = AIRPORTS.length;
@@ -15,7 +19,7 @@ const find = (slug: string, name: string) => s(slug).plans.find((p) => p.name ==
 
 // 按用途速选（本站特色）：每个用途给一家首选 + 具体套餐
 const quick = [
-  { use: '🏆 第一次买 / 综合全能', a: s('sogo'), plan: find('sogo', '基础版'), why: 'IPLC + IEPL 双专线，看剧、AI、多设备都够用' },
+  { use: '🏆 第一次买 / 综合全能', a: s('sogo'), plan: find('sogo', '基础版'), why: 'IPLC 专线 + 原生 IP，看剧、AI、多设备都够用' },
   { use: '🎬 4K 追剧 / 大流量', a: s('weifeng'), plan: find('weifeng', '破风'), why: '¥57 就有 500GB，同价位流量最多' },
   { use: '🎓 学生党 / 只查资料', a: s('feimao'), plan: find('feimao', '学生版'), why: '一年 ¥84，每月 50GB，用 ChatGPT 够了' },
   { use: '💰 预算最低的专线', a: s('wuyou'), plan: find('wuyou', '舒心链接'), why: '专线里月付最便宜，官网写明支持 ChatGPT' },
@@ -25,7 +29,7 @@ const quick = [
 ];
 
 const scenes = [
-  { slug: 'sogo', title: '综合全能、第一次买', text: '既要看 4K、又要用 ChatGPT，还想一家人多台设备一起用。Sogo云 是 IPLC + IEPL 双专线，套餐从 ¥98/年的小包到 1TB 都有，第一次买机场选它最省心。', tag: '综合首选' },
+  { slug: 'sogo', title: '综合全能、第一次买', text: '既要看 4K、又要用 ChatGPT，还想一家人多台设备一起用。Sogo云 是 IPLC 专线 + 原生 IP，套餐从 ¥98/年的小包到 1TB 都有，第一次买机场选它最省心。', tag: '综合首选' },
   { slug: 'weifeng', title: '4K 追剧、大流量', text: '每天看视频的人，最先用完的是流量。微风同价位给得最多：¥27/月 200GB，¥57/月 500GB。', tag: '流量首选' },
   { slug: 'feimao', title: '学生党、冷门地区节点、TikTok 运营', text: '飞猫云节点地区最多（含韩国、越南、印度、阿根廷等），学生版一年 ¥84；做 TikTok 或外贸需要固定 IP，可以选 ¥550/月的独享原生 IP 定制套餐。', tag: '学生首选' },
   { slug: 'wuyou', title: '预算最低的专线机场', text: '只查资料、用 ChatGPT，没必要买大流量。无忧链接 ¥19/月 100GB，是本站收录的专线机场里月付最便宜的。', tag: '预算首选' },
@@ -37,17 +41,81 @@ const scenes = [
   { slug: 'xxyun', title: '预算极低、能接受偶尔变慢', text: '小新云价格最低（¥9.99/月 100GB），但走 BGP 中转不是专线，晚高峰可能变慢，适合预算非常紧的人。', tag: '低价可选' },
 ];
 
+// 按付费方式：每种方式有哪些机场、最便宜的是哪个
+const payWays: { b: Billing; who: string }[] = [
+  { b: 'Monthly', who: '第一次买、想先试一个月' },
+  { b: 'Quarterly', who: '确定用几个月、不想每月续费' },
+  { b: 'Yearly', who: '用量小、确定长期用' },
+  { b: 'One-Time', who: '偶尔用、当备用机场' },
+];
+const payRows = payWays.map((w) => {
+  const has = AIRPORTS.filter((a) => billingTypes(a).includes(w.b));
+  const cheapest = AIRPORTS.flatMap((a) => priced(a).filter((p) => p.billing === w.b).map((plan) => ({ a, plan }))).sort((x, y) => x.plan.price - y.plan.price)[0];
+  return { ...w, has, cheapest };
+});
+
+const compare = [
+  { k: '价格', jc: '¥10–¥30/月起', vpn: '¥50–¥100/月', self: 'VPS ¥30/月起，另加时间成本' },
+  { k: '晚高峰速度', jc: '专线机场稳定，中转看运气', vpn: '一般，线路少', self: '取决于 VPS 线路，普通线路晚上慢' },
+  { k: '节点地区', jc: '几十个，港台日新美都有', vpn: '较多', self: '通常只有 1 个' },
+  { k: '解锁 ChatGPT / Netflix', jc: '多数写明支持', vpn: '部分支持', self: '要自己找原生 IP' },
+  { k: '上手难度', jc: '复制订阅链接导入即可', vpn: '装 App 一键连接', self: '要会 Linux 和配置协议' },
+  { k: '适合谁', jc: '绝大多数人', vpn: '只想点一下就用', self: '懂技术、有特殊需求' },
+];
+
+const steps = [
+  { s: '1. 估算流量', d: '查资料 50GB、看视频 150GB、追 4K 300GB、全家 600GB 以上', tip: '不确定就先买 150GB 月付', link: { href: '#usage', text: '按流量选' } },
+  { s: '2. 选线路', d: '优先 IPLC / IEPL 专线，晚高峰不容易卡', tip: '“非专线”的便宜但晚上可能慢', link: { href: '/recommend/', text: '稳定机场推荐' } },
+  { s: '3. 先买月付', d: '在自己家晚上 8–11 点实测速度和解锁', tip: '用稳了再换年付或长付', link: { href: '/cheap-airport/', text: '便宜机场' } },
+  { s: '4. 填优惠码', d: '结算页填优惠码，最低 7 折', tip: '优惠码不是邀请码，填错不生效', link: { href: '#promo', text: '优惠码汇总' } },
+  { s: '5. 导入客户端', d: '复制订阅链接 → 导入 Clash Verge / 小火箭', tip: '电脑、手机都能用同一个订阅', link: { href: '/guide/', text: '使用教程' } },
+];
+
+// 按节点地区：每个地区适合做什么、哪些机场有
+const regionUse = [
+  { r: '香港', use: '日常上网、刷社交软件、看 YouTube', note: 'ChatGPT、Claude 不支持香港，用 AI 别选' },
+  { r: '台湾', use: '日常上网、巴哈姆特动画疯', note: '延迟低，适合当默认节点' },
+  { r: '日本', use: 'ChatGPT、Claude、日区游戏和动漫', note: '用 AI 最常选的地区之一' },
+  { r: '新加坡', use: 'ChatGPT、Netflix、东南亚业务', note: '延迟和稳定性比较均衡' },
+  { r: '美国', use: 'ChatGPT、美区 App Store、TikTok 美区', note: '延迟较高，看视频优先选亚洲节点' },
+  { r: '韩国', use: '韩区游戏、韩剧平台', note: '不是每家都有' },
+].map((x) => ({ ...x, has: AIRPORTS.filter((a) => a.nodeRegions.includes(x.r)) }));
+
+const clients = [
+  { os: 'Windows', app: 'Clash Verge Rev', why: '免费开源，界面中文，导入订阅一步完成', href: '/guide/clash-verge-rev/', text: 'Clash Verge Rev 教程' },
+  { os: 'Mac', app: 'Clash Verge Rev / Surge', why: 'Clash 免费够用，Surge 功能更强但收费', href: '/guide/mac/', text: 'Mac 教程' },
+  { os: 'iPhone / iPad', app: 'Shadowrocket（小火箭）', why: '需要非国区 Apple ID 购买，¥20 左右一次买断', href: '/guide/shadowrocket/', text: '小火箭教程' },
+  { os: '安卓', app: 'Clash Meta / v2rayNG', why: '免费，从 GitHub 下载安装包', href: '/guide/clash-for-android/', text: '安卓教程' },
+  { os: '全平台', app: 'sing-box', why: '新一代内核，一个配置多个平台通用', href: '/guide/sing-box/', text: 'sing-box 教程' },
+  { os: 'Switch / PS5', app: '电脑或路由器共享代理', why: '游戏机不能装客户端，要通过局域网共享', href: '/guide/troubleshooting-lan-proxy/', text: '局域网共享教程' },
+];
+
+const terms = [
+  { t: '机场', d: '提供翻墙节点的订阅服务，按流量或时间收费' },
+  { t: '订阅链接', d: '买完套餐后官网给你的一条链接，导入客户端就能自动拿到全部节点' },
+  { t: '节点', d: '一台海外代理服务器，按地区命名，比如“香港 01”' },
+  { t: '倍率', d: '用 1GB 实际扣多少流量；1 倍率就是用多少扣多少，2 倍率扣双倍' },
+  { t: 'IPLC / IEPL', d: '跨境专线，不走公网国际出口，晚高峰更稳' },
+  { t: 'BGP 中转', d: '先连国内中转服务器再出海，比直连稳，但仍走公网' },
+  { t: '流量重置', d: '周期套餐每个月按购买日把流量恢复满额，没用完的不累计' },
+  { t: '不限时套餐', d: '一次买一包流量，没有到期时间，用完为止' },
+  { t: '优惠码', d: '结算时填写的折扣码，和注册时的邀请码不是一回事' },
+  { t: '原生 IP', d: '被网站识别为当地家庭或本地网络的 IP，解锁 AI 和流媒体更容易' },
+];
+
 const faq = [
-  { q: '2026 年机场推荐哪家？', a: `按用途选：第一次买、想一家用到底选 Sogo云（¥25/月 150GB，IPLC + IEPL 双专线，优惠码 sogo10000）；追剧选微风；学生选飞猫云学生版；预算最低的专线选无忧链接（¥19/月）；全家共用选跨界云。` },
+  { q: '2026 年机场推荐哪家？', a: `按用途选：第一次买、想一家用到底选 Sogo云（¥25/月 150GB，IPLC 专线 + 原生 IP，优惠码 sogo10000）；追剧选微风；学生选飞猫云学生版；预算最低的专线选无忧链接（¥19/月）；全家共用选跨界云。` },
   { q: '机场是什么？和 VPN 有什么区别？', a: '机场是提供翻墙节点的订阅服务，买完给你一条订阅链接，导入 Clash Verge、小火箭等客户端就能用。它比传统 VPN 便宜、节点多、按流量计费，国内大多数人用的都是机场。' },
   { q: '便宜又好用的机场有哪些？', a: '专线里月付最便宜的是无忧链接 ¥19/月 100GB，其次跨界云 ¥20/月 120GB、闪跃 ¥24/月 150GB。只查资料的话，年付小包 ¥79–¥98/年 更省。详见本站的便宜机场推荐。' },
   { q: '一个月多少流量够用？', a: '只查资料、用 ChatGPT 约 50GB；每天看 1–2 小时视频约 150GB；常看 4K 约 300GB；全家多设备 600GB 以上。不确定就先买 150GB 的月付。' },
   { q: '专线机场和普通机场有什么区别？', a: 'IPLC / IEPL 专线不走拥堵的公网国际出口，晚上 8–11 点高峰期更稳。本站推荐的 10 家里 8 家是专线；小新云走 BGP 中转，Flybit 官网没写线路，页面上都有标注。' },
+  { q: '机场优惠码怎么用？', a: '在机场官网选好套餐，进入结算页，把优惠码填进“优惠码”输入框再付款。Sogo云 sogo10000 9 折、微风 weifeng90 7 折、Firefly firefly 8 折，本页“优惠码汇总”表里有全部优惠码。' },
+  { q: '月付、年付、不限时套餐怎么选？', a: '第一次买选月付，用稳了再换长付；用量小且确定长期用选年付小包，¥79–¥98/年；一个月只用几次选不限时流量包，流量用完为止不过期。' },
   { q: '机场怎么用？', a: '在机场官网复制订阅链接 → 打开客户端导入 → 选一个节点开启。电脑用 Clash Verge Rev，iPhone 用小火箭，安卓用 Clash Meta 或 v2rayNG，本站使用教程里有每个客户端的图文步骤。' },
 ];
 
-const title = `机场推荐2026：${n}家好用机场按用途推荐（10月更新）`;
-const description = `2026机场推荐（${UPDATED_MONTH}更新）：按追剧、学生、全家共用、AI办公、偶尔使用等用途，推荐${n}家好用机场，附每家完整套餐价格、线路、流量和优惠码，以及便宜机场、性价比机场、十大机场排行榜。`;
+const title = `机场推荐2026：${n}家好用机场排名，专线¥19/月起${UPDATED_TAG}`;
+const description = `${UPDATED_MONTH}机场推荐：${n}家机场按价格、线路、流量排名，追剧、学生、ChatGPT、全家共用各给一家首选，附完整套餐价和优惠码，新手看完直接选。`;
 const schemas = [itemListSchema(`${UPDATED_MONTH}机场推荐`, AIRPORTS), faqSchema(faq)];
 ---
 
@@ -60,6 +128,7 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}机场推荐`, AIRPORTS), faqSc
 
     <section class="h-section" aria-labelledby="quick">
       <h2 id="quick">⏱️ 30 秒按用途选机场</h2>
+      <p class="h-intro">不想看长篇对比，就按你最主要的用途找一行：每行给一家首选机场和具体套餐，价格是 {UPDATED_LABEL} 对照官网核对的。</p>
       <div class="h-table-wrap">
         <table class="h-table">
           <thead><tr><th scope="col">你的用途</th><th scope="col">首选机场</th><th scope="col">推荐套餐</th><th scope="col">价格</th><th scope="col">为什么</th></tr></thead>
@@ -75,6 +144,7 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}机场推荐`, AIRPORTS), faqSc
 
     <section class="h-section" aria-labelledby="rank">
       <h2 id="rank">2026 机场推荐排名：{n} 家一表对比</h2>
+      <p class="h-intro">下表把 {n} 家机场的月付起步价、年付最低价、流量范围、线路和优惠码放在一起，第一列是本站综合排名。点机场名可以看单独测评。</p>
       <div class="h-table-wrap">
         <table class="h-table">
           <thead><tr><th scope="col">排名</th><th scope="col">机场</th><th scope="col">月付起步</th><th scope="col">年付最低</th><th scope="col">每月流量</th><th scope="col">线路</th><th scope="col">不限时包</th><th scope="col">优惠码</th><th scope="col"><span style="position:absolute;left:-9999px">操作</span></th></tr></thead>
@@ -101,8 +171,42 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}机场推荐`, AIRPORTS), faqSc
       <p class="h-muted">排名综合线路、价格、流量档位和套餐灵活性。完整排名理由见 <a href="/top-10-airports/">十大机场排行榜</a>；“年付最低”为年付价 / 每月流量。</p>
     </section>
 
+    <section class="h-section" aria-labelledby="speedtest">
+      <h2 id="speedtest">机场实测：速度、延迟和解锁</h2>
+      <p class="h-intro">价格表之外，本站也整理了机场的实测截图。下表是每家测试的时间、线路和最好成绩，点“截图和分地区数据”可以看完整结果。</p>
+      <SpeedSummary />
+    </section>
+
+    <section class="h-section" aria-labelledby="usage">
+      <h2 id="usage">按每月流量选机场：每档最便宜的 3 个专线套餐</h2>
+      <p class="h-intro">流量买少了不够用，买多了浪费。先估算自己每月用多少，再在对应那一行里挑：每档只列能满足用量、折合每月最便宜的 3 个专线套餐。</p>
+      <UsageTable list={AIRPORTS.filter(isPremium)} />
+      <p class="h-muted">只比较 IPLC / IEPL 专线机场；年付、季付已折成每月价格。想看每 GB 单价排行，看 <a href="/best-value-airport/">性价比机场</a>。</p>
+    </section>
+
+    <section class="h-section" aria-labelledby="pay">
+      <h2 id="pay">按付费方式选机场</h2>
+      <p class="h-intro">同样的机场，不同付费方式适合不同的人。下表列出每种付费方式有哪些机场提供，以及这种方式里最便宜的套餐。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">付费方式</th><th scope="col">适合</th><th scope="col">有这种套餐的机场</th><th scope="col">最便宜</th></tr></thead>
+          <tbody>
+            {payRows.map((r) => (
+              <tr>
+                <th scope="row">{billingLabel(r.b)}</th>
+                <td style="min-width:150px">{r.who}</td>
+                <td style="min-width:220px">{r.has.length} 家：{r.has.map((a) => a.name).join('、')}</td>
+                <td style="min-width:170px">{r.cheapest && <><Brand a={r.cheapest.a} /><br /><span class="h-num h-price">{planPrice(r.cheapest.plan)}</span> <span class="h-muted">{fmtGB(r.cheapest.plan.traffic)}{r.b === 'One-Time' ? '（不过期）' : '/月'}</span></>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="h-section" aria-labelledby="scenes">
       <h2 id="scenes">按用途详细推荐</h2>
+      <p class="h-intro">下面按 10 种常见需求逐一推荐，每种需求写清楚为什么选这家，并附上这家机场的完整套餐卡片。</p>
       <div class="h-scenes">
         {scenes.map((x, i) => (
           <div>
@@ -114,8 +218,75 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}机场推荐`, AIRPORTS), faqSc
       </div>
     </section>
 
+    <section class="h-section" aria-labelledby="vs">
+      <h2 id="vs">机场、VPN、自建节点怎么选</h2>
+      <p class="h-intro">很多新手分不清机场和 VPN。简单说，机场是按流量卖的代理订阅，价格更低、节点更多；下表从价格、速度、上手难度等 6 个方面对比三种方式。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">对比项</th><th scope="col">机场（本站推荐）</th><th scope="col">传统 VPN</th><th scope="col">自建 VPS 节点</th></tr></thead>
+          <tbody>
+            {compare.map((c, i) => <tr class={i === compare.length - 1 ? 'is-hl' : ''}><th scope="row">{c.k}</th><td>{c.jc}</td><td>{c.vpn}</td><td>{c.self}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" aria-labelledby="steps">
+      <h2 id="steps">新手买机场 5 步</h2>
+      <p class="h-intro">第一次买机场，按下面 5 步走基本不会踩坑，每一步都附了相关的详细页面。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">步骤</th><th scope="col">做什么</th><th scope="col">注意</th><th scope="col">相关</th></tr></thead>
+          <tbody>
+            {steps.map((x) => <tr><th scope="row">{x.s}</th><td style="min-width:220px">{x.d}</td><td style="min-width:180px">{x.tip}</td><td><a href={x.link.href}>{x.link.text} →</a></td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" aria-labelledby="promo">
+      <h2 id="promo">机场优惠码汇总</h2>
+      <p class="h-intro">以下优惠码在各机场官网结算页填写，不是注册时的邀请码。表里按入门月付价估算了用码后的价格。</p>
+      <PromoTable list={AIRPORTS} />
+    </section>
+
+    <section class="h-section" aria-labelledby="region">
+      <h2 id="region">按节点地区选：每个地区适合做什么</h2>
+      <p class="h-intro">同一家机场有几十个节点，选对地区比换机场更有用。下表列出常用地区适合的用途、注意事项，以及本站哪些机场有这个地区的节点。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">地区</th><th scope="col">适合做什么</th><th scope="col">注意</th><th scope="col">有这个地区的机场</th></tr></thead>
+          <tbody>{regionUse.map((x) => <tr><th scope="row">{x.r}</th><td style="min-width:200px">{x.use}</td><td style="min-width:180px">{x.note}</td><td style="min-width:200px">{x.has.length} 家：{x.has.map((a) => a.name).join('、')}</td></tr>)}</tbody>
+        </table>
+      </div>
+      <p class="h-muted">“有这个地区的机场”按官网写明的节点地区统计；Flybit 官网只写了 30 多个国家和地区，没有逐一列出。</p>
+    </section>
+
+    <section class="h-section" aria-labelledby="clients">
+      <h2 id="clients">买完机场用什么客户端</h2>
+      <p class="h-intro">机场只提供订阅链接，还要装一个客户端才能用。下表按设备列出推荐客户端和本站对应的图文教程。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">设备</th><th scope="col">推荐客户端</th><th scope="col">说明</th><th scope="col">教程</th></tr></thead>
+          <tbody>{clients.map((x) => <tr><th scope="row">{x.os}</th><td><strong>{x.app}</strong></td><td style="min-width:220px">{x.why}</td><td><a href={x.href}>{x.text} →</a></td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" aria-labelledby="terms">
+      <h2 id="terms">机场常用术语速查</h2>
+      <p class="h-intro">机场官网和教程里经常出现这些词，第一次买之前花一分钟看懂，挑套餐时就不会被绕晕。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">术语</th><th scope="col">意思</th></tr></thead>
+          <tbody>{terms.map((x) => <tr><th scope="row">{x.t}</th><td>{x.d}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="h-section" aria-labelledby="more">
       <h2 id="more">按需求继续看</h2>
+      <p class="h-intro">本站按不同需求做了专题页，选定方向后可以继续深入看。</p>
       <div class="h-grid">
         <a class="h-box" href="/quick-guide/"><strong>一分钟选购指南 →</strong><p class="h-muted" style="margin:6px 0 0">3 个问题选对机场，新手先看这个。</p></a>
         <a class="h-box" href="/recommend/"><strong>稳定机场推荐 →</strong><p class="h-muted" style="margin:6px 0 0">8 家专线机场的详细推荐和套餐。</p></a>
@@ -130,11 +301,12 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}机场推荐`, AIRPORTS), faqSc
 
     <section class="h-section" aria-labelledby="faq">
       <h2 id="faq">机场推荐常见问题</h2>
+      <p class="h-intro">整理了新手买机场时问得最多的问题，答案里的价格和优惠码与上面表格一致。</p>
       {faq.map((f) => <div class="h-qa"><h3>{f.q}</h3><p>{f.a}</p></div>)}
     </section>
 
     <div class="h-callout">
-      <p style="margin:0 0 10px"><strong>还没决定？</strong>大多数人选 Sogo云 基础版就够用：{planPrice(s('sogo').plans[1])}，每月 150GB，IPLC + IEPL 双专线。</p>
+      <p style="margin:0 0 10px"><strong>还没决定？</strong>大多数人选 Sogo云 基础版就够用：{planPrice(s('sogo').plans[1])}，每月 150GB，IPLC 专线 + 原生 IP。</p>
       <div class="h-actions">
         <a class="h-btn" href={s('sogo').aff} target="_blank" rel="nofollow sponsored noopener">前往 Sogo云 官网 ↗</a>
         <Promo code={s('sogo').promo} />

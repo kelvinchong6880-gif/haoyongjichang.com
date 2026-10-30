@@ -3,9 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Brand from '../../components/h/Brand.astro';
 import Promo from '../../components/h/Promo.astro';
 import Disclosure from '../../components/h/Disclosure.astro';
+import PromoTable from '../../components/h/PromoTable.astro';
+import { prosCons } from '../../data/review';
 import {
   AIRPORTS, entry, yearly, oneTime, bestValue, perGB, fmtGB, fmtPrice, planPrice, lineLabel, trafficRange, unlockText, isPremium, reviewUrl,
-  faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH, type Airport,
+  billingTypes, maxTraffic, promoText, priced, cheapestFor, usagePrice, type Billing,
+  faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH, UPDATED_TAG, type Airport,
 } from '../../data/airports';
 
 const max = (a: Airport) => Math.max(...a.plans.filter((p) => !p.custom && p.billing !== 'One-Time').map((p) => p.traffic));
@@ -13,16 +16,34 @@ const subs = [
   { title: '月付最便宜（专线）', rows: AIRPORTS.filter(isPremium).sort((x, y) => entry(x)!.price - entry(y)!.price).slice(0, 5), val: (a: Airport) => `${planPrice(entry(a)!)} · ${fmtGB(entry(a)!.traffic)}`, link: { href: '/cheap-airport/', text: '便宜机场推荐' } },
   { title: '每 GB 最便宜（专线）', rows: AIRPORTS.filter(isPremium).sort((x, y) => perGB(bestValue(x)!) - perGB(bestValue(y)!)).slice(0, 5), val: (a: Airport) => `¥${perGB(bestValue(a)!).toFixed(3)}/GB`, link: { href: '/best-value-airport/', text: '性价比机场' } },
   { title: '大流量', rows: [...AIRPORTS].sort((x, y) => max(y) - max(x)).slice(0, 5), val: (a: Airport) => `最高 ${fmtGB(max(a))}/月`, link: { href: '/best-value-airport/#huge', text: '1TB 以上套餐' } },
+  { title: '节点最多', rows: AIRPORTS.filter((a) => a.nodes).sort((x, y) => y.nodes! - x.nodes!).slice(0, 5), val: (a: Airport) => `${a.nodes} 个节点`, link: { href: '/recommend/#regions', text: '节点地区对比' } },
+  { title: '优惠码折扣最大', rows: AIRPORTS.filter((a) => a.promoRate).sort((x, y) => x.promoRate! - y.promoRate!).slice(0, 5), val: (a: Airport) => `${a.promo} · ${promoText(a)}`, link: { href: '#promo', text: '优惠码汇总' } },
   { title: '不限时流量包', rows: AIRPORTS.filter((a) => oneTime(a).length).sort((x, y) => oneTime(x)[0].price - oneTime(y)[0].price).slice(0, 5), val: (a: Airport) => `${planPrice(oneTime(a)[0])} · ${fmtGB(oneTime(a)[0].traffic)}`, link: { href: '/cheap-airport/#no-expiry', text: '不限时包排行' } },
 ];
 
+// 各档位价格总览：每家满足某个用量的最便宜周期套餐
+const levels = [150, 300, 600, 1000];
+const priceGrid = AIRPORTS.map((a) => ({ a, cells: levels.map((need) => cheapestFor(a, need)) }));
+
+const ways: Billing[] = ['Monthly', 'Quarterly', 'Yearly', 'One-Time'];
+const has = (a: Airport, b: Billing) => billingTypes(a).includes(b);
+
+const method = [
+  { k: '线路', look: '是不是 IPLC / IEPL 专线', plus: '专线、原生 IP', minus: '中转、官网不写线路' },
+  { k: '价格', look: '真实月付价、年付折算、每 GB 单价', plus: '入门价低、单价低', minus: '入门价高于平均' },
+  { k: '流量覆盖', look: '最小档到最大档', plus: '50GB 到 1TB 以上都有', minus: '最大档不到 1TB' },
+  { k: '套餐灵活性', look: '有几种付费方式', plus: '有年付小包、季付、不限时包', minus: '只有月付' },
+  { k: '解锁', look: '官网是否写明 ChatGPT、Netflix', plus: '写明支持', minus: '没写' },
+];
+
 const faq = [
-  { q: '十大机场排行榜第一名是哪家？', a: `${UPDATED_MONTH}排第一的是 Sogo云：IPLC + IEPL 双专线，¥25/月 150GB 起，9 款套餐里有 4 款不限时包，优惠码 sogo10000。` },
+  { q: '十大机场排行榜第一名是哪家？', a: `${UPDATED_MONTH}排第一的是 Sogo云：IPLC 专线 + 原生 IP，¥25/月 150GB 起，9 款套餐里有 4 款不限时包，优惠码 sogo10000。` },
   { q: '机场排名是怎么排的？', a: '综合 4 项：线路（IPLC / IEPL 专线优先）、价格和每 GB 成本、流量档位是否从轻度覆盖到重度、套餐灵活性（年付小包、季付、不限时包）。每月按官网价格重新核对。' },
   { q: '排名靠后的机场就不好吗？', a: '不是。很多机场在单项上排第一，比如跨界云大流量单价最低、无忧链接专线月付最便宜、Flybit 不限时包门槛最低。按自己最在意的那一项看分榜更准。' },
+  { q: '十大机场里哪家套餐最多？', a: `套餐最多的是 ${[...AIRPORTS].sort((x, y) => priced(y).length - priced(x).length)[0].name}（${priced([...AIRPORTS].sort((x, y) => priced(y).length - priced(x).length)[0]).length} 款），月付、年付、不限时都有。只有月付和年付、没有不限时包的机场，偶尔用的人不太合适。` },
   { q: '为什么小新云便宜却排在最后？', a: '小新云价格最低（¥9.99/月 100GB），但走 BGP 中转不是专线，晚高峰稳定性不如前面的专线机场，所以综合排名靠后，适合预算非常紧的人。' },
 ];
-const title = `十大机场排行榜2026：机场排名前十与推荐理由（10月更新）`;
+const title = `十大机场排行榜2026：机场排名前十与推荐理由${UPDATED_TAG}`;
 const description = `2026十大机场排行榜（${UPDATED_MONTH}更新）：Sogo云、微风、飞猫云、Firefly、无忧链接等10家机场综合排名，逐家写明排名理由、月付价格、流量、线路和优惠码，另附月付最便宜、每GB最便宜、大流量、不限时包4个机场排行。`;
 const schemas = [itemListSchema(`${UPDATED_MONTH}十大机场排行榜`, AIRPORTS), faqSchema(faq)];
 ---
@@ -35,6 +56,7 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}十大机场排行榜`, AIRPORT
 
     <section class="h-section">
       <h2>{UPDATED_MONTH}十大机场排名</h2>
+      <p class="h-intro">按线路、价格、流量覆盖、套餐灵活性和解锁情况综合排出前十名，每家写一句排名理由。排名每月对照官网价格更新一次。</p>
       <div class="h-table-wrap">
         <table class="h-table">
           <thead><tr><th scope="col">排名</th><th scope="col">机场</th><th scope="col">排名理由</th><th scope="col">月付起步</th><th scope="col">每月流量</th><th scope="col">线路</th><th scope="col">解锁</th><th scope="col"><span style="position:absolute;left:-9999px">操作</span></th></tr></thead>
@@ -56,8 +78,55 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}十大机场排行榜`, AIRPORT
       </div>
     </section>
 
+    <section class="h-section" id="specs">
+      <h2>十大机场参数总表</h2>
+      <p class="h-intro">排名之外，下表列出十家机场的硬指标：套餐数量、支持的付费方式、最高流量、节点数、设备限制和优惠码折扣。</p>
+      <div class="h-table-wrap">
+        <table class="h-table h-table-compact">
+          <thead><tr><th scope="col">#</th><th scope="col">机场</th><th scope="col">套餐数</th><th scope="col">月付</th><th scope="col">季付</th><th scope="col">年付</th><th scope="col">不限时</th><th scope="col">最高流量</th><th scope="col">节点数</th><th scope="col">设备</th><th scope="col">优惠码折扣</th></tr></thead>
+          <tbody>
+            {AIRPORTS.map((a, i) => (
+              <tr class={i === 0 ? 'is-hl' : ''}>
+                <td><span class={`h-rank ${i === 0 ? 'h-rank-1' : ''}`}>{i + 1}</span></td>
+                <td><Brand a={a} /></td>
+                <td class="h-num">{priced(a).length} 款</td>
+                {ways.map((b) => <td class={has(a, b) ? 'h-yes' : 'h-no'}>{has(a, b) ? '✓' : '—'}</td>)}
+                <td class="h-num">{fmtGB(maxTraffic(a))}/月</td>
+                <td class="h-num">{a.nodes ?? '未写明'}</td>
+                <td>{a.devices}</td>
+                <td class="h-num">{promoText(a)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" id="prices">
+      <h2>十大机场各档位价格总览</h2>
+      <p class="h-intro">同一个用量，各家要花多少钱？下表列出每家能满足 150GB、300GB、600GB、1TB 用量的最便宜套餐，年付已折成每月价格。“—”表示这家没有这么大的套餐。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">机场</th>{levels.map((l) => <th scope="col">{fmtGB(l)} 用量</th>)}</tr></thead>
+          <tbody>{priceGrid.map(({ a, cells }) => <tr><td><Brand a={a} /></td>{cells.map((c) => <td class="h-num">{c ? <><span class="h-price">{usagePrice(c)}</span><br /><span class="h-muted">{c.name}</span></> : <span class="h-no">—</span>}</td>)}</tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" id="fit">
+      <h2>十大机场适合谁、缺点是什么</h2>
+      <p class="h-intro">没有适合所有人的机场。下表写清每家最适合谁，以及它最主要的缺点，方便你先排除不合适的。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">#</th><th scope="col">机场</th><th scope="col">最适合</th><th scope="col">主要缺点</th></tr></thead>
+          <tbody>{AIRPORTS.map((a, i) => <tr><td><span class={`h-rank ${i === 0 ? 'h-rank-1' : ''}`}>{i + 1}</span></td><td><Brand a={a} /></td><td style="min-width:220px">{a.bestFor}</td><td style="min-width:220px">{prosCons(a).cons[0] ?? '—'}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="h-section">
       <h2>机场单项排行</h2>
+      <p class="h-intro">只在意某一项的话，看单项排行比看综合排名更准。每个分榜列出前 5 名。</p>
       <div class="h-grid">
         {subs.map((s) => (
           <div class="h-box">
@@ -71,6 +140,7 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}十大机场排行榜`, AIRPORT
 
     <section class="h-section">
       <h2>前十名逐一点评</h2>
+      <p class="h-intro">十家机场逐一点评，包括排名理由、价格区间、线路和设备限制，点机场名可以看完整测评。</p>
       {AIRPORTS.map((a, i) => {
         const y = yearly(a)[0]; const o = oneTime(a);
         return (
@@ -92,18 +162,27 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}十大机场排行榜`, AIRPORT
       })}
     </section>
 
-    <section class="h-section">
+    <section class="h-section" id="promo">
+      <h2>十大机场优惠码</h2>
+      <p class="h-intro">十家机场的优惠码汇总，在官网结算页填写即可。</p>
+      <PromoTable list={AIRPORTS} />
+    </section>
+
+    <section class="h-section" id="method">
       <h2>排名方法</h2>
-      <ul class="h-list">
-        <li><strong>线路</strong>：IPLC / IEPL 专线优先，双专线更高；中转或官网未写线路的排在后面。</li>
-        <li><strong>价格</strong>：比较真实月付价，年付折成每月，再算每 GB 价格。</li>
-        <li><strong>流量覆盖</strong>：从 50GB 到 1TB 以上都有档位的加分。</li>
-        <li><strong>套餐灵活性</strong>：有年付小包、季付、不限时包的加分。</li>
-      </ul>
+      <p class="h-intro">本站排名按下表 5 个维度综合判断，每项都只看官网能核对的信息。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">维度</th><th scope="col">看什么</th><th scope="col">加分</th><th scope="col">减分</th></tr></thead>
+          <tbody>{method.map((x) => <tr><th scope="row">{x.k}</th><td style="min-width:180px">{x.look}</td><td class="h-yes">{x.plus}</td><td>{x.minus}</td></tr>)}</tbody>
+        </table>
+      </div>
+      <p class="h-muted">每月对照官网核对价格和套餐，本期核对于 {UPDATED_LABEL}。</p>
     </section>
 
     <section class="h-section">
       <h2>十大机场排行榜常见问题</h2>
+      <p class="h-intro">关于十大机场排行榜，读者问得最多的问题。</p>
       {faq.map((f) => <div class="h-qa"><h3>{f.q}</h3><p>{f.a}</p></div>)}
     </section>
   </div>

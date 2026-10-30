@@ -1,0 +1,45 @@
+---
+// 单个机场的实测数据：分地区汇总表 + 原始截图
+import { mbps, totalNodes, totalOk, type SpeedTest } from '../../data/speedtests';
+interface Props { test: SpeedTest; name: string }
+const { test: t, name } = Astro.props;
+---
+<section class="h-section" id="speedtest">
+  <h2>{name}实测：节点速度与流媒体解锁</h2>
+  <p class="h-intro">下表根据测速截图逐个节点整理：{t.date} 用 {t.line}（{t.threads} 线程）测试{t.peak ? '，正好在晚高峰' : ''}，{totalNodes(t)} 个节点中 {totalOk(t)} 个测速成功。延迟取该地区的中位数，速度取测速成功节点的平均值。</p>
+  <div class="h-table-wrap">
+    <table class="h-table">
+      <thead><tr><th scope="col">地区</th><th scope="col">节点</th><th scope="col">测速成功</th><th scope="col">延迟（中位数）</th><th scope="col">平均下载速度</th><th scope="col">解锁</th></tr></thead>
+      <tbody>
+        {t.regions.map((r) => (
+          <tr>
+            <th scope="row">{r.region}</th>
+            <td class="h-num">{r.nodes} 个</td>
+            <td class="h-num">{r.ok}/{r.nodes}</td>
+            <td class="h-num">{r.rtt}ms</td>
+            <td class="h-num"><span class="h-price">{r.speed}MB/s</span><br /><span class="h-muted">约 {mbps(r.speed)}Mbps</span></td>
+            <td style="min-width:200px">{r.unlock}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <div class="h-table-wrap">
+    <table class="h-table">
+      <thead><tr><th scope="col">测试说明</th></tr></thead>
+      <tbody>
+        <tr><td>测试来源：{t.source}；测试端：{t.line}，{t.threads} 线程；测试时间：{t.date}（北京时间）</td></tr>
+        {t.notes.map((n) => <tr><td>{n}</td></tr>)}
+        <tr><td class="h-muted">测速结果只代表测试当时、测试那条线路的表现，你家的网络可能不同；不同测试的线路带宽不同，速度不能跨机场直接比较。</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="h-shots">
+    {t.images.map((img) => (
+      <figure>
+        <a href={img.src} target="_blank" rel="noopener"><img src={img.src} width={img.width} height={img.height} alt={img.alt} loading="lazy" decoding="async" /></a>
+        <figcaption>{img.caption}（点击看大图）</figcaption>
+      </figure>
+    ))}
+  </div>
+</section>

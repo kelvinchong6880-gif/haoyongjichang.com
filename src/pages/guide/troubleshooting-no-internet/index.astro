@@ -4,8 +4,8 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout breadcrumbs={[{"name": "使用教程", "path": "/guide/"}, {"name": "[2026最新] 节点测速正常但打不开网页？代理连接成功但连不上网排错指南", "path": "/guide/troubleshooting-no-internet/"}]} 
-  title="[2026最新] 节点测速正常但打不开网页？代理连上但不能上网排错" 
-  description="详细排查 Clash 测速有延迟但连不上网的故障。涵盖系统时间同步、DNS 污染排查、浏览器扩展冲突以及 TUN 模式网卡冲突的解决方案。"
+  title="开了代理网页还是打不开？“检查代理服务器和防火墙”报错解决办法" 
+  description="浏览器提示“无法访问此网站，请尝试检查代理服务器和防火墙”，或 Clash 测速正常但网页打不开？按系统代理、系统时间、浏览器扩展、DNS、TUN 模式 5 步排查。"
 >
   <div class="tutorial-container page-shell">
     <article class="tutorial-article">
@@ -20,6 +20,15 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <p>很多新手在使用翻墙软件（如 Clash、v2rayN）时，经常会遇到一个极其令人崩溃的现象：<strong>Clash 测速有延迟（甚至延迟很低），但浏览器就是打不开任何海外网页</strong>。</p>
         <p>这种情况我们称之为“假连通”。这通常意味着节点服务器本身是存活的，您的本地网络也能连上节点，但在您的电脑或手机内部，流量并没能正确地被转发到代理软件上，或者是在域名解析（DNS）这一步死循环了。</p>
         <p>下面我们将按照由易到难的顺序，一步步带您排查并解决这个问题。</p>
+
+        <h2 id="proxy-error">浏览器提示“请尝试：检查代理服务器和防火墙”怎么办？</h2>
+        <p>Chrome / Edge 显示“无法访问此网站”“请尝试：检查连接、检查代理服务器和防火墙”（错误代码常见为 <code>ERR_PROXY_CONNECTION_FAILED</code>），意思是：<strong>系统代理已经指向了代理软件，但代理软件没有在工作</strong>。最常见的情况是关掉了 Clash，系统代理设置却没被清除，结果连国内网站也打不开。</p>
+        <ol>
+          <li><strong>代理软件还要用</strong>：重新打开 Clash Verge Rev（或你用的客户端），确认“系统代理”开关是开启状态、端口和系统设置一致（Clash 默认 7890）。</li>
+          <li><strong>暂时不用代理</strong>：Windows 打开“设置 → 网络和 Internet → 代理”，关闭“使用代理服务器”；Mac 打开“系统设置 → 网络 → 详细信息 → 代理”，取消勾选所有代理。</li>
+          <li><strong>防火墙拦截</strong>：杀毒软件或 Windows 防火墙可能阻止了客户端监听端口，把客户端加入白名单后重启。</li>
+        </ol>
+        <p>如果代理软件正常运行、系统代理也开着，网页还是打不开，再按下面的步骤排查。</p>
 
         <h2 id="step1">第一步：检查设备系统时间是否精准同步</h2>
         <p>这是 80% 导致 <strong>代理连接成功打不开网页</strong> 的罪魁祸首。由于 Vmess、Trojan、Shadowsocks 等协议非常依赖时间戳来进行加密校验，如果您的电脑/手机时间与标准时间相差超过 <strong>90秒</strong>，哪怕测速有延迟，实际网页也会被服务器拒绝连接。</p>
@@ -56,7 +65,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 
         <div class="recommend-box">
           <h4>💡 是本地设置错误，还是节点真被墙了？</h4>
-          <p>有时候，您折腾了半天本地配置，其实是因为您购买的廉价机场节点已经被防火墙精准阻断，只剩一个“能 ping 通但不能传输数据”的假象。如果您不想每天把时间浪费在排错上，我们强烈建议您选择 <strong>具备 BGP 专线且支持故障秒级切换</strong> 的顶级机场。前往查看我们的 <a href="/best-value-airport/">高性价比 BGP 专线机场推荐</a>，让您告别断流，省心上网！</p>
+          <p>有时候，您折腾了半天本地配置，其实是因为您购买的廉价机场节点已经被防火墙精准阻断，只剩一个“能 ping 通但不能传输数据”的假象。如果您不想每天把时间浪费在排错上，建议选择 <strong>IPLC / IEPL 专线</strong> 的机场（BGP 中转不是专线）。可以看我们的 <a href="/recommend/">稳定机场推荐</a>，让您告别断流，省心上网！</p>
         </div>
 
         <hr />
@@ -116,6 +125,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
         <h3>📋 本文目录</h3>
         <ul class="toc-list">
           <li><a href="#intro">为何“测速正常却连不上网”</a></li>
+          <li><a href="#proxy-error">“检查代理服务器和防火墙”报错</a></li>
           <li><a href="#step1">第一步：系统时间是否同步</a></li>
           <li><a href="#step2">第二步：浏览器插件冲突</a></li>
           <li><a href="#step3">第三步：TUN与DNS污染排查</a></li>

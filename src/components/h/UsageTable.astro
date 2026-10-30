@@ -1,0 +1,35 @@
+---
+// 按每月用量列出最便宜的 3 个套餐（年付、季付折成每月比较）
+import Brand from './Brand.astro';
+import { USAGE, cheapestFor, monthlyEq, usagePrice, fmtGB, perGB, type Airport } from '../../data/airports';
+interface Props { list: Airport[]; showPerGB?: boolean }
+const { list, showPerGB = false } = Astro.props;
+const tiers = [...USAGE, { key: 'family', label: '全家', need: 1000, desc: '全家多设备、经常下载大文件' }].map((u) => ({
+  ...u,
+  picks: list
+    .map((a) => ({ a, plan: cheapestFor(a, u.need) }))
+    .filter((x) => x.plan)
+    .sort((x, y) => monthlyEq(x.plan!)! - monthlyEq(y.plan!)! || y.plan!.traffic - x.plan!.traffic)
+    .slice(0, 3),
+}));
+---
+<div class="h-table-wrap">
+  <table class="h-table">
+    <thead><tr><th scope="col">每月用量</th><th scope="col">适合</th><th scope="col">第 1 选择</th><th scope="col">第 2 选择</th><th scope="col">第 3 选择</th></tr></thead>
+    <tbody>
+      {tiers.map((t) => (
+        <tr>
+          <td class="h-num"><strong>{t.label} · {fmtGB(t.need)}</strong></td>
+          <td style="min-width:150px">{t.desc}</td>
+          {t.picks.map(({ a, plan }, i) => (
+            <td style="min-width:170px" class={i === 0 ? 'h-best' : ''}>
+              <Brand a={a} /><br />
+              <span class="h-muted">{plan!.name} · {fmtGB(plan!.traffic)}</span><br />
+              <span class="h-num h-price">{usagePrice(plan!)}</span>{showPerGB && <span class="h-muted"> · ¥{perGB(plan!).toFixed(3)}/GB</span>}
+            </td>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

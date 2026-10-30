@@ -10,6 +10,9 @@ export interface Airport {
   logo: string;
   aff: string; // 推广链接
   promo: string | null; // 结算优惠码（不是邀请码）
+  promoRate: number | null; // 优惠码折扣，0.9 = 9 折；null = 未写明
+  promoNote?: string; // 优惠码使用限制
+  nodes: number | null; // 节点总数（资料核对时）
   lines: string[]; // 线路
   streaming: boolean | null; // 官网写明支持流媒体
   ai: boolean | null; // 官网写明支持 ChatGPT 等 AI
@@ -20,18 +23,21 @@ export interface Airport {
   plans: Plan[];
 }
 
-export const UPDATED = '2026-10-04';
-export const UPDATED_LABEL = '2026 年 10 月 4 日';
+export const UPDATED = '2026-10-30';
+export const UPDATED_LABEL = '2026 年 10 月 30 日';
 export const UPDATED_MONTH = '2026年10月';
+/** 标题里的“（10月更新）”，跟随 UPDATED 自动变化 */
+export const UPDATED_TAG = `（${+UPDATED.slice(5, 7)}月更新）`;
 export const SITE = 'https://haoyongjichang.com';
 export const SITE_NAME = '好用机场';
 
 export const AIRPORTS: Airport[] = [
   {
     slug: 'sogo', name: 'Sogo云', logo: '/images/brands/sogo.webp', aff: 'https://wzjc.sogoyunaff.cc/#/?code=BC2BL855', promo: 'sogo10000',
-    lines: ['IPLC', 'IEPL'], streaming: true, ai: true, devices: '不限设备数',
-    nodeRegions: '香港×20、台湾×5、日本×10、新加坡×10、美国×10、马来西亚×2，以及英国、法国、德国、土耳其、泰国、巴西等',
-    verdict: 'IPLC + IEPL 双专线，¥25/月 150GB 起，9 款套餐里有 4 款不限时包，各种用途都能覆盖',
+    promoRate: 0.9, nodes: 60,
+    lines: ['IPLC'], streaming: true, ai: true, devices: '不限设备数',
+    nodeRegions: '香港×20、台湾×10、日本×10、新加坡×10、美国×10，以及马来西亚、英国、法国、德国、土耳其、泰国、巴西等',
+    verdict: 'IPLC 专线 + 原生 IP，¥25/月 150GB 起，9 款套餐里有 4 款不限时包，各种用途都能覆盖',
     bestFor: '想要一家用到底、晚高峰稳定、看剧和 AI 都要的人',
     plans: [
       { name: '小包-年付版', price: 98, billing: 'Yearly', traffic: 60 },
@@ -40,13 +46,14 @@ export const AIRPORTS: Airport[] = [
       { name: '强化版', price: 80, billing: 'Monthly', traffic: 550 },
       { name: '顶配版', price: 150, billing: 'Monthly', traffic: 1050 },
       { name: '基础餐不限时版', price: 120, billing: 'One-Time', traffic: 120 },
-      { name: '优选餐不限时版', price: 220, billing: 'One-Time', traffic: 250 },
+      { name: '优选餐不限时版', price: 250, billing: 'One-Time', traffic: 250 },
       { name: '强化餐不限时版', price: 450, billing: 'One-Time', traffic: 500 },
       { name: '至尊餐不限时版', price: 850, billing: 'One-Time', traffic: 1000 },
     ],
   },
   {
     slug: 'weifeng', name: '微风', logo: '/images/brands/weifeng.webp', aff: 'https://edp01.breezenetaff.com/#/?code=hM8APccJ', promo: 'weifeng90',
+    promoRate: 0.7, nodes: 60,
     lines: ['IPLC'], streaming: null, ai: null, devices: '不限设备数',
     nodeRegions: '香港、台湾、日本、新加坡、美国、马来西亚等',
     verdict: '同价位流量最多：¥27/月 200GB、¥57/月 500GB，追剧和多设备更划算',
@@ -62,8 +69,9 @@ export const AIRPORTS: Airport[] = [
   },
   {
     slug: 'feimao', name: '飞猫云', logo: '/images/brands/feimao.webp', aff: 'https://flycat1.flycatvipaff.cc/#/?code=w5lO9fqB', promo: 'flycat888',
+    promoRate: null, nodes: 63,
     lines: ['IPLC'], streaming: true, ai: true, devices: '不限设备数',
-    nodeRegions: '香港×20、台湾×10、日本×10、新加坡×10、美国×10、韩国×3，以及马来西亚、越南、菲律宾、泰国、印度、英国、德国、阿根廷等',
+    nodeRegions: '香港×20、台湾×10、日本×10、新加坡×10、美国×10、韩国×3，以及马来西亚、越南、菲律宾、泰国、印度、英国、法国、德国、阿根廷等',
     verdict: '节点地区最多，学生版 ¥84/年；另有 ¥550/月 的独享原生 IP 定制套餐',
     bestFor: '学生党、需要冷门地区节点、做 TikTok / 外贸要固定 IP 的人',
     plans: [
@@ -78,7 +86,8 @@ export const AIRPORTS: Airport[] = [
   },
   {
     slug: 'firefly', name: 'Firefly', logo: '/images/brands/firefly.webp', aff: 'https://vip02.fireflyaff.com/#/?code=8nDg6OEY', promo: 'firefly',
-    lines: ['IPLC'], streaming: null, ai: null, devices: '不限设备数',
+    promoRate: 0.8, promoNote: '年付版不可用', nodes: 49,
+    lines: ['IPLC'], streaming: true, ai: true, devices: '不限设备数',
     nodeRegions: '香港、台湾、日本、新加坡、美国、马来西亚等',
     verdict: '套餐简单清楚，¥100 就能买 100GB 永久不过期流量',
     bestFor: '偶尔才用、想买一次用很久，或者给家人备一个的人',
@@ -93,6 +102,7 @@ export const AIRPORTS: Airport[] = [
   },
   {
     slug: 'wuyou', name: '无忧链接', logo: '/images/brands/wuyou.webp', aff: 'https://wep01.worryfreeaff.com/#/?code=s1kH64A8', promo: 'wuyou',
+    promoRate: null, nodes: 49,
     lines: ['IPLC'], streaming: true, ai: true, devices: '不限设备数',
     nodeRegions: '香港、台湾、日本、新加坡、美国等',
     verdict: '专线里月付最便宜：¥19/月 100GB，年付 ¥79 起，官网写明支持 ChatGPT 和 4K Netflix',
@@ -109,6 +119,7 @@ export const AIRPORTS: Airport[] = [
   },
   {
     slug: 'kuajie', name: '跨界云', logo: '/images/brands/kuajie.webp', aff: 'https://vip02.kuajieaff.com/#/?code=hh3QezsW', promo: 'kuajie',
+    promoRate: null, promoNote: '可叠加长付折扣：年付 8 折、两年 7 折、三年 6 折', nodes: 49,
     lines: ['IPLC'], streaming: true, ai: true, devices: '不限设备数',
     nodeRegions: '香港、台湾、日本、新加坡、美国、马来西亚等',
     verdict: '大流量单价最低的专线：1.8TB 只要 ¥130/月，¥20/月 120GB 入门',
@@ -122,7 +133,8 @@ export const AIRPORTS: Airport[] = [
     ],
   },
   {
-    slug: 'lingmao', name: '灵猫', logo: '/images/brands/lingmao.webp', aff: 'https://edp01.civetaff.com/#/?code=CYg7QSJo', promo: 'lingmao',
+    slug: 'lingmao', name: '灵猫', logo: '/images/brands/lingmao.webp', aff: 'https://edp01.civetaff.com/#/?code=CYg7QSJo', promo: 'LM80',
+    promoRate: 0.8, nodes: 50,
     lines: ['IPLC'], streaming: true, ai: true, devices: '不限客户端',
     nodeRegions: '香港、台湾、日本、新加坡、美国等',
     verdict: '少见的季付档，年付 Big ¥295 每月 300GB，折合不到 ¥25/月',
@@ -138,6 +150,7 @@ export const AIRPORTS: Airport[] = [
   },
   {
     slug: 'shanyue', name: '闪跃', logo: '/images/brands/shanyue.webp', aff: 'https://wep01.flashleapaff.com/#/?code=cs0ekCMG', promo: 'shanyue',
+    promoRate: 0.8, nodes: 48,
     lines: ['IPLC'], streaming: true, ai: true, devices: '官网未写明',
     nodeRegions: '香港、台湾、日本、新加坡、美国等',
     verdict: '同档位便宜 ¥1：¥24/月 150GB、¥44/月 300GB，全节点 1 倍率',
@@ -152,6 +165,7 @@ export const AIRPORTS: Airport[] = [
   },
   {
     slug: 'flybit', name: 'Flybit', logo: '/images/brands/flybit.webp', aff: 'https://1.flybit.network/#/register?code=Aga7bd1s', promo: null,
+    promoRate: null, nodes: null,
     lines: [], streaming: null, ai: null, devices: '可共享',
     nodeRegions: '官网列出 30 多个国家和地区',
     verdict: '不限时包门槛最低：¥36 买 128GB，¥238 买 1TB，流量不过期',
@@ -169,6 +183,7 @@ export const AIRPORTS: Airport[] = [
   },
   {
     slug: 'xxyun', name: '小新云', logo: '/images/brands/xxyun.webp', aff: 'https://www.xx-yun.com/?code=pi9fB906', promo: null,
+    promoRate: null, nodes: null,
     lines: ['BGP 中转'], streaming: null, ai: null, devices: '不限设备数',
     nodeRegions: '香港、台湾、日本、新加坡、美国等',
     verdict: '价格最低：¥9.99/月 100GB、¥39.9/月 1TB，但走 BGP 中转不是专线',
@@ -210,6 +225,9 @@ export const trafficRange = (a: Airport) => {
 };
 export const unlockText = (a: Airport) =>
   a.streaming && a.ai ? 'Netflix + ChatGPT' : a.streaming ? '流媒体' : a.ai ? 'ChatGPT' : '官网未写明';
+export const promoText = (a: Airport) => (a.promoRate ? `${+(a.promoRate * 10).toFixed(1)} 折` : a.promo ? '官网未写明' : '无');
+export const billingTypes = (a: Airport) => (['Monthly', 'Quarterly', 'Yearly', 'One-Time'] as Billing[]).filter((b) => priced(a).some((p) => p.billing === b));
+export const maxTraffic = (a: Airport) => Math.max(...priced(a).filter((p) => p.billing !== 'One-Time').map((p) => p.traffic));
 export const reviewUrl = (a: Airport) => `/review/${a.slug}/`;
 export const bySlug = (s: string) => AIRPORTS.find((a) => a.slug === s)!;
 

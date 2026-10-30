@@ -3,31 +3,83 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AirportCard from '../../components/h/AirportCard.astro';
 import Brand from '../../components/h/Brand.astro';
 import Disclosure from '../../components/h/Disclosure.astro';
-import { AIRPORTS, isPremium, entry, fmtPrice, fmtGB, trafficRange, unlockText, lineLabel, faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH } from '../../data/airports';
+import SpeedSummary from '../../components/h/SpeedSummary.astro';
+import { AIRPORTS, oneTime, planPrice, isPremium, entry, fmtPrice, fmtGB, trafficRange, unlockText, lineLabel, faqSchema, itemListSchema, UPDATED, UPDATED_LABEL, UPDATED_MONTH, UPDATED_TAG } from '../../data/airports';
 
 const list = AIRPORTS.filter(isPremium);
 const n = list.length;
 const tags = ['综合首选', '流量首选', '学生首选', '不限时首选', '预算首选', '大流量首选', '季付可选', '比价可选'];
 
+const yn = (v: boolean | null) => (v ? '✓ 官网写明' : '未写明');
+
+const lineTypes = [
+  { t: '直连', how: '直接连海外服务器，走公网国际出口', peak: '很容易卡，经常被干扰', price: '最便宜', here: '本站不收录' },
+  { t: 'BGP 中转', how: '先到国内中转服务器，再走公网出海', peak: '白天快，晚高峰可能变慢', price: '便宜', here: AIRPORTS.filter((a) => !isPremium(a) && a.lines.length).map((a) => a.name).join('、') || '—' },
+  { t: 'IEPL', how: '以太网专线出境，不走公网国际出口', peak: '稳定', price: '中等', here: AIRPORTS.filter((a) => a.lines.includes('IEPL')).map((a) => a.name).join('、') || '本期收录机场未写明' },
+  { t: 'IPLC', how: '国际私有专线，点对点不走公网', peak: '稳定，延迟低', price: '中等', here: `${AIRPORTS.filter((a) => a.lines.includes('IPLC')).length} 家：${AIRPORTS.filter((a) => a.lines.includes('IPLC')).map((a) => a.name).join('、')}` },
+];
+
+const uses = [
+  { u: 'ChatGPT / Claude 等 AI', need: '高：IP 不能频繁变，地区要支持', region: '日本、新加坡、美国', pick: 'sogo' },
+  { u: '4K 追剧（Netflix、YouTube）', need: '中高：带宽要够，晚上不能掉速', region: '香港、新加坡、日本', pick: 'weifeng' },
+  { u: '远程办公、视频会议', need: '很高：断线就掉会', region: '香港、日本', pick: 'sogo' },
+  { u: 'TikTok、外贸账号', need: '很高：要固定的原生 IP', region: '美国等目标市场', pick: 'feimao' },
+  { u: '只查资料、刷社交软件', need: '一般', region: '香港、台湾', pick: 'wuyou' },
+  { u: '主力机场之外的备用', need: '一般：关键时刻能用就行', region: '香港', pick: 'firefly' },
+].map((x) => ({ ...x, a: AIRPORTS.find((a) => a.slug === x.pick)! }));
+
+const selfTest = [
+  { k: '晚高峰速度', how: '晚上 8–11 点用 Speedtest 或打开 YouTube 看 4K', ok: '4K 不缓冲，下载 50Mbps 以上' },
+  { k: '延迟', how: '客户端里测节点延迟', ok: '香港、日本节点 100ms 以内' },
+  { k: '连续一周', how: '每天固定时间用一下', ok: '没有整晚连不上的情况' },
+  { k: 'AI 解锁', how: '打开 chatgpt.com 登录', ok: '不出现 “unsupported country”' },
+  { k: '流媒体解锁', how: '打开 Netflix 看非自制剧', ok: '能看到当地片库' },
+];
+
+const fixes = [
+  { k: '客户端显示延迟，但网页打不开', why: '系统时间不准、系统代理没开、DNS 被污染', fix: '同步系统时间，确认系统代理开关', href: '/guide/troubleshooting-no-internet/' },
+  { k: '国内网站也打不开', why: '代理软件关了，系统代理设置还在', fix: '重新打开客户端，或在系统设置里关掉代理', href: '/guide/troubleshooting-no-internet/' },
+  { k: '国内网站变慢', why: '用了全局模式，国内流量也走了代理', fix: '切回“规则”模式', href: '/guide/troubleshooting-routing-mode/' },
+  { k: 'ChatGPT 提示地区不支持', why: '选了香港节点，或 IP 被识别为数据中心', fix: '换日本、新加坡、美国节点', href: '/guide/scenario-ai-unblock/' },
+  { k: 'Netflix 只能看自制剧', why: '节点没有解锁当地片库', fix: '换写明解锁的节点或地区', href: '/guide/scenario-streaming-unblock/' },
+  { k: '节点全部超时', why: '订阅过期、流量用完，或订阅链接没更新', fix: '在客户端里更新订阅，检查官网余额', href: '/guide/troubleshooting-no-internet/' },
+];
+
+const protocols = [
+  { k: 'Shadowsocks（SS）', feat: '老牌协议，配置简单', speed: '快', note: '容易被识别，现在多配合其他手段使用' },
+  { k: 'VMess', feat: 'V2Ray 的传统协议', speed: '中等', note: '依赖系统时间，时间不准会连不上' },
+  { k: 'VLESS', feat: 'VMess 的精简版，常配合 Reality 使用', speed: '快', note: 'Sogo云 使用的就是 VLESS' },
+  { k: 'Trojan', feat: '伪装成 HTTPS 流量', speed: '快', note: '需要域名和证书，机场已经配好' },
+  { k: 'Hysteria 2', feat: '基于 UDP，弱网下也快', speed: '很快', note: '部分网络会限制 UDP' },
+];
+
+const whyPremium = [
+  { k: '晚高峰更稳', d: 'IPLC / IEPL 专线不走拥堵的公网国际出口，晚上 8–11 点不容易掉速' },
+  { k: '价格差距不大', d: `专线入门档 ¥19–¥27/月，和中转机场差不多` },
+  { k: '线路写得清楚', d: '官网明确写了线路类型的机场，通常运营更规范' },
+];
+
 const faq = [
-  { q: '稳定的机场推荐哪几家？', a: `本页 ${n} 家都是 IPLC / IEPL 专线机场，晚高峰比中转机场稳。综合首选 Sogo云（IPLC + IEPL 双专线，¥25/月 150GB），其次微风、飞猫云、Firefly、无忧链接。` },
+  { q: '稳定的机场推荐哪几家？', a: `本页 ${n} 家都是 IPLC / IEPL 专线机场，晚高峰比中转机场稳。综合首选 Sogo云（IPLC 专线 + 原生 IP，¥25/月 150GB），其次微风、飞猫云、Firefly、无忧链接。` },
   { q: '怎么判断一个机场稳不稳定？', a: '看三点：线路是不是 IPLC / IEPL 专线；晚上 8–11 点高峰期速度会不会明显下降；运营时间和公告是否规律。新手先买月付，在自己家晚上实测最准。' },
-  { q: '机场推荐列表多久更新？', a: `每月对照官网核对一次价格和套餐，这一版核对于 ${UPDATED_LABEL}。` },
+  { q: '稳定机场列表多久更新？', a: `每月对照官网核对一次价格和套餐，这一版核对于 ${UPDATED_LABEL}。` },
+  { q: 'IPLC 和 IEPL 哪个更稳定？', a: '两者都是专线，都不走公网国际出口，晚高峰都比中转稳定。实际体验差别不大，更重要的是机场有没有超售、节点维护得好不好，所以新手先月付在自己家晚上实测最准。' },
   { q: '专线机场一定比中转机场贵吗？', a: '不一定。本页专线机场入门价在 ¥19–¥27/月，和很多中转机场差不多。真正贵的是大流量档和独享 IP 定制套餐。' },
 ];
-const title = `机场推荐列表2026：${n}家稳定好用的专线机场推荐（10月更新）`;
-const description = `稳定机场推荐（${UPDATED_MONTH}更新）：${n}家IPLC/IEPL专线机场逐家推荐，附完整套餐价格、每月流量、解锁情况、优惠码和适合人群，Sogo云、微风、飞猫云、Firefly、无忧链接等，新手按需求直接选。`;
+const title = `稳定机场推荐2026：${n}家IPLC/IEPL专线机场，晚高峰不卡${UPDATED_TAG}`;
+const description = `${UPDATED_MONTH}稳定机场推荐：只收录${n}家IPLC/IEPL专线机场，月付¥19起，逐家写明套餐价、流量、能否解锁ChatGPT和Netflix、优惠码和适合人群。`;
 const schemas = [itemListSchema(`${UPDATED_MONTH}稳定机场推荐`, list), faqSchema(faq)];
 ---
-<BaseLayout title={title} description={description} structuredData={schemas} breadcrumbs={[{ name: '机场推荐', path: '/recommend/' }]}>
+<BaseLayout title={title} description={description} structuredData={schemas} breadcrumbs={[{ name: '稳定机场推荐', path: '/recommend/' }]}>
   <div class="h-page">
     <p class="h-eyebrow">更新于 <time datetime={UPDATED}>{UPDATED_LABEL}</time></p>
-    <h1>稳定好用的机场推荐：{n} 家专线机场详细推荐</h1>
+    <h1>稳定机场推荐 2026：{n} 家专线机场详细推荐</h1>
     <p class="h-lead">这份机场推荐列表只收录 <strong>IPLC / IEPL 专线机场</strong>，晚上高峰期也不容易卡。每家都附上完整套餐价格和适合人群，想按用途快速选，回 <a href="/">首页</a> 看“30 秒按用途选机场”。</p>
     <Disclosure />
 
     <section class="h-section">
       <h2>{n} 家专线机场速览</h2>
+      <p class="h-intro">下面 {n} 家都是官网写明 IPLC / IEPL 专线的机场，按本站综合推荐顺序排列。表里先给出推荐理由、入门价格和解锁情况。</p>
       <div class="h-table-wrap">
         <table class="h-table">
           <thead><tr><th scope="col">#</th><th scope="col">机场</th><th scope="col">推荐理由</th><th scope="col">月付起步</th><th scope="col">每月流量</th><th scope="col">解锁</th></tr></thead>
@@ -38,25 +90,125 @@ const schemas = [itemListSchema(`${UPDATED_MONTH}稳定机场推荐`, list), faq
       </div>
     </section>
 
+    <section class="h-section" id="compare">
+      <h2>{n} 家专线机场稳定性参数对比</h2>
+      <p class="h-intro">稳定性不只看线路，还要看节点数量、设备限制和有没有备用方案。下表把 {n} 家专线机场的这些参数放在一起。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">机场</th><th scope="col">线路</th><th scope="col">节点数</th><th scope="col">设备数</th><th scope="col">流媒体</th><th scope="col">ChatGPT</th><th scope="col">不限时备用包</th></tr></thead>
+          <tbody>
+            {list.map((a, i) => (
+              <tr class={i === 0 ? 'is-hl' : ''}>
+                <td><Brand a={a} /></td>
+                <td>{lineLabel(a)}</td>
+                <td class="h-num">{a.nodes ? `${a.nodes} 个` : '未写明'}</td>
+                <td>{a.devices}</td>
+                <td class={a.streaming ? 'h-yes' : 'h-no'}>{yn(a.streaming)}</td>
+                <td class={a.ai ? 'h-yes' : 'h-no'}>{yn(a.ai)}</td>
+                <td class="h-num">{oneTime(a)[0] ? planPrice(oneTime(a)[0]) + ' 起' : <span class="h-no">无</span>}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="h-muted">节点数为 {UPDATED_LABEL} 核对时的数量；“未写明”表示官网没写，不代表不支持。</p>
+    </section>
+
+    <section class="h-section" id="speedtest">
+      <h2>专线机场实测数据</h2>
+      <p class="h-intro">参数写得再好，也要看实际跑出来的速度。下表是本站已整理的机场实测：每家都附原始测速截图，分地区列出延迟、下载速度和流媒体解锁结果。</p>
+      <SpeedSummary />
+    </section>
+
+    <section class="h-section" id="uses">
+      <h2>按用途选稳定机场</h2>
+      <p class="h-intro">不同用途对稳定性的要求不一样：AI 和远程办公最怕断线，查资料就宽松很多。下表按用途给出建议节点地区和推荐机场。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">用途</th><th scope="col">对稳定性的要求</th><th scope="col">建议节点地区</th><th scope="col">推荐</th></tr></thead>
+          <tbody>{uses.map((x) => <tr><th scope="row">{x.u}</th><td style="min-width:180px">{x.need}</td><td>{x.region}</td><td><Brand a={x.a} /></td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="h-section">
       <h2>逐家推荐：套餐、价格与适合人群</h2>
+      <p class="h-intro">每家机场的完整套餐、价格、流量和适合人群，可以直接对比后去官网购买。</p>
       <div class="h-scenes">
         {list.map((a, i) => <AirportCard a={a} rank={i + 1} tag={tags[i]} top={i === 0} headingLevel="h3" />)}
       </div>
     </section>
 
-    <section class="h-section">
+    <section class="h-section" id="lines">
+      <h2>直连、中转、IEPL、IPLC 线路对比</h2>
+      <p class="h-intro">机场稳不稳定，线路类型是最主要的因素。下表对比 4 种常见线路的走法、晚高峰表现和价格。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">线路</th><th scope="col">怎么走</th><th scope="col">晚高峰</th><th scope="col">价格</th><th scope="col">本站机场</th></tr></thead>
+          <tbody>{lineTypes.map((x) => <tr class={x.t === 'IPLC' ? 'is-hl' : ''}><th scope="row">{x.t}</th><td style="min-width:200px">{x.how}</td><td style="min-width:140px">{x.peak}</td><td>{x.price}</td><td style="min-width:200px">{x.here}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" id="regions">
+      <h2>{n} 家专线机场节点地区覆盖</h2>
+      <p class="h-intro">节点地区决定了你能用哪些服务：用 AI 要日本、新加坡、美国，追港剧要香港。下表列出每家官网写明的节点数和地区。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">机场</th><th scope="col">节点数</th><th scope="col">节点地区</th></tr></thead>
+          <tbody>{list.map((a) => <tr><td><Brand a={a} /></td><td class="h-num">{a.nodes ? `${a.nodes} 个` : '未写明'}</td><td style="min-width:320px">{a.nodeRegions}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" id="protocols">
+      <h2>机场常用协议对比</h2>
+      <p class="h-intro">除了线路，协议也会影响速度和稳定性。机场已经配好协议，你不用自己设置，但了解区别有助于在客户端里挑节点。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">协议</th><th scope="col">特点</th><th scope="col">速度</th><th scope="col">注意</th></tr></thead>
+          <tbody>{protocols.map((x) => <tr><th scope="row">{x.k}</th><td style="min-width:200px">{x.feat}</td><td>{x.speed}</td><td style="min-width:200px">{x.note}</td></tr>)}</tbody>
+        </table>
+      </div>
+      <p class="h-muted">详细对比见 <a href="/guide/knowledge-protocols/">常用代理协议对比</a>。</p>
+    </section>
+
+    <section class="h-section" id="why">
       <h2>为什么只推荐专线机场</h2>
-      <ul class="h-list">
-        <li><strong>晚高峰更稳</strong>：IPLC / IEPL 专线不走拥堵的公网国际出口，晚上 8–11 点不容易掉速。</li>
-        <li><strong>价格差距不大</strong>：专线入门档 ¥19–¥27/月，和中转机场差不多。</li>
-        <li><strong>线路写得清楚</strong>：官网明确写了线路类型的机场，通常运营更规范。</li>
-      </ul>
+      <p class="h-intro">本页只收录专线机场，原因有下面 3 个。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <tbody>{whyPremium.map((x) => <tr><th scope="row">{x.k}</th><td>{x.d}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" id="test">
+      <h2>买完怎么测稳不稳定</h2>
+      <p class="h-intro">买完机场后，建议在第一周按下表自测。不达标就趁月付到期前换一家。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">测什么</th><th scope="col">怎么测</th><th scope="col">合格标准</th></tr></thead>
+          <tbody>{selfTest.map((x) => <tr><th scope="row">{x.k}</th><td style="min-width:220px">{x.how}</td><td style="min-width:180px">{x.ok}</td></tr>)}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="h-section" id="fixes">
+      <h2>机场不稳定时先查这几项</h2>
+      <p class="h-intro">很多“机场不稳定”其实是本地设置的问题。换机场之前，先按下表排查常见现象，每一行都附了详细教程。</p>
+      <div class="h-table-wrap">
+        <table class="h-table">
+          <thead><tr><th scope="col">现象</th><th scope="col">常见原因</th><th scope="col">先这样处理</th><th scope="col">教程</th></tr></thead>
+          <tbody>{fixes.map((x) => <tr><th scope="row">{x.k}</th><td style="min-width:200px">{x.why}</td><td style="min-width:200px">{x.fix}</td><td><a href={x.href}>查看 →</a></td></tr>)}</tbody>
+        </table>
+      </div>
       <p>想要更便宜的中转机场，可以看 <a href="/cheap-airport/">便宜机场</a> 里的小新云；想了解线路区别，看 <a href="/guide/knowledge-network-lines/">直连、中转与专线</a>。</p>
     </section>
 
     <section class="h-section">
-      <h2>机场推荐常见问题</h2>
+      <h2>稳定机场常见问题</h2>
+      <p class="h-intro">关于稳定机场和专线线路，读者问得最多的问题。</p>
       {faq.map((f) => <div class="h-qa"><h3>{f.q}</h3><p>{f.a}</p></div>)}
     </section>
   </div>
